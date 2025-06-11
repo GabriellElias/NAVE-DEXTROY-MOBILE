@@ -9,7 +9,7 @@
 
         body {
             margin: 0;
-            overflow: hidden;
+            overflow: hidden; /* Prevent all scrolling, including horizontal */
             background-color: #050510;
             display: flex;
             justify-content: center;
@@ -278,7 +278,7 @@
             transform: translateX(-50%);
             z-index: 10;
             background: rgba(0, 0, 0, 0.8);
-            padding: 2px 4px; /* Reduced padding */
+            padding: 1px 2px; /* Further reduced padding */
             border-radius: 10px;
             border: 2px solid rgba(0, 255, 0, 0.5);
             box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
@@ -286,11 +286,11 @@
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            gap: 4px 2px; /* Reduced gap */
+            gap: 2px 1px; /* Further reduced gap */
             font-family: 'Share Tech Mono', monospace;
             color: #E0E0E0;
             display: none;
-            max-width: 98%;
+            max-width: 98%; /* Ensure it doesn't exceed screen width */
             height: auto;
         }
 
@@ -299,9 +299,9 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-width: 35px; /* Reduced min-width */
-            height: 35px; /* Reduced height */
-            padding: 2px; /* Reduced padding */
+            min-width: 30px; /* Further reduced min-width */
+            height: 30px; /* Further reduced height */
+            padding: 1px; /* Further reduced padding */
             border: 1px solid rgba(0, 255, 0, 0.2);
             border-radius: 6px;
             background-color: rgba(0, 0, 0, 0.3);
@@ -317,7 +317,7 @@
         }
 
         .menu-item .label {
-            font-size: 0.55em; /* Reduced label font size */
+            font-size: 0.5em; /* Further reduced label font size */
             color: #999;
             margin-bottom: 1px;
             white-space: nowrap;
@@ -326,14 +326,14 @@
         .menu-item span:not(.label) {
             font-weight: bold;
             color: #0f0;
-            font-size: 0.8em; /* Reduced value font size */
+            font-size: 0.7em; /* Further reduced value font size */
             white-space: nowrap;
         }
 
         .menu-item svg {
             margin-bottom: 1px;
-            width: 16px; /* Reduced icon size */
-            height: 16px; /* Reduced icon size */
+            width: 14px; /* Further reduced icon size */
+            height: 14px; /* Further reduced icon size */
         }
 
         /* Specific styles for ability/power-up status */
@@ -487,12 +487,13 @@
             }
         }
 
+        /* Left Joystick (Movement) */
         #joystick-area {
             position: absolute;
             bottom: 15px;
             left: 15px;
-            width: 100px; /* Reduced size */
-            height: 100px; /* Reduced size */
+            width: 90px; /* Reduced size */
+            height: 90px; /* Reduced size */
             background: rgba(50, 50, 50, 0.4);
             border: 2px solid rgba(0, 255, 0, 0.6);
             border-radius: 50%;
@@ -507,8 +508,8 @@
         }
 
         #joystick-inner {
-            width: 40px; /* Reduced size */
-            height: 40px; /* Reduced size */
+            width: 35px; /* Reduced size */
+            height: 35px; /* Reduced size */
             background: rgba(0, 255, 0, 0.7);
             border: 2px solid rgba(0, 200, 0, 0.9);
             border-radius: 50%;
@@ -520,12 +521,13 @@
             background-color: rgba(0, 255, 0, 1);
         }
 
-        #fire-button {
+        /* Right Joystick (Aim/Fire) */
+        #aim-joystick-area {
             position: absolute;
             bottom: 15px;
             right: 15px;
-            width: 70px; /* Reduced size */
-            height: 70px; /* Reduced size */
+            width: 60px; /* Further reduced size for aiming joystick */
+            height: 60px; /* Further reduced size for aiming joystick */
             background: rgba(255, 0, 0, 0.6);
             border: 2px solid rgba(255, 50, 50, 0.8);
             border-radius: 50%;
@@ -533,7 +535,7 @@
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 1.2em;
+            font-size: 1em; /* Adjusted font size */
             font-weight: bold;
             pointer-events: all;
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
@@ -542,30 +544,38 @@
             user-select: none;
         }
 
-        #fire-button:active {
-            background: rgba(255, 0, 0, 0.9);
-            box-shadow: 0 0 30px rgba(255, 0, 0, 1);
-            transform: scale(0.98);
+        #aim-joystick-inner {
+            width: 25px; /* Further reduced size */
+            height: 25px; /* Further reduced size */
+            background: rgba(255, 0, 0, 0.7);
+            border: 2px solid rgba(200, 0, 0, 0.9);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
+            transition: background-color 0.1s ease;
         }
-        #fire-button svg {
-            width: 25px; /* Reduced size */
-            height: 25px; /* Reduced size */
+        #aim-joystick-inner.active {
+            background-color: rgba(255, 0, 0, 1);
+        }
+        #aim-joystick-inner svg {
+            width: 20px; /* Adjusted icon size */
+            height: 20px; /* Adjusted icon size */
             fill: white;
         }
 
         #ability-buttons-container {
             position: absolute;
-            bottom: 90px; /* Adjusted position slightly up */
-            right: 15px;
+            bottom: 75px; /* Adjusted position slightly up */
+            right: 85px; /* Adjusted position to make space for aim joystick */
             display: flex;
             flex-direction: column;
-            gap: 6px; /* Reduced gap */
+            gap: 5px; /* Reduced gap */
             pointer-events: all;
         }
 
         .ability-button {
-            width: 45px; /* Reduced size */
-            height: 45px; /* Reduced size */
+            width: 40px; /* Reduced size */
+            height: 40px; /* Reduced size */
             background: rgba(50, 50, 200, 0.6);
             border: 2px solid rgba(100, 100, 255, 0.8);
             border-radius: 10px;
@@ -574,7 +584,7 @@
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 0.6em; /* Reduced font size */
+            font-size: 0.55em; /* Reduced font size */
             font-weight: bold;
             box-shadow: 0 0 10px rgba(50, 50, 200, 0.5);
             transition: background-color 0.1s ease, transform 0.1s ease;
@@ -583,8 +593,8 @@
             user-select: none;
         }
         .ability-button svg {
-            width: 20px; /* Reduced size */
-            height: 20px; /* Reduced size */
+            width: 18px; /* Reduced size */
+            height: 18px; /* Reduced size */
             margin-bottom: 2px;
         }
 
@@ -605,7 +615,7 @@
         #btn-bomb { background-color: rgba(75, 0, 75, 0.6); border-color: rgba(100, 0, 100, 0.8); }
 
         /* Disable user select on touch controls */
-        #joystick-area, #fire-button, .ability-button {
+        #joystick-area, #aim-joystick-area, .ability-button {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
@@ -638,7 +648,7 @@
         <!-- Energy (Battery) -->
         <svg id="icon-energy" viewBox="0 0 24 24" fill="currentColor"><path d="M17 4h-3V2h-4v2H7v18h10V4zm-2 16H9V6h6v14z"/></svg>
         <!-- Defense Drone (Gear) -->
-        <svg id="icon-defense-drone" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.09-.7-1.71-.94L14 2.1c-.05-.2-.25-.3-.46-.3h-4c-.21 0-.4.1-.45.3L9.03 5.05c-.62.24-1.19.55-1.71.94l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.64-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.31.61.22l2.49-1c.52.39 1.09.7 1.71.94L9.03 21.9c.05.2.25.3.46.3h4c.21 0 .4-.1.45.3l.36-2.81c.62-.24 1.19-.55 1.71-.94l2.49 1c-.22.09.49 0 .61.22l2-3.46c.12.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+        <svg id="icon-defense-drone" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.09-.7-1.71-.94L14 2.1c-.05-.2-.25-.3-.46-.3h-4c-.21 0-.4.1-.45.3L9.03 5.05c-.62.24-1.19.55-1.71.94l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.64-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.31.61.22l2.49-1c.52.39 1.09.7 1.71.94L9.03 21.9c.05.2.25.3.46.3h4c-.21 0 .4-.1.45.3l.36-2.81c.62-.24 1.19-.55 1.71-.94l2.49 1c-.22.09-.49 0 .61.22l2-3.46c.12.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
         <!-- Multiplier Icon -->
         <svg id="icon-multiplier" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
         <!-- Fire Icon for button -->
@@ -679,13 +689,13 @@
                 <li><strong>W / A / S / D:</strong> Mover a nave.</li>
                 <li>Mire com o **Mouse** para onde a nave deve apontar.</li>
                 <li>**SHIFT:** Segure para um movimento mais lento e preciso.</li>
-                <li>**Dispositivos Móveis:** Use o **Joystick Virtual** no lado esquerdo da tela para mover e o **Botão de Tiro** no lado direito para atirar e mirar automaticamente no inimigo mais próximo.</li>
+                <li>**Dispositivos Móveis:** Use o **Joystick Virtual** no lado esquerdo da tela para mover, e o **Joystick de Mira/Tiro** no lado direito para mirar e atirar.</li>
             </ul>
         </div>
         <div class="section">
             <h3><svg class="icon icon-small" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 6h2v8h-2zm0 9h2v2h-2z"/></svg>Atirar</h3>
             <ul>
-                <li><strong>Botão Esquerdo do Mouse (ou Botão de Tiro no Celular):</strong> Atira projéteis padrão.</li>
+                <li><strong>Botão Esquerdo do Mouse (ou Joystick de Mira/Tiro no Celular):</strong> Atira projéteis padrão.</li>
                 <li><strong>Power-ups:</strong>
                     <ul>
                         <li><svg class="icon icon-small pickup-icon-rapidfire"><use xlink:href="#icon-rapidfire"></use></svg><strong>Tiro Rápido (F):</strong> Aumenta a velocidade de disparo por um tempo.</li>
@@ -797,11 +807,15 @@
 
     <!-- Mobile Controls Overlay -->
     <div id="mobile-controls">
+        <!-- Left Joystick (Movement) -->
         <div id="joystick-area">
             <div id="joystick-inner"></div>
         </div>
-        <div id="fire-button">
-            <svg><use xlink:href="#icon-fire"></use></svg>
+        <!-- Right Joystick (Aim/Fire) -->
+        <div id="aim-joystick-area">
+            <div id="aim-joystick-inner">
+                <svg><use xlink:href="#icon-fire"></use></svg>
+            </div>
         </div>
         <div id="ability-buttons-container">
             <div class="ability-button" id="btn-shield">
@@ -883,9 +897,10 @@
 
         // Mobile Controls elements
         const mobileControls = document.getElementById('mobile-controls');
-        const joystickArea = document.getElementById('joystick-area');
+        const joystickArea = document.getElementById('joystick-area'); // Left joystick
         const joystickInner = document.getElementById('joystick-inner');
-        const fireButton = document.getElementById('fire-button');
+        const aimJoystickArea = document.getElementById('aim-joystick-area'); // Right joystick (Aim/Fire)
+        const aimJoystickInner = document.getElementById('aim-joystick-inner');
         const abilityButtonsContainer = document.getElementById('ability-buttons-container');
         const btnShield = document.getElementById('btn-shield');
         const btnDash = document.getElementById('btn-dash');
@@ -914,7 +929,8 @@
         let score = 0;
         let lives = 5;
         let gameOver = false;
-        let mouseIsDown = false; // For desktop firing, also used for mobile fire button state
+        let mouseIsDown = false; // Used for desktop firing only now
+        let aimJoystickActive = false; // Variable for right joystick active state / firing
         let droneCharge = 0;
         let lastFrameTime = performance.now();
         let playerName = "Jogador"; 
@@ -1207,13 +1223,20 @@
         let mouseX = 0; // Used for desktop aiming
         let mouseY = 0; // Used for desktop aiming
 
-        // Virtual Joystick variables
+        // Virtual Joystick variables (Left Joystick - Movement)
         let joystickActive = false;
         let joystickCenterX = 0;
         let joystickCenterY = 0;
-        const JOYSTICK_MAX_DIST = 30; // Reduced from 40
+        const JOYSTICK_MAX_DIST = 25; // Adjusted
         let joystickDeltaX = 0;
         let joystickDeltaY = 0;
+
+        // Aim Joystick variables (Right Joystick - Aim/Fire)
+        let aimJoystickCenterX = 0;
+        let aimJoystickCenterY = 0;
+        const AIM_JOYSTICK_MAX_DIST = 20; // New constant
+        let aimJoystickDeltaX = 0;
+        let aimJoystickDeltaY = 0;
 
 
         // --- Helper Functions and Classes ---
@@ -1346,11 +1369,14 @@
             update(deltaTime) {
                 // Background particles should move relative to player's simulated movement
                 const backgroundMovementScale = 0.05; 
-                if (keys.w) this.y += playerSpeed * backgroundMovementScale * deltaTime;
-                if (keys.s) this.y -= playerSpeed * backgroundMovementScale * deltaTime;
-                if (keys.a) this.x += playerSpeed * backgroundMovementScale * deltaTime;
-                if (keys.d) this.x -= playerSpeed * backgroundMovementScale * deltaTime;
-
+                // Only move background if player is actively moving, not just joystick active
+                if (Math.hypot(joystickDeltaX, joystickDeltaY) > 0 || keys.w || keys.s || keys.a || keys.d) {
+                    if (joystickDeltaY < 0 || keys.w) this.y += playerSpeed * backgroundMovementScale * deltaTime;
+                    if (joystickDeltaY > 0 || keys.s) this.y -= playerSpeed * backgroundMovementScale * deltaTime;
+                    if (joystickDeltaX < 0 || keys.a) this.x += playerSpeed * backgroundMovementScale * deltaTime;
+                    if (joystickDeltaX > 0 || keys.d) this.x -= playerSpeed * backgroundMovementScale * deltaTime;
+                }
+                
                 this.x += this.vx * deltaTime;
                 this.y += this.vy * deltaTime;
 
@@ -1462,7 +1488,7 @@
 
                 ctx.restore();
 
-                if (!this.dashActive && (keys.w || keys.s || keys.a || keys.d || joystickActive)) {
+                if (!this.dashActive && (Math.hypot(joystickDeltaX, joystickDeltaY) > 0 || keys.w || keys.s || keys.a || keys.d)) {
                     const thrustX = this.x + this.width / 2 + Math.cos(this.angle + Math.PI) * (this.height * 0.4);
                     const thrustY = this.y + this.height / 2 + Math.sin(this.angle + Math.PI) * (this.height * 0.4);
                     const spreadAngle = 0.6; 
@@ -1506,7 +1532,7 @@
                         currentMoveX = joystickDeltaX / JOYSTICK_MAX_DIST;
                         currentMoveY = joystickDeltaY / JOYSTICK_MAX_DIST;
                     }
-                    // For mobile, movement is purely based on joystick, keyboard 'keys' are not used for movement.
+                    // On mobile, movement is purely based on joystick, keyboard 'keys' are not used for player movement.
                 } else { // Desktop keyboard input
                     if (keys.w) currentMoveY -= 1;
                     if (keys.s) currentMoveY += 1;
@@ -1541,24 +1567,28 @@
 
                 let targetAngle;
                 if (window.innerWidth <= 768) { // Mobile aiming logic
-                    let closestEnemy = null;
-                    let minDist = Infinity;
-                    enemies.forEach(enemy => {
-                        const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
-                                                player.y + player.height / 2 - (enemy.y + enemy.height / 2));
-                        if (dist < minDist) {
-                            minDist = dist;
-                            closestEnemy = enemy;
-                        }
-                    });
+                    const magnitudeAimJoystick = Math.hypot(aimJoystickDeltaX, aimJoystickDeltaY);
+                    if (aimJoystickActive && magnitudeAimJoystick > 0) { // Right joystick is active and being moved
+                        targetAngle = Math.atan2(aimJoystickDeltaY, aimJoystickDeltaX);
+                    } else if (aimJoystickActive) { // Right joystick is active (touched) but not moved, auto-aim to closest enemy
+                        let closestEnemy = null;
+                        let minDist = Infinity;
+                        enemies.forEach(enemy => {
+                            const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
+                                                    player.y + player.height / 2 - (enemy.y + enemy.height / 2));
+                            if (dist < minDist) {
+                                minDist = dist;
+                                closestEnemy = enemy;
+                            }
+                        });
 
-                    // Priority: Firing + Enemy -> Joystick movement -> Current Angle
-                    if (mouseIsDown && closestEnemy) { // "mouseIsDown" is fire button for mobile
-                        targetAngle = Math.atan2((closestEnemy.y + closestEnemy.height / 2) - (player.y + player.height / 2),
-                                                 (closestEnemy.x + closestEnemy.width / 2) - (player.x + player.width / 2));
-                    } else if (joystickActive && (Math.hypot(joystickDeltaX, joystickDeltaY) > 0)) { // If joystick is active and moving, aim in joystick direction
-                        targetAngle = Math.atan2(joystickDeltaY, joystickDeltaX);
-                    } else { // Otherwise, maintain current angle
+                        if (closestEnemy) {
+                            targetAngle = Math.atan2((closestEnemy.y + closestEnemy.height / 2) - (player.y + player.height / 2),
+                                                     (closestEnemy.x + closestEnemy.width / 2) - (player.x + player.width / 2));
+                        } else { // No closest enemy, but aim joystick touched, maintain current angle
+                            targetAngle = this.angle;
+                        }
+                    } else { // Right joystick not active, maintain current angle
                         targetAngle = this.angle;
                     }
 
@@ -1639,7 +1669,8 @@
                     this.target = closestEnemy;
                 } else {
                     if (this.isPlayerBullet && this.isHoming) {
-                        const angle = Math.atan2(mouseY - this.y, mouseX - this.x);
+                        // If no enemy, missile still tries to follow player's current aim
+                        const angle = player.angle; // Use player's current angle for direction
                         this.dx = Math.cos(angle) * this.speed;
                         this.dy = Math.sin(angle) * this.speed;
                     } else if (!this.isPlayerBullet && this.isHoming) {
@@ -2587,7 +2618,8 @@
             score = 0;
             lives = 5; 
             gameOver = false;
-            mouseIsDown = false;
+            mouseIsDown = false; // Reset desktop firing state
+            aimJoystickActive = false; // Reset mobile firing state
             droneCharge = 0;
             pointsForNextLife = 200;
             currentWave = 1;
@@ -2633,11 +2665,16 @@
             playerInvulnerableTimer = 0;
             playerFlashTimer = 0;
 
-            // Reset joystick state
+            // Reset joystick states
             joystickActive = false;
             joystickDeltaX = 0;
             joystickDeltaY = 0;
             joystickInner.style.transform = `translate(0px, 0px)`;
+
+            aimJoystickActive = false;
+            aimJoystickDeltaX = 0;
+            aimJoystickDeltaY = 0;
+            aimJoystickInner.style.transform = `translate(0px, 0px)`;
 
 
             resizeCanvas();
@@ -3050,33 +3087,39 @@
                 playerInvulnerable = false;
             }
 
-            if (player && mouseIsDown && currentRealTime - lastPlayerShotTime > playerBulletCooldown) {
-                let targetX = mouseX; 
-                let targetY = mouseY;
+            // Player firing logic
+            // Firing is triggered by desktop mouse click (mouseIsDown) OR mobile aim joystick active (aimJoystickActive)
+            if (player && ((window.innerWidth > 768 && mouseIsDown) || (window.innerWidth <= 768 && aimJoystickActive)) && currentRealTime - lastPlayerShotTime > playerBulletCooldown) {
+                let targetX, targetY;
 
-                if (window.innerWidth <= 768) { // Mobile auto-aim
-                    let closestEnemy = null;
-                    let minDist = Infinity;
-                    enemies.forEach(enemy => {
-                        const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
-                                                player.y + player.height / 2 - (enemy.y + enemy.height / 2));
-                        if (dist < minDist) {
-                            minDist = dist;
-                            closestEnemy = enemy;
+                if (window.innerWidth <= 768) { // Mobile auto-aim and aim joystick based aiming
+                    const magnitudeAimJoystick = Math.hypot(aimJoystickDeltaX, aimJoystickDeltaY);
+                    if (magnitudeAimJoystick > 0) { // Aim joystick is being moved
+                        targetX = player.x + player.width / 2 + aimJoystickDeltaX * 100;
+                        targetY = player.y + player.height / 2 + aimJoystickDeltaY * 100;
+                    } else { // Aim joystick is touched but not moved, auto-aim to closest enemy
+                        let closestEnemy = null;
+                        let minDist = Infinity;
+                        enemies.forEach(enemy => {
+                            const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
+                                                    player.y + player.height / 2 - (enemy.y + enemy.height / 2));
+                            if (dist < minDist) {
+                                minDist = dist;
+                                closestEnemy = enemy;
+                            }
+                        });
+
+                        if (closestEnemy) {
+                            targetX = closestEnemy.x + closestEnemy.width / 2;
+                            targetY = closestEnemy.y + closestEnemy.height / 2;
+                        } else { // No closest enemy, and aim joystick not moved, aim straight up (initial angle of player)
+                            targetX = player.x + player.width / 2 + Math.cos(player.angle) * 100;
+                            targetY = player.y + player.height / 2 + Math.sin(player.angle) * 100;
                         }
-                    });
-
-                    if (closestEnemy) { 
-                        targetX = closestEnemy.x + closestEnemy.width / 2;
-                        targetY = closestEnemy.y + closestEnemy.height / 2;
-                    } else if (joystickActive && (Math.hypot(joystickDeltaX, joystickDeltaY) > 0)) { 
-                        const joystickAngle = Math.atan2(joystickDeltaY, joystickDeltaX);
-                        targetX = player.x + player.width / 2 + Math.cos(joystickAngle) * 100;
-                        targetY = player.y + player.height / 2 + Math.sin(joystickAngle) * 100;
-                    } else { 
-                        targetX = player.x + player.width / 2 + Math.cos(player.angle) * 100;
-                        targetY = player.y + player.height / 2 + Math.sin(player.angle) * 100;
                     }
+                } else { // Desktop aiming logic
+                    targetX = mouseX;
+                    targetY = mouseY;
                 }
 
                 const bulletStartX = player.x + player.width / 2 + Math.cos(player.angle) * (player.height / 2);
@@ -3498,18 +3541,25 @@
         document.addEventListener('keydown', (e) => {
             if (gameOver && e.key.toLowerCase() !== 'enter') return;
 
+            // Only process movement keys for desktop
+            if (window.innerWidth > 768) {
+                switch (e.key.toLowerCase()) {
+                    case 'w': keys.w = true; break;
+                    case 'a': keys.a = true; break;
+                    case 's': keys.s = true; break;
+                    case 'd': keys.d = true; break;
+                    case 'shift': keys.shift = true; break;
+                }
+            }
+
+            // Abilities are global (desktop keys or mobile buttons)
             switch (e.key.toLowerCase()) {
-                case 'w': keys.w = true; break;
-                case 'a': keys.a = true; break;
-                case 's': keys.s = true; break;
-                case 'd': keys.d = true; break;
-                case 'shift': keys.shift = true; break;
                 case 'q':
-                    const currentRealTime = performance.now();
-                    if (currentRealTime - lastShieldActivation >= SHIELD_COOLDOWN) {
+                    const currentRealTimeShield = performance.now();
+                    if (currentRealTimeShield - lastShieldActivation >= SHIELD_COOLDOWN) {
                         shieldActive = true;
-                        shieldTimer = currentRealTime;
-                        lastShieldActivation = currentRealTime;
+                        shieldTimer = currentRealTimeShield;
+                        lastShieldActivation = currentRealTimeShield;
                         updateMenuDisplay();
                     }
                     break;
@@ -3542,10 +3592,10 @@
                     }
                     break;
                 case 'g':
-                    const currentTime = performance.now();
+                    const currentTimeMissile = performance.now();
                     let missileSlotIndex = -1;
                     for (let i = 0; i < missileSlots.length; i++) {
-                        if (missileSlots[i].readyTime <= currentTime) {
+                        if (missileSlots[i].readyTime <= currentTimeMissile) {
                             missileSlotIndex = i;
                             break;
                         }
@@ -3556,7 +3606,7 @@
                         const missileStartY = player.y + player.height / 2 + Math.sin(player.angle) * (player.height / 2);
                         bullets.push(new Bullet(missileStartX, missileStartY, mouseX, mouseY, MISSILE_HACKER_SPEED, 'purple', true, true, true, 0, EXPLOSION_RADIUS, 0)); 
                         
-                        missileSlots[missileSlotIndex].readyTime = currentTime + MISSILE_COOLDOWN_PER_SLOT;
+                        missileSlots[missileSlotIndex].readyTime = currentTimeMissile + MISSILE_COOLDOWN_PER_SLOT;
                         updateMenuDisplay();
                     }
                     break;
@@ -3582,25 +3632,29 @@
         document.addEventListener('keyup', (e) => {
             if (gameOver) return;
 
-            switch (e.key.toLowerCase()) {
-                case 'w': keys.w = false; break;
-                case 'a': keys.a = false; break;
-                case 's': keys.s = false; break;
-                case 'd': keys.d = false; break;
-                case 'shift': keys.shift = false; break;
-                case 't': keys.t = false; break;
+            if (window.innerWidth > 768) {
+                switch (e.key.toLowerCase()) {
+                    case 'w': keys.w = false; break;
+                    case 'a': keys.a = false; break;
+                    case 's': keys.s = false; break;
+                    case 'd': keys.d = false; break;
+                    case 'shift': keys.shift = false; break;
+                }
             }
         });
 
         document.addEventListener('mousemove', (e) => {
-            mouseX = e.clientX;
-            mouseY = e.clientY;
+            // Only update mouseX/Y for desktop aiming
+            if (window.innerWidth > 768) {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            }
         });
 
         document.addEventListener('mousedown', (e) => {
-            if (e.button === 0 && !gameOver && window.innerWidth > 768) { 
-                mouseIsDown = true;
-            } else if (e.button === 2 && !gameOver && window.innerWidth > 768) { 
+            if (e.button === 0 && !gameOver && window.innerWidth > 768) { // Only desktop mouse left click
+                mouseIsDown = true; // Use this only for desktop to trigger firing
+            } else if (e.button === 2 && !gameOver && window.innerWidth > 768) { // Only desktop mouse right click for Predator
                 const currentTime = performance.now();
                 if (currentTime - lastPredatorActivation >= PREDATOR_COOLDOWN) {
                     predatorActive = true;
@@ -3613,13 +3667,13 @@
         });
 
         document.addEventListener('mouseup', (e) => {
-            if (e.button === 0 && window.innerWidth > 768) { 
-                mouseIsDown = false;
+            if (e.button === 0 && window.innerWidth > 768) { // Only desktop mouse left click
+                mouseIsDown = false; // Use this only for desktop
             }
         });
 
         document.addEventListener('wheel', (e) => {
-            if (gameOver || window.innerWidth <= 768) return; 
+            if (gameOver || window.innerWidth <= 768) return; // Only desktop mouse wheel
 
             if (bombCount > 0) { 
                 createExplosion(canvas.width / 2, canvas.height / 2, '#8B008B', BOMB_EXPLOSION_PARTICLE_COUNT, 1000, 1.5, 8, 30, true); 
@@ -3648,6 +3702,7 @@
 
         // --- Mobile Touch Controls ---
 
+        // Left Joystick (Movement)
         joystickArea.addEventListener('touchstart', (e) => {
             e.preventDefault(); 
             if (gameOver) return;
@@ -3695,18 +3750,56 @@
             joystickDeltaY = dy;
         }
 
-        fireButton.addEventListener('touchstart', (e) => {
+        // Right Joystick (Aim/Fire)
+        aimJoystickArea.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
-            mouseIsDown = true; 
+
+            const touch = e.touches[0];
+            const rect = aimJoystickArea.getBoundingClientRect();
+            aimJoystickCenterX = rect.left + rect.width / 2;
+            aimJoystickCenterY = rect.top + rect.height / 2;
+
+            aimJoystickActive = true; // This now also triggers firing for mobile
+            aimJoystickInner.classList.add('active');
+            updateAimJoystick(touch.clientX, touch.clientY);
         }, { passive: false });
 
-        fireButton.addEventListener('touchend', (e) => {
+        aimJoystickArea.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            if (gameOver || !aimJoystickActive) return;
+
+            const touch = e.touches[0];
+            updateAimJoystick(touch.clientX, touch.clientY);
+        }, { passive: false });
+
+        aimJoystickArea.addEventListener('touchend', (e) => {
             if (gameOver) return;
-            mouseIsDown = false; 
+
+            aimJoystickActive = false; // Deactivate aim joystick, stop firing
+            aimJoystickInner.style.transform = `translate(0px, 0px)`;
+            aimJoystickInner.classList.remove('active');
+            aimJoystickDeltaX = 0;
+            aimJoystickDeltaY = 0;
         });
 
-        // Mobile Ability Buttons
+        function updateAimJoystick(touchX, touchY) {
+            let dx = touchX - aimJoystickCenterX;
+            let dy = touchY - aimJoystickCenterY;
+            const distance = Math.hypot(dx, dy);
+
+            if (distance > AIM_JOYSTICK_MAX_DIST) {
+                dx = dx / distance * AIM_JOYSTICK_MAX_DIST;
+                dy = dy / distance * AIM_JOYSTICK_MAX_DIST;
+            }
+
+            aimJoystickInner.style.transform = `translate(${dx}px, ${dy}px)`;
+            aimJoystickDeltaX = dx;
+            aimJoystickDeltaY = dy;
+        }
+
+
+        // Mobile Ability Buttons - remain the same
         btnShield.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
@@ -3768,7 +3861,7 @@
             if (missileSlotIndex !== -1) {
                 const missileStartX = player.x + player.width / 2 + Math.cos(player.angle) * (player.height / 2);
                 const missileStartY = player.y + player.height / 2 + Math.sin(player.angle) * (player.height / 2);
-                bullets.push(new Bullet(missileStartX, missileStartY, mouseX, mouseY, MISSILE_HACKER_SPEED, 'purple', true, true, true, 0, EXPLOSION_RADIUS, 0)); 
+                bullets.push(new Bullet(missileStartX, missileStartY, player.x + player.width / 2, player.y + player.height / 2, MISSILE_HACKER_SPEED, 'purple', true, true, true, 0, EXPLOSION_RADIUS, 0)); 
                 
                 missileSlots[missileSlotIndex].readyTime = currentTime + MISSILE_COOLDOWN_PER_SLOT;
                 updateMenuDisplay();
