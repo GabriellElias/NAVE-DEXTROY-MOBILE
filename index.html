@@ -273,20 +273,20 @@
         /* Bottom Bar Menu */
         #bottom-bar-menu {
             position: absolute;
-            bottom: 10px; /* Posição um pouco mais para cima */
+            bottom: 8px; /* Posição um pouco mais para cima */
             left: 50%;
             transform: translateX(-50%); /* Centraliza horizontalmente */
             z-index: 10;
             background: rgba(0, 0, 0, 0.8);
-            padding: 5px 8px; /* Padding reduzido */
-            border-radius: 12px; /* Menos arredondado */
+            padding: 3px 6px; /* Padding reduzido */
+            border-radius: 10px; /* Menos arredondado */
             border: 2px solid rgba(0, 255, 0, 0.5);
             box-shadow: 0 0 15px rgba(0, 255, 0, 0.5); /* Sombra mais suave */
             display: flex;
             flex-wrap: wrap; /* Permite quebrar linha em telas pequenas */
             justify-content: center;
             align-items: center;
-            gap: 8px 6px; /* Espaçamento entre os itens (vertical e horizontal) */
+            gap: 6px 4px; /* Espaçamento entre os itens (vertical e horizontal) */
             font-family: 'Share Tech Mono', monospace;
             color: #E0E0E0;
             display: none; /* Inicia oculto */
@@ -299,14 +299,14 @@
             flex-direction: column; /* Ícone/label em cima, valor embaixo */
             align-items: center;
             justify-content: center;
-            min-width: 50px; /* Largura mínima para cada item (reduzido) */
-            height: 50px; /* Altura fixa para itens */
-            padding: 4px; /* Padding reduzido */
+            min-width: 40px; /* Largura mínima para cada item (reduzido) */
+            height: 40px; /* Altura fixa para itens */
+            padding: 3px; /* Padding reduzido */
             border: 1px solid rgba(0, 255, 0, 0.2);
-            border-radius: 8px; /* Menos arredondado */
+            border-radius: 6px; /* Menos arredondado */
             background-color: rgba(0, 0, 0, 0.3);
             box-shadow: inset 0 0 3px rgba(0, 255, 0, 0.1);
-            font-size: 0.8em; /* Fonte menor */
+            font-size: 0.7em; /* Fonte menor */
             text-align: center;
             transition: background-color 0.2s ease, transform 0.1s ease;
         }
@@ -317,7 +317,7 @@
         }
 
         .menu-item .label {
-            font-size: 0.7em; /* Rótulo ainda menor */
+            font-size: 0.6em; /* Rótulo ainda menor */
             color: #999;
             margin-bottom: 1px; /* Espaço mínimo entre label e valor */
             white-space: nowrap; /* Evita quebra de linha para rótulos curtos */
@@ -326,14 +326,14 @@
         .menu-item span:not(.label) { /* Estilo para os valores reais */
             font-weight: bold;
             color: #0f0;
-            font-size: 1em; /* Valor um pouco maior */
+            font-size: 0.9em; /* Valor um pouco maior */
             white-space: nowrap;
         }
 
         .menu-item svg {
-            margin-bottom: 2px; /* Espaço entre ícone e texto */
-            width: 20px; /* Tamanho do ícone (reduzido) */
-            height: 20px;
+            margin-bottom: 1px; /* Espaço entre ícone e texto */
+            width: 18px; /* Tamanho do ícone (reduzido) */
+            height: 18px;
         }
 
         /* Specific styles for ability/power-up status */
@@ -349,7 +349,7 @@
         }
         .recharging {
             color: #ffaa00;
-            font-size: 0.8em !important; /* Font size for recharge text */
+            font-size: 0.7em !important; /* Font size for recharge text */
         }
         .not-ready {
             color: #888; /* Mais cinza quando não pronto */
@@ -359,7 +359,7 @@
             display: inline-block;
             margin: 0 1px; /* Margem reduzida */
             font-weight: normal;
-            font-size: 0.8em; /* Tamanho para pontos de míssil */
+            font-size: 0.7em; /* Tamanho para pontos de míssil */
         }
         .missile-display.ready {
             color: #00ff00;
@@ -378,14 +378,14 @@
 
         #reticle {
             position: absolute;
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
             border: 2px solid yellow;
             border-radius: 50%;
             pointer-events: none;
             z-index: 20;
             transform: translate(-50%, -50%);
-            box-shadow: 0 0 12px yellow, 0 0 20px rgba(255, 255, 0, 0.5);
+            box-shadow: 0 0 10px yellow, 0 0 15px rgba(255, 255, 0, 0.5);
             display: none;
             transition: transform 0.05s linear; /* Smooth reticle movement */
         }
@@ -394,11 +394,11 @@
             content: '';
             position: absolute;
             background-color: yellow;
-            box-shadow: 0 0 5px yellow;
+            box-shadow: 0 0 4px yellow;
         }
 
         #reticle::before {
-            width: 35px;
+            width: 25px;
             height: 2px;
             top: 50%;
             left: 50%;
@@ -407,7 +407,7 @@
 
         #reticle::after {
             width: 2px;
-            height: 35px;
+            height: 25px;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -433,8 +433,8 @@
             pointer-events: none; /* Make sure it doesn't block mouse events */
         }
         .icon-small {
-            width: 1.2em;
-            height: 1.2em;
+            width: 1.1em;
+            height: 1.1em;
         }
 
         /* Specific colors for pickup icons */
@@ -490,10 +490,10 @@
 
         #joystick-area {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
-            width: 150px;
-            height: 150px;
+            bottom: 15px;
+            left: 15px;
+            width: 120px;
+            height: 120px;
             background: rgba(50, 50, 50, 0.4);
             border: 2px solid rgba(0, 255, 0, 0.6);
             border-radius: 50%;
@@ -508,8 +508,8 @@
         }
 
         #joystick-inner {
-            width: 70px;
-            height: 70px;
+            width: 50px;
+            height: 50px;
             background: rgba(0, 255, 0, 0.7);
             border: 2px solid rgba(0, 200, 0, 0.9);
             border-radius: 50%;
@@ -523,10 +523,10 @@
 
         #fire-button {
             position: absolute;
-            bottom: 20px;
-            right: 20px;
-            width: 100px;
-            height: 100px;
+            bottom: 15px;
+            right: 15px;
+            width: 80px;
+            height: 80px;
             background: rgba(255, 0, 0, 0.6);
             border: 2px solid rgba(255, 50, 50, 0.8);
             border-radius: 50%;
@@ -534,7 +534,7 @@
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 1.5em;
+            font-size: 1.2em;
             font-weight: bold;
             pointer-events: all;
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
@@ -549,33 +549,33 @@
             transform: scale(0.98);
         }
         #fire-button svg {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             fill: white;
         }
 
         #ability-buttons-container {
             position: absolute;
-            bottom: 140px; /* Above joystick and fire button */
-            right: 20px;
+            bottom: 100px; /* Above joystick and fire button */
+            right: 15px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
             pointer-events: all;
         }
 
         .ability-button {
-            width: 60px;
-            height: 60px;
+            width: 50px;
+            height: 50px;
             background: rgba(50, 50, 200, 0.6);
             border: 2px solid rgba(100, 100, 255, 0.8);
-            border-radius: 12px; /* Slightly rounded rectangle */
+            border-radius: 10px; /* Slightly rounded rectangle */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 0.8em;
+            font-size: 0.7em;
             font-weight: bold;
             box-shadow: 0 0 10px rgba(50, 50, 200, 0.5);
             transition: background-color 0.1s ease, transform 0.1s ease;
@@ -584,8 +584,8 @@
             user-select: none; /* Standard syntax */
         }
         .ability-button svg {
-            width: 30px;
-            height: 30px;
+            width: 25px;
+            height: 25px;
             margin-bottom: 2px;
         }
 
@@ -938,16 +938,16 @@
         let nextBossSpawnScore = 10000; 
 
         // Configurações do Jogador
-        const PLAYER_SIZE = 60;
-        const PLAYER_BASE_SPEED = 5; 
+        const PLAYER_SIZE = 45; // Reduced from 60
+        const PLAYER_BASE_SPEED = 300; // units per second (was 5 units per frame)
         const PLAYER_SLOW_SPEED_FACTOR = 0.5; 
         let playerSpeed = PLAYER_BASE_SPEED; 
-        const PLAYER_BULLET_SPEED = 12;
+        const PLAYER_BULLET_SPEED = 500; // units per second (was 12 units per frame)
         const PLAYER_BASE_BULLET_COOLDOWN = 100;
         let playerBulletCooldown = PLAYER_BASE_BULLET_COOLDOWN; 
         let lastPlayerShotTime = 0;
-        const BULLET_TRAIL_LENGTH = 5; 
-        const PLAYER_TURN_SPEED = 0.25; // Aumentado para maior precisão
+        const BULLET_TRAIL_LENGTH = 3; // Reduced from 5
+        const PLAYER_TURN_SPEED = Math.PI * 2.5; // Radians per second (was 0.25 rad per frame)
         let playerInvulnerable = false; 
         let playerInvulnerableTimer = 0;
         let playerFlashTimer = 0;
@@ -971,7 +971,7 @@
         // Configurações de Energia (Dash)
         const MAX_ENERGY = 100;
         const DASH_COST = 25;
-        const ENERGY_REGEN_RATE = 5; 
+        const ENERGY_REGEN_RATE = 10; // units per second (was 5)
         const DASH_DURATION = 200; 
         let currentEnergy = MAX_ENERGY;
         let lastEnergyRegenTime = performance.now();
@@ -980,14 +980,14 @@
         const MAX_MISSILES = 10; 
         const MISSILE_COOLDOWN_PER_SLOT = 50000; 
         const MISSILE_COUNT_HACKER = 1; 
-        const MISSILE_HACKER_SPEED = 15; 
+        const MISSILE_HACKER_SPEED = 600; // units per second (was 15)
         let missileSlots = []; 
-        const EXPLOSION_RADIUS = 100; 
+        const EXPLOSION_RADIUS = 80; // Reduced from 100
         const ELITE_BOSS_EXPLOSION_DAMAGE_MULTIPLIER = 0.1; 
 
         // Configurações da Bomba (clear map)
-        const BOMB_EXPLOSION_PARTICLE_COUNT = 100; 
-        const BOMB_EXPLOSION_RADIUS_MAX = 600; 
+        const BOMB_EXPLOSION_PARTICLE_COUNT = 50; // Reduced from 100
+        const BOMB_EXPLOSION_RADIUS_MAX = 400; // Reduced from 600
 
         // Configurações da Habilidade Predador
         const PREDATOR_DURATION = 30000; 
@@ -1001,7 +1001,7 @@
         // Configurações dos Inimigos
         const ENEMY_SPAWN_INTERVAL_BASE = 900;
         let lastEnemySpawnTime = 0;
-        const ENEMY_BULLET_SPEED = 6;
+        const ENEMY_BULLET_SPEED = 250; // units per second (was 6)
         const ENEMY_BULLET_COOLDOWN_MIN = 700;
         const ENEMY_BULLET_COOLDOWN_MAX = 2000;
         const ENEMY_ELITE_MISSILE_DAMAGE_MIN = 0.01; 
@@ -1019,30 +1019,30 @@
             default: 15000 
         };
 
-        // Tipos de Inimigos e suas propriedades base
+        // Tipos de Inimigos e suas propriedades base (all sizes reduced)
         const ENEMY_BASE_TYPES = {
             'standard': {
-                size: 40, speed: { min: 1.5, max: 4 }, hp: 50, score: 10 * 2, droneCharge: 10,
+                size: 30, speed: { min: 60, max: 180 }, hp: 50, score: 10 * 2, droneCharge: 10,
                 color: '#FF4500', detailColor: '#FFA500', shootMultiple: 1, bulletColor: '#FF6600', isBoss: false, isElite: false,
                 bulletCooldownMin: 700, bulletCooldownMax: 2000, explosionDamage: 0
             },
             'chaser': {
-                size: 35, speed: { min: 3, max: 6 }, hp: 60, score: 15 * 2, droneCharge: 15,
+                size: 25, speed: { min: 120, max: 240 }, hp: 60, score: 15 * 2, droneCharge: 15,
                 color: '#32CD32', detailColor: '#ADFF2F', shootMultiple: 1, bulletColor: '#99FF99', isBoss: false, isElite: false,
                 bulletCooldownMin: 600, bulletCooldownMax: 1800, explosionDamage: 0
             },
             'tank': {
-                size: 55, speed: { min: 1, max: 2.5 }, hp: 150, score: 25 * 2, droneCharge: 25,
+                size: 40, speed: { min: 40, max: 100 }, hp: 150, score: 25 * 2, droneCharge: 25,
                 color: '#4169E1', detailColor: '#6495ED', shootMultiple: 1, bulletColor: '#ADD8E6', isBoss: false, isElite: false,
                 bulletCooldownMin: 900, bulletCooldownMax: 2500, explosionDamage: 0
             },
             'multi-shooter': {
-                size: 45, speed: { min: 2, max: 4 }, hp: 80, score: 20 * 2, droneCharge: 20,
+                size: 35, speed: { min: 80, max: 160 }, hp: 80, score: 20 * 2, droneCharge: 20,
                 color: '#8A2BE2', detailColor: '#BA55D3', shootMultiple: 3, bulletColor: '#FF99FF', isBoss: false, isElite: false,
                 bulletCooldownMin: 800, bulletCooldownMax: 2200, explosionDamage: 0
             },
             'elite': { 
-                size: 45, speed: { min: 3, max: 7 }, hp: 120, score: 30 * 2, droneCharge: 30,
+                size: 35, speed: { min: 120, max: 280 }, hp: 120, score: 30 * 2, droneCharge: 30,
                 color: '#00FFFF', detailColor: '#00BFFF', shootMultiple: 1, bulletColor: '#FFFF66', isBoss: false, isElite: true,
                 bulletCooldownMin: 1500, bulletCooldownMax: 3000, 
                 hasMissile: true, missileDamageMin: ENEMY_ELITE_MISSILE_DAMAGE_MIN, missileDamageMax: ENEMY_ELITE_MISSILE_DAMAGE_MAX,
@@ -1054,30 +1054,31 @@
                 explosionDamage: 0
             },
             'boss': {
-                size: 100, speed: { min: 1, max: 2 }, hp: 1000, score: 500 * 2, droneCharge: 100,
+                size: 70, speed: { min: 40, max: 80 }, hp: 1000, score: 500 * 2, droneCharge: 100,
                 color: '#FFD700', detailColor: '#FFFF00', shootMultiple: 5, bulletColor: '#FF0000', isBoss: true, isElite: false,
-                bulletSpeed: 7, bulletCooldownMin: 300, bulletCooldownMax: 800,
+                bulletSpeed: 280, // units per second (was 7)
+                bulletCooldownMin: 300, bulletCooldownMax: 800,
                 maxBossDrones: 3, bossDroneSpawnCooldown: 10000,
                 explosionDamage: 0
             },
             'disruptor': {
-                size: 30, speed: { min: 4, max: 7 }, hp: 40, score: 18 * 2, droneCharge: 18,
+                size: 20, speed: { min: 160, max: 280 }, hp: 40, score: 18 * 2, droneCharge: 18,
                 color: '#FF69B4', detailColor: '#FFB6C1', shootMultiple: 1, bulletColor: '#FFFF00', isBoss: false, isElite: false,
                 bulletCooldownMin: 1000, bulletCooldownMax: 2500, isDebuffBullet: true, explosionDamage: 0
             },
             'heavy_shooter': {
-                size: 60, speed: { min: 1, max: 2.5 }, hp: 180, score: 28 * 2, droneCharge: 28,
+                size: 45, speed: { min: 40, max: 100 }, hp: 180, score: 28 * 2, droneCharge: 28,
                 color: '#556B2F', detailColor: '#8FBC8F', shootMultiple: 3, bulletColor: '#FF0000', isBoss: false, isElite: false,
                 bulletCooldownMin: 1500, bulletCooldownMax: 3000, explosiveBullets: true, explosionDamage: 0
             },
             'exploder': {
-                size: 45, speed: { min: 5, max: 9 }, hp: 70, score: 22 * 2, droneCharge: 22,
+                size: 35, speed: { min: 200, max: 360 }, hp: 70, score: 22 * 2, droneCharge: 22,
                 color: '#FFD700', detailColor: '#FFCC00', shootMultiple: 0, bulletColor: '', isBoss: false, isElite: false, 
                 explosionDamage: 2, 
                 bulletCooldownMin: 0, bulletCooldownMax: 0 
             },
             'armored': {
-                size: 50, speed: { min: 0.8, max: 2 }, hp: 250, score: 35 * 2, droneCharge: 35,
+                size: 40, speed: { min: 30, max: 80 }, hp: 250, score: 35 * 2, droneCharge: 35,
                 color: '#696969', detailColor: '#A9A9A9', shootMultiple: 1, bulletColor: '#D3D3D3', isBoss: false, isElite: false,
                 bulletCooldownMin: 1200, bulletCooldownMax: 2800, explosionDamage: 0
             }
@@ -1115,68 +1116,67 @@
 
         // Configurações das Estrelas
         const NUM_STARS = 200; 
-        const STAR_SPEED_MIN = 0.2;
-        const STAR_SPEED_MAX = 1.5;
+        const STAR_SPEED_MIN = 10; // units per second (was 0.2)
+        const STAR_SPEED_MAX = 50; // units per second (was 1.5)
         const STAR_COLOR_VARIATIONS = ['#FFFFFF', '#E0E0E0', '#D0D0FF', '#FFFFA0']; 
 
         // Configurações das Partículas de Fundo (Espaço)
         const NUM_SPACE_PARTICLES = 150; 
-        const SPACE_PARTICLE_SPEED_MIN = 0.8;
-        const SPACE_PARTICLE_SPEED_MAX = 4;
+        const SPACE_PARTICLE_SPEED_MIN = 30; // units per second (was 0.8)
+        const SPACE_PARTICLE_SPEED_MAX = 120; // units per second (was 4)
         const SPACE_PARTICLE_RADIUS_MIN = 0.8;
-        const SPACE_PARTICLE_RADIUS_MAX = 2;
+        const SPACE_PARTICLE_RADIUS_MAX = 1.5; // Reduced from 2
 
         // Configurações das Partículas do Propulsor (Nave)
-        const THRUST_PARTICLE_COUNT_PER_FRAME = 2; 
-        const THRUST_PARTICLE_MAX_SPEED = 6; 
-        const THRUST_PARTICLE_MIN_RADIUS = 1.5;
-        const THRUST_PARTICLE_MAX_RADIUS = 3; 
-        const THRUST_PARTICLE_LIFE = 30; 
+        const THRUST_PARTICLE_COUNT_PER_FRAME = 1; // Reduced from 2
+        const THRUST_PARTICLE_MAX_SPEED = 250; // units per second (was 6)
+        const THRUST_PARTICLE_MIN_RADIUS = 1; // Reduced from 1.5
+        const THRUST_PARTICLE_MAX_RADIUS = 2; // Reduced from 3
+        const THRUST_PARTICLE_LIFE = 0.5; // seconds (was 30 frames)
         const THRUST_PARTICLE_DECAY = 0.05; 
         const THRUST_PARTICLE_GRAVITY_FACTOR = 0.05; 
 
         // Configurações do Drone de Combate (player-controlled)
-        const DRONE_SIZE = 30; 
-        const DRONE_BULLET_SPEED = 10;
+        const DRONE_SIZE = 25; // Reduced from 30
+        const DRONE_BULLET_SPEED = 400; // units per second (was 10)
         const DRONE_BULLET_COOLDOWN = 300;
         const DRONE_MAX_DRONES = 5;
         const DRONE_HP = 200;
         const DRONE_ACTIVATION_COST = 100;
         const DRONE_OFFSETS = [
-            { x: -70, y: 0 },
-            { x: 70, y: 0 },
-            { x: -50, y: -50 },
-            { x: 50, y: -50 },
-            { x: 0, y: 60 }
+            { x: -50, y: 0 }, // Reduced from 70
+            { x: 50, y: 0 },
+            { x: -35, y: -35 }, // Reduced from 50
+            { x: 35, y: -35 },
+            { x: 0, y: 45 } // Reduced from 60
         ];
 
         // Configurações do Drone de Defesa
-        const DEFENSE_DRONE_SIZE = 35; 
+        const DEFENSE_DRONE_SIZE = 28; // Reduced from 35
         const DEFENSE_DRONE_HP = 800;
         const DEFENSE_DRONE_COST = 80;
         const DEFENSE_DRONE_MAX = 5;
-        const DEFENSE_DRONE_RADIUS = 80; 
-        const DEFENSE_DRONE_ORBIT_SPEED = 0.06; 
+        const DEFENSE_DRONE_RADIUS = 60; // Reduced from 80
+        const DEFENSE_DRONE_ORBIT_SPEED = Math.PI * 0.1; // radians per second (was 0.06 rad per frame)
 
         // Configurações do Drone Especial (do chefe)
-        const SPECIAL_DRONE_SIZE = 40; 
-        const SPECIAL_DRONE_BULLET_SPEED = 12;
+        const SPECIAL_DRONE_SIZE = 30; // Reduced from 40
+        const SPECIAL_DRONE_BULLET_SPEED = 480; // units per second (was 12)
         const SPECIAL_DRONE_BULLET_COOLDOWN = 2000; 
         const SPECIAL_DRONE_HP = 1500; 
-        const SPECIAL_DRONE_BULLET_EXPLOSION_RADIUS = 30; 
+        const SPECIAL_DRONE_BULLET_EXPLOSION_RADIUS = 20; // Reduced from 30
         const SPECIAL_DRONE_BULLET_DAMAGE = 20; 
         const SPECIAL_DRONE_OFFSETS = [ 
-            { x: -100, y: 100 },
-            { x: 100, y: 100 }
+            { x: -70, y: 70 }, // Reduced from 100
+            { x: 70, y: 70 }
         ];
 
         // Configurações dos Drones do Chefe
-        const BOSS_DRONE_SIZE = 25;
+        const BOSS_DRONE_SIZE = 20; // Reduced from 25
         const BOSS_DRONE_HP = 100;
-        const BOSS_DRONE_SPEED = 4;
+        const BOSS_DRONE_SPEED = 160; // units per second (was 4)
         const BOSS_DRONE_BULLET_COOLDOWN = 1500;
-        const BOSS_DRONE_BULLET_SPEED = 7;
-        const BOSS_MAX_DRONES_PER_BOSS = 3;
+        const BOSS_DRONE_BULLET_SPEED = 280; // units per second (was 7)
 
 
         // Configurações dos Drops - Frequência ligeiramente aumentada
@@ -1212,7 +1212,7 @@
         let joystickActive = false;
         let joystickCenterX = 0;
         let joystickCenterY = 0;
-        const JOYSTICK_MAX_DIST = 50; 
+        const JOYSTICK_MAX_DIST = 40; // Reduced from 50
         let joystickDeltaX = 0;
         let joystickDeltaY = 0;
 
@@ -1244,9 +1244,10 @@
                 this.vy = vy;
                 this.radius = radius;
                 this.color = color;
-                this.life = life;
+                // Life is now in seconds, so decay rate is per second
+                this.life = life; 
                 this.opacity = 1;
-                this.decayRate = decayRate;
+                this.decayRate = decayRate; // % per second
                 this.gravityY = gravityY;
                 this.initialRadius = radius;
             }
@@ -1264,8 +1265,8 @@
             update(deltaTime) {
                 this.x += this.vx * deltaTime;
                 this.y += (this.vy + this.gravityY) * deltaTime;
-                this.life--;
-                this.opacity -= this.decayRate * deltaTime;
+                this.life -= deltaTime; // Decay life by delta time
+                this.opacity -= this.decayRate * deltaTime; // Decay opacity by delta time
                 this.radius = this.initialRadius * (this.life / (this.life + (1 / this.decayRate)));
                 if (this.radius < 0) this.radius = 0;
             }
@@ -1275,7 +1276,7 @@
             constructor() {
                 this.x = Math.random() * canvas.width;
                 this.y = Math.random() * canvas.height;
-                this.radius = Math.random() * 1.5 + 0.5;
+                this.radius = Math.random() * 1.0 + 0.5; // Reduced max radius
                 this.speed = Math.random() * (STAR_SPEED_MAX - STAR_SPEED_MIN) + STAR_SPEED_MIN;
                 this.opacity = Math.random() * 0.8 + 0.2;
                 this.color = STAR_COLOR_VARIATIONS[Math.floor(Math.random() * STAR_COLOR_VARIATIONS.length)];
@@ -1296,7 +1297,7 @@
                 if (this.y > canvas.height + this.radius) {
                     this.x = Math.random() * canvas.width;
                     this.y = -this.radius;
-                    this.radius = Math.random() * 1.5 + 0.5;
+                    this.radius = Math.random() * 1.0 + 0.5;
                     this.speed = Math.random() * (STAR_SPEED_MAX - STAR_SPEED_MIN) + STAR_SPEED_MIN;
                     this.opacity = Math.random() * 0.8 + 0.2;
                     this.color = STAR_COLOR_VARIATIONS[Math.floor(Math.random() * STAR_COLOR_VARIATIONS.length)];
@@ -1345,10 +1346,12 @@
 
             update(deltaTime) {
                 // Background particles should move relative to player's simulated movement
-                if (keys.w) this.y += playerSpeed * 0.2 * deltaTime;
-                if (keys.s) this.y -= playerSpeed * 0.2 * deltaTime;
-                if (keys.a) this.x += playerSpeed * 0.2 * deltaTime;
-                if (keys.d) this.x -= playerSpeed * 0.2 * deltaTime;
+                // Player's speed is now per second, so scale this down significantly
+                const backgroundMovementScale = 0.05; // Adjust this for perceived background speed
+                if (keys.w) this.y += playerSpeed * backgroundMovementScale * deltaTime;
+                if (keys.s) this.y -= playerSpeed * backgroundMovementScale * deltaTime;
+                if (keys.a) this.x += playerSpeed * backgroundMovementScale * deltaTime;
+                if (keys.d) this.x -= playerSpeed * backgroundMovementScale * deltaTime;
 
                 this.x += this.vx * deltaTime;
                 this.y += this.vy * deltaTime;
@@ -1468,11 +1471,11 @@
 
                     for (let i = 0; i < THRUST_PARTICLE_COUNT_PER_FRAME; i++) {
                         const angle = this.angle + Math.PI + (Math.random() - 0.5) * spreadAngle;
-                        const speed = Math.random() * THRUST_PARTICLE_MAX_SPEED + 1;
+                        const speed = Math.random() * THRUST_PARTICLE_MAX_SPEED + (THRUST_PARTICLE_MAX_SPEED * 0.5); // Adjusted speed
                         const vx = Math.cos(angle) * speed;
                         const vy = Math.sin(angle) * speed;
                         const radius = Math.random() * (THRUST_PARTICLE_MAX_RADIUS - THRUST_PARTICLE_MIN_RADIUS) + THRUST_PARTICLE_MIN_RADIUS;
-                        const life = Math.floor(Math.random() * THRUST_PARTICLE_LIFE + THRUST_PARTICLE_LIFE/2);
+                        const life = Math.random() * THRUST_PARTICLE_LIFE + (THRUST_PARTICLE_LIFE / 2); // Life now in seconds
                         const color = `rgba(255, ${Math.floor(Math.random() * 100 + 155)}, 0, 1)`; 
                         thrustParticles.push(new Particle(thrustX, thrustY, vx, vy, radius, color, life, THRUST_PARTICLE_DECAY, THRUST_PARTICLE_GRAVITY_FACTOR));
                     }
@@ -1500,8 +1503,9 @@
                 let currentMoveY = 0;
 
                 if (window.innerWidth <= 768 && joystickActive) { // Mobile joystick input
-                    currentMoveX = joystickDeltaX;
-                    currentMoveY = joystickDeltaY;
+                    // Normalize joystickDelta to a -1 to 1 range for consistent speed
+                    currentMoveX = joystickDeltaX / JOYSTICK_MAX_DIST;
+                    currentMoveY = joystickDeltaY / JOYSTICK_MAX_DIST;
                 } else { // Desktop keyboard input
                     if (keys.w) currentMoveY -= 1;
                     if (keys.s) currentMoveY += 1;
@@ -1516,14 +1520,13 @@
                 }
 
                 if (!this.dashActive) {
-                    const moveAmount = playerSpeed * deltaTime;
                     const magnitude = Math.hypot(currentMoveX, currentMoveY);
                     if (magnitude > 0) {
-                        this.x += (currentMoveX / magnitude) * moveAmount;
-                        this.y += (currentMoveY / magnitude) * moveAmount;
+                        this.x += (currentMoveX / magnitude) * playerSpeed * deltaTime;
+                        this.y += (currentMoveY / magnitude) * playerSpeed * deltaTime;
                     }
                 } else {
-                    const dashSpeed = PLAYER_BASE_SPEED * 5; 
+                    const dashSpeed = PLAYER_BASE_SPEED * 3; // Reduced dash speed to make it manageable
                     const dashAngle = this.angle; 
                     const dashVx = Math.cos(dashAngle) * dashSpeed * deltaTime;
                     const dashVy = Math.sin(dashAngle) * dashSpeed * deltaTime;
@@ -1597,7 +1600,7 @@
             constructor(x, y, targetX, targetY, speed, color, isPlayerBullet = true, isHoming = false, isExplosive = false, damagePercent = 0, explosionRadius = 0, damageAmount = 0, isDebuff = false) {
                 this.x = x;
                 this.y = y;
-                this.radius = isPlayerBullet ? 5 : 4; 
+                this.radius = isPlayerBullet ? 3 : 2; // Reduced from 5/4
                 this.speed = speed;
                 this.color = color;
                 this.isPlayerBullet = isPlayerBullet;
@@ -1695,7 +1698,7 @@
                     this.trail.shift();
                 }
                  for (let i = this.trail.length - 1; i >= 0; i--) {
-                    this.trail[i].opacity -= 0.05 * deltaTime;
+                    this.trail[i].opacity -= 0.05 * deltaTime; // Decay faster over time
                     if (this.trail[i].opacity <= 0) {
                         this.trail.splice(i, 1);
                     }
@@ -1771,7 +1774,7 @@
                     this.x = canvas.width / 2 - this.width / 2;
                     this.y = -this.height; 
                     this.dx = 0; 
-                    this.dy = this.speed * 0.5;
+                    this.dy = this.speed * 0.5; // Boss initial descent speed
                 } else if (player && this.type !== 'exploder') {
                     const angleToPlayer = Math.atan2(player.y + player.height / 2 - (this.y + this.height / 2),
                                                      player.x + player.width / 2 - (this.x + this.width / 2));
@@ -1902,7 +1905,7 @@
                     ctx.stroke();
 
                     ctx.fillStyle = 'black';
-                    ctx.font = 'bold 36px Orbitron';
+                    ctx.font = 'bold 24px Orbitron'; // Adjusted font size for smaller boss
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
                     ctx.fillText('BOSS', 0, 0);
@@ -1993,19 +1996,19 @@
 
                 // HP Bar
                 const hpBarWidth = this.width * 0.8;
-                const hpBarHeight = 5; 
+                const hpBarHeight = 4; // Reduced from 5
                 const hpRatio = this.hp / this.maxHp;
                 ctx.fillStyle = 'red';
-                ctx.fillRect(this.x + this.width / 2 - hpBarWidth / 2, this.y - 15, hpBarWidth, hpBarHeight);
+                ctx.fillRect(this.x + this.width / 2 - hpBarWidth / 2, this.y - 12, hpBarWidth, hpBarHeight); // Adjusted y
                 ctx.fillStyle = 'lime';
-                ctx.fillRect(this.x + this.width / 2 - hpBarWidth / 2, this.y - 15, hpBarWidth * hpRatio, hpBarHeight);
+                ctx.fillRect(this.x + this.width / 2 - hpBarWidth / 2, this.y - 12, hpBarWidth * hpRatio, hpBarHeight);
             }
 
             update(deltaTime) {
                 const currentTime = performance.now();
 
                 if (this.flickerTimer > 0) {
-                    this.flickerTimer -= elapsed;
+                    this.flickerTimer -= (performance.now() - lastFrameTime); // Use elapsed for flicker
                 }
 
                 if (this.isBoss) {
@@ -2089,7 +2092,7 @@
                             enemyBullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2,
                                                          this.x + this.width / 2 + Math.cos(angle) * 100,
                                                          this.y + Math.sin(angle) * 100,
-                                                         bulletSpeed, this.bulletColor, false, false, this.type === 'heavy_shooter' ? true : false, 0, 50));
+                                                         bulletSpeed, this.bulletColor, false, false, this.type === 'heavy_shooter' ? true : false, 0, 40)); // Reduced explosion radius
                         }
                     } else if (this.shootMultiple === 5 && this.isBoss) { 
                         const angleStep = Math.PI * 2 / 5;
@@ -2426,11 +2429,11 @@
             constructor(x, y, type) {
                 this.x = x;
                 this.y = y;
-                this.width = 35;
-                this.height = 35;
+                this.width = 25; // Reduced from 35
+                this.height = 25; // Reduced from 35
                 this.type = type;
                 this.color = 'white';
-                this.speed = 2.5; 
+                this.speed = 100; // units per second (was 2.5)
 
                 switch(this.type) {
                     case 'life': this.color = 'limegreen'; break;
@@ -2454,7 +2457,7 @@
                 ctx.strokeRect(this.x - this.width / 2, this.y - this.height / 2, this.width, this.height);
 
                 ctx.fillStyle = this.color; 
-                ctx.font = 'bold 24px Share Tech Mono'; 
+                ctx.font = 'bold 18px Share Tech Mono'; // Adjusted font size
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 let displayText = '';
@@ -2477,14 +2480,14 @@
             }
         }
 
-        function createExplosion(x, y, baseColor, numParticles = 30, particleSpeed = 6, particleDecay = 0.03, minRadius = 1.5, maxRadius = 5, hasGravity = false) { 
+        function createExplosion(x, y, baseColor, numParticles = 20, particleSpeed = 250, particleDecay = 2, minRadius = 1, maxRadius = 3, hasGravity = false) { // Reduced particles, adjusted speed, decay
             for (let i = 0; i < numParticles; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const speed = Math.random() * particleSpeed + (particleSpeed * 0.5);
                 const vx = Math.cos(angle) * speed;
                 const vy = Math.sin(angle) * speed;
                 const radius = Math.random() * (maxRadius - minRadius) + minRadius;
-                const life = Math.floor(Math.random() * 40 + 30); 
+                const life = Math.random() * 0.8 + 0.4; // Life now in seconds (was 40-70 frames)
                 let color;
                 if (baseColor === 'red' || baseColor === 'orange' || baseColor === '#FF4500' || baseColor === '#FF6600') {
                     color = `rgb(${Math.floor(Math.random() * 80 + 175)}, ${Math.floor(Math.random() * 100)}, 0)`;
@@ -2964,12 +2967,11 @@
                 return;
             }
 
-            elapsed = currentTime - lastFrameTime;
-            if (elapsed <= 0) {
-                elapsed = 1; 
-            }
-            const deltaTime = elapsed / 1000 * 60;
+            elapsed = currentTime - lastFrameTime; // elapsed in milliseconds
+            const deltaTime = elapsed / 1000; // deltaTime in seconds
             lastFrameTime = currentTime;
+            
+            // console.log(`deltaTime: ${deltaTime}`); // Debugging to check if deltaTime is too small
 
             // Reticle is only for desktop mouse control
             if (window.innerWidth > 768) {
@@ -3038,11 +3040,12 @@
             }
 
 
-            const energyDeltaTime = (currentRealTime - lastEnergyRegenTime) / 1000;
+            const energyDeltaTime = deltaTime; // energy regen is now based on real seconds
             if (currentEnergy < MAX_ENERGY) {
                 currentEnergy = Math.min(MAX_ENERGY, currentEnergy + ENERGY_REGEN_RATE * energyDeltaTime);
             }
-            lastEnergyRegenTime = currentRealTime;
+            // No need to update lastEnergyRegenTime if energy regenerates continuously based on deltaTime
+            // lastEnergyRegenTime = currentRealTime; 
 
             if (player && player.dashActive && currentRealTime - player.dashTimer > DASH_DURATION) {
                 player.dashActive = false;
@@ -3128,7 +3131,7 @@
 
                 if (player && checkCollision(player, bDrone)) {
                     player.takeDamage(1); 
-                    createExplosion(bDrone.x, bDrone.y, bDrone.color, 20, 6, 0.04, 1.5, 4); 
+                    createExplosion(bDrone.x, bDrone.y, bDrone.color, 10, 200, 2, 1, 3); // Adjusted explosion
                     bossDrones.splice(i, 1);
                 }
             }
@@ -3188,7 +3191,7 @@
                             tripleShotTimer = currentRealTime;
                             break;
                     }
-                    createExplosion(pickup.x, pickup.y, pickup.color, 10, 3, 0.06, 1.5, 3); 
+                    createExplosion(pickup.x, pickup.y, pickup.color, 5, 100, 3, 1, 2); // Adjusted explosion
                     pickups.splice(i, 1);
                     updateMenuDisplay();
                 } else if (pickup.y > canvas.height + pickup.height) { 
@@ -3217,7 +3220,7 @@
                         const bDrone = bossDrones[bdIndex];
                         if (checkCollision(bullet, bDrone)) {
                             if (bDrone.takeDamage(50)) { 
-                                createExplosion(bDrone.x, bDrone.y, bDrone.color, 15, 5, 0.05, 1.5, 4); 
+                                createExplosion(bDrone.x, bDrone.y, bDrone.color, 10, 200, 2.5, 1, 3); // Adjusted explosion
                                 bossDrones.splice(bdIndex, 1);
                             }
                             bullets.splice(i, 1);
@@ -3232,7 +3235,7 @@
                         const enemy = enemies[eIndex];
                         if (checkCollision(bullet, enemy)) {
                             if (bullet.isExplosive) { 
-                                createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 'red', 50, 10, 0.03, 4, 10); 
+                                createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 'red', 25, 400, 1.5, 2, 6); // Adjusted explosion
                                 bullet.collided = true; 
 
                                 const explosionCenter = { x: enemy.x + enemy.width / 2, y: enemy.y + enemy.height / 2 };
@@ -3262,10 +3265,10 @@
                                     if (otherEnemy.takeDamage(damageAmount)) {
                                         const idx = enemies.indexOf(otherEnemy);
                                         if (idx > -1) {
-                                            createExplosion(otherEnemy.x + otherEnemy.width / 2, otherEnemy.y + otherEnemy.height / 2, 'orange', 30, 7, 0.04, 2, 6); 
+                                            createExplosion(otherEnemy.x + otherEnemy.width / 2, otherEnemy.y + otherEnemy.height / 2, 'orange', 15, 280, 2, 1.5, 4); // Adjusted explosion
                                             
                                             if (otherEnemy.type === 'exploder' && otherEnemy.explosionDamage > 0) {
-                                                createExplosion(otherEnemy.x + otherEnemy.width / 2, otherEnemy.y + otherEnemy.height / 2, otherEnemy.color, 75, 15, 0.02, 6, 12); 
+                                                createExplosion(otherEnemy.x + otherEnemy.width / 2, otherEnemy.y + otherEnemy.height / 2, otherEnemy.color, 35, 600, 1.5, 3, 8); // Adjusted explosion
                                                 player.takeDamage(otherEnemy.explosionDamage); 
                                             }
 
@@ -3286,10 +3289,10 @@
 
                             } else { 
                                 if (enemy.takeDamage(50)) { 
-                                    createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 'orange', 25, 5, 0.04, 1.5, 5); 
+                                    createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 'orange', 15, 200, 2, 1, 3); // Adjusted explosion
                                     
                                     if (enemy.type === 'exploder' && enemy.explosionDamage > 0) {
-                                        createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, enemy.color, 75, 15, 0.02, 6, 12); 
+                                        createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, enemy.color, 35, 600, 1.5, 3, 8); // Adjusted explosion
                                         player.takeDamage(enemy.explosionDamage); 
                                     }
 
@@ -3339,12 +3342,12 @@
 
                 if (player && checkCollision(player, enemy)) {
                     if (enemy.type === 'exploder' && enemy.explosionDamage > 0) {
-                        createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, enemy.color, 75, 15, 0.02, 6, 12); 
+                        createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, enemy.color, 35, 600, 1.5, 3, 8); // Adjusted explosion
                         player.takeDamage(enemy.explosionDamage);
                     } else { 
                         player.takeDamage();
                     }
-                    createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 'orange', 30, 7, 0.04, 2, 6); 
+                    createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, 'orange', 15, 280, 2, 1.5, 4); // Adjusted explosion
                     enemies.splice(i, 1);
                     addScore(enemy.scoreValue / 2); 
                     droneCharge += enemy.droneChargeValue / 2;
@@ -3370,7 +3373,7 @@
                     const dDrone = defenseDrones[ddIndex];
                     if (checkCollision(bullet, dDrone)) {
                         if (dDrone.takeDamage(100)) { 
-                            createExplosion(dDrone.x, dDrone.y, '#B22222', 20, 6, 0.05, 1.5, 4); 
+                            createExplosion(dDrone.x, dDrone.y, '#B22222', 10, 250, 2.5, 1, 3); // Adjusted explosion
                             defenseDrones.splice(ddIndex, 1);
                         }
                         enemyBullets.splice(i, 1);
@@ -3382,7 +3385,7 @@
 
                 if (specialDrone && checkCollision(bullet, specialDrone)) {
                      if (specialDrone.takeDamage(100)) { 
-                         createExplosion(specialDrone.x, specialDrone.y, specialDrone.color, 20, 6, 0.05, 1.5, 4); 
+                         createExplosion(specialDrone.x, specialDrone.y, specialDrone.color, 10, 250, 2.5, 1, 3); // Adjusted explosion
                          specialDrone = null;
                      }
                      enemyBullets.splice(i, 1);
@@ -3394,7 +3397,7 @@
                     const drone = drones[dIndex];
                     if (checkCollision(bullet, drone)) {
                         if (drone.takeDamage(ENEMY_BASE_TYPES['standard'].hp / 2)) { 
-                            createExplosion(drone.x, drone.y, 'gray', 20, 6, 0.05, 1.5, 4); 
+                            createExplosion(drone.x, drone.y, 'gray', 10, 250, 2.5, 1, 3); // Adjusted explosion
                             drones.splice(dIndex, 1);
                         }
                         enemyBullets.splice(i, 1);
@@ -3407,12 +3410,12 @@
 
                 if (player && checkCollision(bullet, player)) {
                     if (bullet.isExplosive) { 
-                        createExplosion(bullet.x, bullet.y, bullet.color, 30, 8, 0.04, 2, 6); 
+                        createExplosion(bullet.x, bullet.y, bullet.color, 15, 300, 2, 1.5, 4); // Adjusted explosion
                         player.takeDamage(2); 
                     } else if (bullet.isDebuff) { 
                         playerBulletCooldownSlowed = true;
                         playerBulletCooldownSlowedTimer = currentRealTime;
-                        createExplosion(bullet.x, bullet.y, bullet.color, 10, 3, 0.06, 1, 3); 
+                        createExplosion(bullet.x, bullet.y, bullet.color, 5, 120, 3, 0.8, 2); // Adjusted explosion
                         player.takeDamage(0); 
                     } else if (bullet.damagePercent > 0) { 
                         const damage = Math.ceil(lives * bullet.damagePercent);
@@ -3425,7 +3428,7 @@
                     } else { 
                         player.takeDamage(1); 
                     }
-                    createExplosion(bullet.x, bullet.y, 'red', 15, 4, 0.05, 1.5, 3); 
+                    createExplosion(bullet.x, bullet.y, 'red', 8, 160, 2.5, 1, 2); // Adjusted explosion
                     enemyBullets.splice(i, 1);
                     bulletHit = true;
                 }
@@ -3518,7 +3521,7 @@
                         playerInvulnerable = true; 
                         player.dashTimer = performance.now();
                         currentEnergy -= DASH_COST;
-                        createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 20, 8, 0.05, 2, 5); 
+                        createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); // Adjusted explosion
                         updateMenuDisplay();
                     }
                     break;
@@ -3621,7 +3624,7 @@
             if (gameOver || window.innerWidth <= 768) return; // Only desktop mouse wheel
 
             if (bombCount > 0) { 
-                createExplosion(canvas.width / 2, canvas.height / 2, '#8B008B', BOMB_EXPLOSION_PARTICLE_COUNT, 25, 0.008, 15, 60, true);
+                createExplosion(canvas.width / 2, canvas.height / 2, '#8B008B', BOMB_EXPLOSION_PARTICLE_COUNT, 1000, 1.5, 8, 30, true); // Adjusted explosion
                 enemies = enemies.filter(enemy => enemy.isBoss); 
                 enemyBullets = []; 
                 bombCount--; 
@@ -3734,7 +3737,7 @@
                 playerInvulnerable = true; 
                 player.dashTimer = performance.now();
                 currentEnergy -= DASH_COST;
-                createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 20, 8, 0.05, 2, 5); 
+                createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); // Adjusted explosion
                 updateMenuDisplay();
             }
         }, { passive: false });
@@ -3820,7 +3823,7 @@
             e.preventDefault();
             if (gameOver) return;
             if (bombCount > 0) { 
-                createExplosion(canvas.width / 2, canvas.height / 2, '#8B008B', BOMB_EXPLOSION_PARTICLE_COUNT, 25, 0.008, 15, 60, true);
+                createExplosion(canvas.width / 2, canvas.height / 2, '#8B008B', BOMB_EXPLOSION_PARTICLE_COUNT, 1000, 1.5, 8, 30, true); // Adjusted explosion
                 enemies = enemies.filter(enemy => enemy.isBoss); 
                 enemyBullets = []; 
                 bombCount--; 
