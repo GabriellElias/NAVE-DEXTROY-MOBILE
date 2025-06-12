@@ -270,7 +270,7 @@
             text-shadow: 0 0 20px #00ff00, 0 0 30px rgba(0, 255, 0, 0.7);
         }
 
-        /* Bottom Bar Menu */
+        /* Bottom Bar Menu - Desktop Styles */
         #bottom-bar-menu {
             position: absolute;
             bottom: 8px;
@@ -278,19 +278,19 @@
             transform: translateX(-50%);
             z-index: 10;
             background: rgba(0, 0, 0, 0.8);
-            padding: 1px 2px; /* Further reduced padding */
+            padding: 4px 6px; /* Reduced padding for more compactness */
             border-radius: 10px;
             border: 2px solid rgba(0, 255, 0, 0.5);
             box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap; /* Prevent wrapping on desktop */
             justify-content: center;
             align-items: center;
-            gap: 2px 1px; /* Further reduced gap */
+            gap: 6px 4px; /* Reduced gap between items */
             font-family: 'Share Tech Mono', monospace;
             color: #E0E0E0;
             display: none;
-            max-width: 98%; /* Ensure it doesn't exceed screen width */
+            max-width: 98%; 
             height: auto;
         }
 
@@ -299,14 +299,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-width: 30px; /* Further reduced min-width */
-            height: 30px; /* Further reduced height */
-            padding: 1px; /* Further reduced padding */
+            min-width: 50px; /* Reduced min-width for more compactness */
+            height: 40px; /* Reduced height for more compactness */
+            padding: 3px; /* Reduced padding */
             border: 1px solid rgba(0, 255, 0, 0.2);
             border-radius: 6px;
             background-color: rgba(0, 0, 0, 0.3);
             box-shadow: inset 0 0 3px rgba(0, 255, 0, 0.1);
-            font-size: 0.7em;
+            font-size: 0.8em; /* Reduced font size */
             text-align: center;
             transition: background-color 0.2s ease, transform 0.1s ease;
         }
@@ -317,23 +317,23 @@
         }
 
         .menu-item .label {
-            font-size: 0.5em; /* Further reduced label font size */
+            font-size: 0.6em; /* Reduced label font size */
             color: #999;
-            margin-bottom: 1px;
+            margin-bottom: 1px; /* Reduced margin */
             white-space: nowrap;
         }
 
         .menu-item span:not(.label) {
             font-weight: bold;
             color: #0f0;
-            font-size: 0.7em; /* Further reduced value font size */
+            font-size: 0.9em; /* Reduced value font size */
             white-space: nowrap;
         }
 
         .menu-item svg {
-            margin-bottom: 1px;
-            width: 14px; /* Further reduced icon size */
-            height: 14px; /* Further reduced icon size */
+            margin-bottom: 1px; /* Reduced margin */
+            width: 16px; /* Reduced icon size */
+            height: 16px; /* Reduced icon size */
         }
 
         /* Specific styles for ability/power-up status */
@@ -349,7 +349,7 @@
         }
         .recharging {
             color: #ffaa00;
-            font-size: 0.7em !important;
+            font-size: 0.8em !important; /* Adjusted for new font size */
         }
         .not-ready {
             color: #888;
@@ -357,9 +357,9 @@
         
         .missile-display {
             display: inline-block;
-            margin: 0 1px;
+            margin: 0 1px; /* Adjusted margin */
             font-weight: normal;
-            font-size: 0.7em;
+            font-size: 0.8em; /* Adjusted font size */
         }
         .missile-display.ready {
             color: #00ff00;
@@ -484,6 +484,52 @@
             }
             canvas {
                 cursor: default;
+            }
+            /* Revert #bottom-bar-menu styles for mobile */
+            #bottom-bar-menu {
+                padding: 0px 1px; /* Even smaller padding */
+                gap: 1px 0.5px; /* Even smaller gap */
+                flex-wrap: wrap; /* Allow wrapping on mobile */
+            }
+            .menu-item {
+                min-width: 25px; /* Reduced min-width */
+                height: 25px; /* Reduced height */
+                padding: 0px; /* Reduced padding */
+                font-size: 0.6em; /* Reduced font size */
+            }
+            .menu-item .label {
+                font-size: 0.45em; /* Reduced label font size */
+                margin-bottom: 0px; /* Reduced margin */
+            }
+            .menu-item span:not(.label) {
+                font-size: 0.6em; /* Reduced value font size */
+            }
+            .menu-item svg {
+                width: 12px; /* Reduced icon size */
+                height: 12px; /* Reduced icon size */
+                margin-bottom: 0px; /* Reduced margin */
+            }
+            .recharging {
+                font-size: 0.6em !important; /* Adjusted for new font size */
+            }
+            .missile-display {
+                margin: 0 0.5px; /* Reduced margin */
+                font-size: 0.6em; /* Reduced font size */
+            }
+            /* Aim Joystick size increase */
+            #aim-joystick-area {
+                width: 80px; /* Increased size for aiming joystick */
+                height: 80px; /* Increased size for aiming joystick */
+                right: 10px; /* Adjusted position */
+                bottom: 10px; /* Adjusted position */
+            }
+            #aim-joystick-inner {
+                width: 40px; /* Increased size */
+                height: 40px; /* Increased size */
+            }
+            #ability-buttons-container {
+                right: 95px; /* Adjusted position */
+                bottom: 70px; /* Adjusted position */
             }
         }
 
@@ -648,7 +694,7 @@
         <!-- Energy (Battery) -->
         <svg id="icon-energy" viewBox="0 0 24 24" fill="currentColor"><path d="M17 4h-3V2h-4v2H7v18h10V4zm-2 16H9V6h6v14z"/></svg>
         <!-- Defense Drone (Gear) -->
-        <svg id="icon-defense-drone" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.09-.7-1.71-.94L14 2.1c-.05-.2-.25-.3-.46-.3h-4c-.21 0-.4.1-.45.3L9.03 5.05c-.62.24-1.19.55-1.71.94l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.64-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.31.61.22l2.49-1c.52.39 1.09.7 1.71.94L9.03 21.9c.05.2.25.3.46.3h4c-.21 0 .4-.1.45.3l.36-2.81c.62-.24 1.19-.55 1.71-.94l2.49 1c-.22.09-.49 0 .61.22l2-3.46c.12.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+        <svg id="icon-defense-drone" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.09-.7-1.71-.94L14 2.1c-.05-.2-.25-.3-.46-.3h-4c-.21 0-.4.1-.45.3L9.03 5.05c-.62.24-1.19.55-1.71.94l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.64-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24-.42-.12-.64l2 3.46c.12.22.39.31.61.22l2.49-1c.52.39 1.09.7 1.71.94L9.03 21.9c.05.2.25.3.46.3h4c-.21 0 .4-.1.45.3l.36-2.81c.62-.24 1.19-.55 1.71-.94l2.49 1c-.22.09-.49 0 .61.22l2-3.46c.12.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
         <!-- Multiplier Icon -->
         <svg id="icon-multiplier" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
         <!-- Fire Icon for button -->
@@ -714,7 +760,7 @@
                 <li><svg class="icon icon-small menu-icon-dash"><use xlink:href="#icon-energy"></use></svg><strong>E (Impulso / Dash) / Botão na Tela:</strong> Realiza um rápido impulso na direção do movimento, te tornando invulnerável por um curto período. Consome <strong>Energia</strong>.</li>
                 <li><svg class="icon icon-small menu-icon-defense-drone"><use xlink:href="#icon-defense-drone"></use></svg><strong>C (Drone de Defesa) / Botão na Tela:</strong> Invoca um drone de defesa que protege o jogador de tiros inimigos. Cada drone tem <strong>800 HP</strong>. Custa <strong>80 pontos de drone</strong> e você pode ter até 5.</li>
                 <li><svg class="icon icon-small menu-icon-predator"><use xlink:href="#icon-score"></use></svg><strong>Botão Direito do Mouse (Predador) / Botão na Tela:</strong> Ativa um disparo em leque com 5 tiros. Dura <strong>30 segundos</strong> e tem um tempo de recarga de <strong>40 segundos</strong>.</li>
-                <li><svg class="icon icon-small menu-icon-multiplier"><use xlink:href="#icon-multiplier"></use></svg><strong>T (Multiplicador de Pontuação) / Botão na Tela:</strong> Ativa um multiplicador de <strong>10x</strong> em todos os pontos por <strong>10 segundos</strong>.</li>
+                <li><svg class="icon icon-small menu-icon-multiplier"><use xlink:href="#icon-multiplier"></use></svg><strong>T (Multiplicador de Pontuação) / Botão na Tela:</strong> Ativa um multiplicador de <strong>2x</strong> em todos os pontos por <strong>10 segundos</strong>.</li>
             </ul>
         </div>
         <button id="back-to-main-button" class="back-button">Voltar ao Menu Principal</button>
@@ -895,7 +941,7 @@
 
         const reticle = document.getElementById('reticle');
 
-        // Mobile Controls elements
+        // Mobile Controls elements (will be hidden on desktop but referenced)
         const mobileControls = document.getElementById('mobile-controls');
         const joystickArea = document.getElementById('joystick-area'); // Left joystick
         const joystickInner = document.getElementById('joystick-inner');
@@ -913,65 +959,67 @@
 
 
         // --- Global Game Variables ---
-        let player = null;
-        let bullets = [];
-        let enemies = [];
-        let enemyBullets = [];
-        let particles = [];
-        let thrustParticles = [];
-        let spaceParticles = [];
-        let stars = [];
-        let drones = []; // Player combat drones
-        let defenseDrones = []; // Player defense drones
-        let specialDrone = null; // Boss special drone
-        let bossDrones = []; // Boss attack drones
-        let pickups = [];
-        let score = 0;
-        let lives = 5;
-        let gameOver = false;
-        let mouseIsDown = false; // Used for desktop firing only now
-        let aimJoystickActive = false; // Variable for right joystick active state / firing
-        let droneCharge = 0;
-        let lastFrameTime = performance.now();
-        let playerName = "Jogador"; 
-        let currentWave = 1;
-        let pointsForNextLife = 200;
+        var player = null;
+        var bullets = [];
+        var enemies = [];
+        var enemyBullets = [];
+        var particles = [];
+        var thrustParticles = [];
+        var spaceParticles = [];
+        var stars = [];
+        var drones = []; // Player combat drones
+        var defenseDrones = []; // Player defense drones
+        var specialDrone = null; // Boss special drone
+        var bossDrones = []; // Boss attack drones
+        var pickups = [];
+        var score = 0;
+        var lives = 5;
+        var gameOver = false;
+        var mouseIsDown = false; // Used for desktop firing only
+        // Changed to var to fix SyntaxError
+        var aimJoystickActive = false; // Variable for right joystick active state / firing (mobile only)
+        var joystickActive = false; // Changed to var to fix SyntaxError
+        var droneCharge = 0;
+        var lastFrameTime = performance.now();
+        var playerName = "Jogador"; 
+        var currentWave = 1;
+        var pointsForNextLife = 200;
 
-        let bombCount = 0; 
+        var bombCount = 0; 
         const BOMB_CHARGE_INTERVAL = 10000; // 10 seconds
-        let lastBombChargeTime = 0; 
+        var lastBombChargeTime = 0; 
         const MAX_BOMBS = 20; // Max bombs (changed to 20)
 
-        let globalScoreMultiplier = 1; 
-        let scoreMultiplierActive = false; 
-        let scoreMultiplierTimer = 0; 
-        let lastScoreMultiplierActivation = -Infinity; // For cooldown of multiplier
+        var globalScoreMultiplier = 1; 
+        var scoreMultiplierActive = false; 
+        var scoreMultiplierTimer = 0; 
+        var lastScoreMultiplierActivation = -Infinity; // For cooldown of multiplier
         const SCORE_MULTIPLIER_DURATION = 10000; // 10 seconds
-        const GAME_SCORE_MULTIPLIER_AMOUNT = 10; // Multiplies by 10
+        const GAME_SCORE_MULTIPLIER_AMOUNT = 2; // Multiplies by 2 (changed from 10 to 2)
         const SCORE_MULTIPLIER_COOLDOWN = 30000; // 30 seconds cooldown
 
-        let nextBossSpawnScore = 10000; 
+        var nextBossSpawnScore = 10000; 
 
         // Player settings
         const PLAYER_SIZE = 45; 
         const PLAYER_BASE_SPEED = 300; // units per second
         const PLAYER_SLOW_SPEED_FACTOR = 0.5; 
-        let playerSpeed = PLAYER_BASE_SPEED; 
+        var playerSpeed = PLAYER_BASE_SPEED; 
         const PLAYER_BULLET_SPEED = 500; // units per second
         const PLAYER_BASE_BULLET_COOLDOWN = 100;
-        let playerBulletCooldown = PLAYER_BASE_BULLET_COOLDOWN; 
-        let lastPlayerShotTime = 0;
+        var playerBulletCooldown = PLAYER_BASE_BULLET_COOLDOWN; 
+        var lastPlayerShotTime = 0;
         const BULLET_TRAIL_LENGTH = 3;
         const PLAYER_TURN_SPEED = Math.PI * 2.5; // Radians per second
-        let playerInvulnerable = false; 
-        let playerInvulnerableTimer = 0;
-        let playerFlashTimer = 0;
+        var playerInvulnerable = false; 
+        var playerInvulnerableTimer = 0;
+        var playerFlashTimer = 0;
         const PLAYER_FLASH_DURATION = 1000;
         const PLAYER_MISSILE_HACKER_EXPLOSION_DAMAGE = 200;
 
         // Player debuffs
-        let playerBulletCooldownSlowed = false;
-        let playerBulletCooldownSlowedTimer = 0;
+        var playerBulletCooldownSlowed = false;
+        var playerBulletCooldownSlowedTimer = 0;
         const PLAYER_SLOW_BULLET_DURATION = 5000; 
         const PLAYER_SLOW_BULLET_FACTOR = 2;
 
@@ -979,24 +1027,24 @@
         const SHIELD_DURATION = 20000; 
         const SHIELD_COOLDOWN = 20000;
         const COLLECTED_SHIELD_DURATION = 20000;
-        let shieldActive = false;
-        let shieldTimer = 0;
-        let lastShieldActivation = -SHIELD_COOLDOWN;
+        var shieldActive = false;
+        var shieldTimer = 0;
+        var lastShieldActivation = -SHIELD_COOLDOWN;
 
         // Energy (Dash) settings
         const MAX_ENERGY = 100;
         const DASH_COST = 25;
         const ENERGY_REGEN_RATE = 10; // units per second
         const DASH_DURATION = 200; 
-        let currentEnergy = MAX_ENERGY;
-        let lastEnergyRegenTime = performance.now();
+        var currentEnergy = MAX_ENERGY;
+        var lastEnergyRegenTime = performance.now();
 
         // Hacker Missile settings
         const MAX_MISSILES = 10; 
         const MISSILE_COOLDOWN_PER_SLOT = 50000; 
         const MISSILE_COUNT_HACKER = 1; 
         const MISSILE_HACKER_SPEED = 600; // units per second
-        let missileSlots = []; 
+        var missileSlots = []; 
         const EXPLOSION_RADIUS = 80;
         const ELITE_BOSS_EXPLOSION_DAMAGE_MULTIPLIER = 0.1; 
 
@@ -1009,20 +1057,20 @@
         const PREDATOR_COOLDOWN = 40000; 
         const PREDATOR_BULLET_COUNT = 5;
         const PREDATOR_BULLET_SPREAD = Math.PI / 4; 
-        let predatorActive = false;
-        let predatorTimer = 0;
-        let lastPredatorActivation = -PREDATOR_COOLDOWN; 
+        var predatorActive = false;
+        var predatorTimer = 0;
+        var lastPredatorActivation = -PREDATOR_COOLDOWN; 
 
         // Enemy settings
         const ENEMY_SPAWN_INTERVAL_BASE = 900;
-        let lastEnemySpawnTime = 0;
+        var lastEnemySpawnTime = 0;
         const ENEMY_BULLET_SPEED = 250; // units per second
         const ENEMY_BULLET_COOLDOWN_MIN = 700;
         const ENEMY_BULLET_COOLDOWN_MAX = 2000;
         const ENEMY_ELITE_MISSILE_DAMAGE_MIN = 0.01; 
         const ENEMY_ELITE_MISSILE_DAMAGE_MAX = 0.05; 
 
-        let bossActive = false;
+        var bossActive = false;
 
         // Boss HP properties by wave
         const BOSS_HP_SCALING = {
@@ -1070,11 +1118,10 @@
             },
             'boss': {
                 size: 70, speed: { min: 40, max: 80 }, hp: 1000, score: 500 * 2, droneCharge: 100,
-                color: '#FFD700', detailColor: '#FFFF00', shootMultiple: 5, bulletColor: '#FF0000', isBoss: true, isElite: false,
-                bulletSpeed: 280, 
+                color: '#FFD700', detailColor: '#FFFF00', shootMultiple: 8, bulletColor: '#FF0000', isBoss: true, isElite: false, 
+                bulletSpeed: 280, explosiveBullets: true, explosionRadius: 50, explosionDamage: 5, /* Boss bullets now explode */
                 bulletCooldownMin: 300, bulletCooldownMax: 800,
                 maxBossDrones: 3, bossDroneSpawnCooldown: 10000,
-                explosionDamage: 0
             },
             'disruptor': {
                 size: 20, speed: { min: 160, max: 280 }, hp: 40, score: 18 * 2, droneCharge: 18,
@@ -1084,7 +1131,7 @@
             'heavy_shooter': {
                 size: 45, speed: { min: 40, max: 100 }, hp: 180, score: 28 * 2, droneCharge: 28,
                 color: '#556B2F', detailColor: '#8FBC8F', shootMultiple: 3, bulletColor: '#FF0000', isBoss: false, isElite: false,
-                bulletCooldownMin: 1500, bulletCooldownMax: 3000, explosiveBullets: true, explosionDamage: 0
+                bulletCooldownMin: 1500, bulletCooldownMax: 3000, explosiveBullets: true, explosionRadius: 40, explosionDamage: 2 /* Explosion damage for heavy shooter */
             },
             'exploder': {
                 size: 35, speed: { min: 200, max: 360 }, hp: 70, score: 22 * 2, droneCharge: 22,
@@ -1205,13 +1252,13 @@
         };
 
         // Temporary power-ups
-        let rapidFireActive = false;
-        let rapidFireTimer = 0;
+        var rapidFireActive = false;
+        var rapidFireTimer = 0;
         const RAPID_FIRE_DURATION = 5000;
         const RAPID_FIRE_COOLDOWN_FACTOR = 0.4; 
 
-        let tripleShotActive = false;
-        let tripleShotTimer = 0;
+        var tripleShotActive = false;
+        var tripleShotTimer = 0;
         const TRIPLE_SHOT_DURATION = 5000;
 
         // Player inputs (keys pressed)
@@ -1220,23 +1267,22 @@
         };
 
         // Player aiming (Mouse/Touch)
-        let mouseX = 0; // Used for desktop aiming
-        let mouseY = 0; // Used for desktop aiming
+        var mouseX = 0; // Used for desktop aiming
+        var mouseY = 0; // Used for desktop aiming
 
         // Virtual Joystick variables (Left Joystick - Movement)
-        let joystickActive = false;
-        let joystickCenterX = 0;
-        let joystickCenterY = 0;
+        var joystickCenterX = 0;
+        var joystickCenterY = 0;
         const JOYSTICK_MAX_DIST = 25; // Adjusted
-        let joystickDeltaX = 0;
-        let joystickDeltaY = 0;
+        var joystickDeltaX = 0;
+        var joystickDeltaY = 0;
 
         // Aim Joystick variables (Right Joystick - Aim/Fire)
-        let aimJoystickCenterX = 0;
-        let aimJoystickCenterY = 0;
+        var aimJoystickCenterX = 0;
+        var aimJoystickCenterY = 0;
         const AIM_JOYSTICK_MAX_DIST = 20; // New constant
-        let aimJoystickDeltaX = 0;
-        let aimJoystickDeltaY = 0;
+        var aimJoystickDeltaX = 0;
+        var aimJoystickDeltaY = 0;
 
 
         // --- Helper Functions and Classes ---
@@ -1570,24 +1616,8 @@
                     const magnitudeAimJoystick = Math.hypot(aimJoystickDeltaX, aimJoystickDeltaY);
                     if (aimJoystickActive && magnitudeAimJoystick > 0) { // Right joystick is active and being moved
                         targetAngle = Math.atan2(aimJoystickDeltaY, aimJoystickDeltaX);
-                    } else if (aimJoystickActive) { // Right joystick is active (touched) but not moved, auto-aim to closest enemy
-                        let closestEnemy = null;
-                        let minDist = Infinity;
-                        enemies.forEach(enemy => {
-                            const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
-                                                    player.y + player.height / 2 - (enemy.y + enemy.height / 2));
-                            if (dist < minDist) {
-                                minDist = dist;
-                                closestEnemy = enemy;
-                            }
-                        });
-
-                        if (closestEnemy) {
-                            targetAngle = Math.atan2((closestEnemy.y + closestEnemy.height / 2) - (player.y + player.height / 2),
-                                                     (closestEnemy.x + closestEnemy.width / 2) - (player.x + player.width / 2));
-                        } else { // No closest enemy, but aim joystick touched, maintain current angle
-                            targetAngle = this.angle;
-                        }
+                    } else if (aimJoystickActive) { // Right joystick is active but not moved, maintain current angle
+                        targetAngle = this.angle;
                     } else { // Right joystick not active, maintain current angle
                         targetAngle = this.angle;
                     }
@@ -1772,6 +1802,9 @@
                 this.isBoss = baseConfig.isBoss;
                 this.isElite = baseConfig.isElite;
                 this.explosionDamage = baseConfig.explosionDamage;
+                this.explosiveBullets = baseConfig.explosiveBullets || false; 
+                this.bulletDamage = baseConfig.bulletDamage || 0; 
+                this.explosionRadius = baseConfig.explosionRadius || 0;
 
                 this.speed = (Math.random() * (baseConfig.speed.max - baseConfig.speed.min) + baseConfig.speed.min) * currentSpeedMultiplier;
                 
@@ -1843,7 +1876,8 @@
                     ctx.arc(0, -this.height * 0.1, this.width * 0.1, 0, Math.PI * 2);
                     ctx.fill();
                     ctx.stroke();
-                } else if (this.type === 'chaser') {
+                }
+                else if (this.type === 'chaser') {
                     ctx.fillStyle = this.color;
                     ctx.beginPath();
                     ctx.moveTo(0, -this.height / 2);
@@ -2070,7 +2104,7 @@
                     this.dy = Math.sin(angleToPlayer) * this.speed;
                 } else if (this.isElite && player) { 
                     const baseConfig = ENEMY_BASE_TYPES['elite'];
-                    let currentSpeed = this.speed;
+                    var currentSpeed = this.speed;
 
                     // Acceleration logic
                     if (this.isAccelerating) {
@@ -2101,6 +2135,8 @@
 
                 if (player && currentTime - this.lastShotTime > this.shotCooldown && this.shootMultiple > 0) {
                     const bulletSpeed = this.isBoss ? ENEMY_BASE_TYPES['boss'].bulletSpeed : ENEMY_BULLET_SPEED;
+                    const bulletExplosionRadius = this.explosiveBullets ? this.explosionRadius : 0; 
+                    const bulletDamage = this.explosiveBullets ? this.explosionDamage : 0;
 
                     if (this.type === 'elite' && ENEMY_BASE_TYPES['elite'].hasMissile) {
                         const missileDamagePercent = Math.random() * (ENEMY_ELITE_MISSILE_DAMAGE_MAX - ENEMY_ELITE_MISSILE_DAMAGE_MIN) + ENEMY_ELITE_MISSILE_DAMAGE_MIN;
@@ -2114,7 +2150,7 @@
                     } else if (this.shootMultiple === 1) {
                         enemyBullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2,
                                                      player.x + player.width / 2, player.y + player.height / 2,
-                                                     bulletSpeed, this.bulletColor, false));
+                                                     bulletSpeed, this.bulletColor, false, false, this.explosiveBullets, 0, bulletExplosionRadius, bulletDamage));
                     }
                     else if (this.shootMultiple === 3) {
                         const targetAngle = Math.atan2(player.y + player.height / 2 - (this.y + this.height / 2),
@@ -2125,16 +2161,16 @@
                             enemyBullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2,
                                                          this.x + this.width / 2 + Math.cos(angle) * 100,
                                                          this.y + Math.sin(angle) * 100,
-                                                         bulletSpeed, this.bulletColor, false, false, this.type === 'heavy_shooter' ? true : false, 0, 40)); 
+                                                         bulletSpeed, this.bulletColor, false, false, this.explosiveBullets, 0, bulletExplosionRadius, bulletDamage)); 
                         }
-                    } else if (this.shootMultiple === 5 && this.isBoss) { 
-                        const angleStep = Math.PI * 2 / 5;
-                        for (let i = 0; i < 5; i++) {
+                    } else if (this.shootMultiple === 8 && this.isBoss) { 
+                        const angleStep = Math.PI * 2 / 8;
+                        for (let i = 0; i < 8; i++) {
                             const angle = i * angleStep + performance.now() * 0.0005;
                             enemyBullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2,
                                                          this.x + this.width / 2 + Math.cos(angle) * 100,
                                                          this.y + Math.sin(angle) * 100,
-                                                         bulletSpeed, this.bulletColor, false));
+                                                         bulletSpeed, this.bulletColor, false, false, this.explosiveBullets, 0, bulletExplosionRadius, bulletDamage));
                         }
                     }
                     this.lastShotTime = currentTime;
@@ -2216,8 +2252,8 @@
                         this.currentTarget = null;
                     }
 
-                    let targetEnemy = null;
-                    let minDist = Infinity;
+                    var targetEnemy = null;
+                    var minDist = Infinity;
                     enemies.forEach(enemy => {
                         const dist = Math.hypot(this.x - (enemy.x + enemy.width / 2), this.y - (enemy.y + enemy.height / 2));
                         if (dist < minDist) {
@@ -2493,7 +2529,7 @@
                 ctx.font = 'bold 18px Share Tech Mono'; 
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                let displayText = '';
+                var displayText = '';
                 switch(this.type) {
                     case 'life': displayText = '+'; break;
                     case 'shield': displayText = 'S'; break;
@@ -2521,7 +2557,7 @@
                 const vy = Math.sin(angle) * speed;
                 const radius = Math.random() * (maxRadius - minRadius) + minRadius;
                 const life = Math.random() * 0.8 + 0.4; 
-                let color;
+                var color;
                 if (baseColor === 'red' || baseColor === 'orange' || baseColor === '#FF4500' || baseColor === '#FF6600') {
                     color = `rgb(${Math.floor(Math.random() * 80 + 175)}, ${Math.floor(Math.random() * 100)}, 0)`;
                 } else if (baseColor === 'white' || baseColor === 'cyan' || baseColor === 'lightblue' || baseColor === '#66FFFF') {
@@ -2556,7 +2592,7 @@
 
         // --- UI and Game Management Functions ---
 
-        let animationFrameId = null;
+        var animationFrameId = null;
 
         function showScreen(screenId) {
             if (animationFrameId) {
@@ -2665,16 +2701,16 @@
             playerInvulnerableTimer = 0;
             playerFlashTimer = 0;
 
-            // Reset joystick states
+            // Reset joystick states (for mobile only, but reset regardless for safety)
             joystickActive = false;
             joystickDeltaX = 0;
             joystickDeltaY = 0;
-            joystickInner.style.transform = `translate(0px, 0px)`;
+            if (joystickInner) joystickInner.style.transform = `translate(0px, 0px)`;
 
             aimJoystickActive = false;
             aimJoystickDeltaX = 0;
             aimJoystickDeltaY = 0;
-            aimJoystickInner.style.transform = `translate(0px, 0px)`;
+            if (aimJoystickInner) aimJoystickInner.style.transform = `translate(0px, 0px)`;
 
 
             resizeCanvas();
@@ -2697,7 +2733,7 @@
         }
 
         function addScore(points) {
-            let pointsToAdd = points;
+            var pointsToAdd = points;
             // Apply temporary score multiplier first
             if (scoreMultiplierActive) {
                 pointsToAdd *= GAME_SCORE_MULTIPLIER_AMOUNT;
@@ -2724,7 +2760,7 @@
             }
 
             // Wave progression logic based on score
-            let newCalculatedWave = 1;
+            var newCalculatedWave = 1;
             if (score >= 31000) { 
                 newCalculatedWave = 8 + Math.floor((score - 31000) / 10000);
             } else if (score >= 1000) { 
@@ -2746,7 +2782,7 @@
         }
 
         function saveHighScore(name, score) {
-            let highScores = JSON.parse(localStorage.getItem('spaceGameHighScores')) || [];
+            var highScores = JSON.parse(localStorage.getItem('spaceGameHighScores')) || [];
             highScores.push({ name: name, score: score });
             
             highScores.sort((a, b) => b.score - a.score);
@@ -2757,7 +2793,7 @@
         }
 
         function loadHighScores() {
-            let highScores = JSON.parse(localStorage.getItem('spaceGameHighScores')) || [];
+            var highScores = JSON.parse(localStorage.getItem('spaceGameHighScores')) || [];
             highScoresBody.innerHTML = '';
 
             if (highScores.length === 0) {
@@ -2818,7 +2854,7 @@
             }
             
             missileSlotsText.innerHTML = '';
-            let missilesReadyCount = 0;
+            var missilesReadyCount = 0;
             missileSlots.forEach((slot) => {
                 const span = document.createElement('span');
                 span.classList.add('missile-display');
@@ -2940,7 +2976,7 @@
                 if (missileSlots.length < MAX_MISSILES) {
                     missileSlots.push({ readyTime: performance.now() });
                 } else {
-                    let foundRecharging = false;
+                    var foundRecharging = false;
                     for (let j = 0; j < missileSlots.length; j++) {
                         if (missileSlots[j].readyTime > performance.now()) { 
                             missileSlots[j].readyTime = performance.now(); 
@@ -2965,13 +3001,13 @@
             const eliteEnemiesOnScreen = enemies.filter(e => e.isElite).length;
             const nonEliteEnemiesOnScreen = enemies.filter(e => !e.isElite && !e.isBoss).length;
 
-            let eliteMaxOnScreen = currentWaveConfig.eliteMaxOnScreen;
+            var eliteMaxOnScreen = currentWaveConfig.eliteMaxOnScreen;
             if (currentWave > 1) { 
                  eliteMaxOnScreen *= Math.pow(ENEMY_BASE_TYPES['elite'].maxOnScreenMultiplierPerWave, currentWave - 1);
             }
             eliteMaxOnScreen = Math.max(1, eliteMaxOnScreen); 
 
-            let typeToSpawn = '';
+            var typeToSpawn = '';
             if (eliteEnemiesOnScreen < eliteMaxOnScreen && availableEnemyTypes.includes('elite') && Math.random() < 0.3) { 
                 typeToSpawn = 'elite';
             } else if (nonEliteEnemiesOnScreen < currentWaveConfig.maxOnScreen) {
@@ -2992,11 +3028,23 @@
             enemies.push(new Enemy('boss', 1 + (currentWave * 0.05), 1 + (currentWave * 0.1)));
             bossActive = true;
             console.log(`Boss of wave ${currentWave} spawned!`);
+
+            // Spawn 30 missile-shooting elite enemies
+            for (let i = 0; i < 30; i++) {
+                enemies.push(new Enemy('elite', 1, 1)); 
+            }
+            console.log("30 elite missile-shooting enemies spawned with the boss!");
+
+            // Spawn 30 explosive-shooting heavy_shooter enemies
+            for (let i = 0; i < 30; i++) {
+                enemies.push(new Enemy('heavy_shooter', 1, 1)); 
+            }
+            console.log("30 heavy_shooter explosive-shooting enemies spawned with the boss!");
         }
 
 
         // --- Main Game Loop ---
-        let elapsed = 0;
+        var elapsed = 0;
         function gameLoop(currentTime) {
             if (gameOver) {
                 if (animationFrameId) {
@@ -3090,33 +3138,14 @@
             // Player firing logic
             // Firing is triggered by desktop mouse click (mouseIsDown) OR mobile aim joystick active (aimJoystickActive)
             if (player && ((window.innerWidth > 768 && mouseIsDown) || (window.innerWidth <= 768 && aimJoystickActive)) && currentRealTime - lastPlayerShotTime > playerBulletCooldown) {
-                let targetX, targetY;
+                var targetX, targetY;
 
-                if (window.innerWidth <= 768) { // Mobile auto-aim and aim joystick based aiming
-                    const magnitudeAimJoystick = Math.hypot(aimJoystickDeltaX, aimJoystickDeltaY);
-                    if (magnitudeAimJoystick > 0) { // Aim joystick is being moved
-                        targetX = player.x + player.width / 2 + aimJoystickDeltaX * 100;
-                        targetY = player.y + player.height / 2 + aimJoystickDeltaY * 100;
-                    } else { // Aim joystick is touched but not moved, auto-aim to closest enemy
-                        let closestEnemy = null;
-                        let minDist = Infinity;
-                        enemies.forEach(enemy => {
-                            const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
-                                                    player.y + player.height / 2 - (enemy.y + enemy.height / 2));
-                            if (dist < minDist) {
-                                minDist = dist;
-                                closestEnemy = enemy;
-                            }
-                        });
-
-                        if (closestEnemy) {
-                            targetX = closestEnemy.x + closestEnemy.width / 2;
-                            targetY = closestEnemy.y + closestEnemy.height / 2;
-                        } else { // No closest enemy, and aim joystick not moved, aim straight up (initial angle of player)
-                            targetX = player.x + player.width / 2 + Math.cos(player.angle) * 100;
-                            targetY = player.y + player.height / 2 + Math.sin(player.angle) * 100;
-                        }
-                    }
+                if (window.innerWidth <= 768) { // Mobile joystick based aiming
+                    // Always use joystick delta for aiming if aimJoystickActive.
+                    // If joystick is touched but not moved (deltaX/Y are 0), it will shoot straight.
+                    const angle = Math.atan2(aimJoystickDeltaY, aimJoystickDeltaX);
+                    targetX = player.x + player.width / 2 + Math.cos(angle) * 1000; // Project far out
+                    targetY = player.y + player.height / 2 + Math.sin(angle) * 1000; // Project far out
                 } else { // Desktop aiming logic
                     targetX = mouseX;
                     targetY = mouseY;
@@ -3195,8 +3224,8 @@
                             break;
                         case 'drone':
                             if (drones.length < DRONE_MAX_DRONES) {
-                                let nextOffsetIndex = 0;
-                                let foundSlot = false;
+                                var nextOffsetIndex = 0;
+                                var foundSlot = false;
                                 for (let j = 0; j < DRONE_OFFSETS.length; j++) {
                                     if (!drones.some(d => d.offsetIndex === j)) {
                                         nextOffsetIndex = j;
@@ -3210,7 +3239,7 @@
                             }
                             break;
                         case 'missile':
-                            let foundMissileSlotToSpeedUp = false;
+                            var foundMissileSlotToSpeedUp = false;
                             for (let j = 0; j < missileSlots.length; j++) {
                                 if (missileSlots[j].readyTime > currentTime) { 
                                     missileSlots[j].readyTime = currentTime; 
@@ -3254,7 +3283,7 @@
                 bullet.update(deltaTime);
                 bullet.draw();
 
-                let bulletHit = false;
+                var bulletHit = false;
 
                 if (bullet.isPlayerBullet) {
                     for (let bdIndex = bossDrones.length - 1; bdIndex >= 0; bdIndex--) {
@@ -3294,7 +3323,7 @@
                                 }
 
                                 for(let otherEnemy of enemiesHitByExplosion) {
-                                    let damageAmount;
+                                    var damageAmount;
                                     if (bullet.damageAmount > 0) { 
                                         damageAmount = bullet.damageAmount;
                                     } else if (otherEnemy.isElite || otherEnemy.isBoss) { 
@@ -3382,7 +3411,13 @@
                 enemy.draw();
 
                 if (player && checkCollision(player, enemy)) {
-                    if (enemy.type === 'exploder' && enemy.explosionDamage > 0) {
+                    if (enemy.isBoss) { // If it's a boss, instantly eliminate player
+                        lives = 0; // Set lives to 0 to trigger game over
+                        gameOver = true;
+                        endGame();
+                        // No need to remove boss or add score here, game is over.
+                        return; // Exit the loop and function immediately
+                    } else if (enemy.type === 'exploder' && enemy.explosionDamage > 0) {
                         createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, enemy.color, 35, 600, 1.5, 3, 8); 
                         player.takeDamage(enemy.explosionDamage);
                     } else { 
@@ -3392,14 +3427,7 @@
                     enemies.splice(i, 1);
                     addScore(enemy.scoreValue / 2); 
                     droneCharge += enemy.droneChargeValue / 2;
-                    if (enemy.isBoss) {
-                        lives += 10;
-                        if (!specialDrone) specialDrone = new SpecialDrone();
-                        bossDrones = []; 
-                        bossActive = false; 
-                        console.log("Boss defeated by collision! +10 lives, +1 special drone.");
-                        givePostBossRewards(); 
-                    }
+                    // Boss is handled by the specific check above, so this block only for non-boss enemies
                 }
             }
 
@@ -3408,7 +3436,7 @@
                 bullet.update(deltaTime);
                 bullet.draw();
 
-                let bulletHit = false;
+                var bulletHit = false;
 
                 for (let ddIndex = defenseDrones.length - 1; ddIndex >= 0; ddIndex--) {
                     const dDrone = defenseDrones[ddIndex];
@@ -3452,7 +3480,7 @@
                 if (player && checkCollision(bullet, player)) {
                     if (bullet.isExplosive) { 
                         createExplosion(bullet.x, bullet.y, bullet.color, 15, 300, 2, 1.5, 4); 
-                        player.takeDamage(2); 
+                        player.takeDamage(bullet.damageAmount); // Use bullet's specific damage for explosive
                     } else if (bullet.isDebuff) { 
                         playerBulletCooldownSlowed = true;
                         playerBulletCooldownSlowedTimer = currentRealTime;
@@ -3497,7 +3525,7 @@
 
         function dropItem(x, y) {
             const roll = Math.random();
-            let cumulativeChance = 0;
+            var cumulativeChance = 0;
             for (const type in DROP_CHANCE) {
                 cumulativeChance += DROP_CHANCE[type];
                 if (roll < cumulativeChance) {
@@ -3575,8 +3603,8 @@
                     break;
                 case 'f':
                     if (droneCharge >= DRONE_ACTIVATION_COST && drones.length < DRONE_MAX_DRONES) {
-                        let nextOffsetIndex = 0;
-                        let foundSlot = false;
+                        var nextOffsetIndex = 0;
+                        var foundSlot = false;
                         for (let i = 0; i < DRONE_OFFSETS.length; i++) {
                             if (!drones.some(d => d.offsetIndex === i)) {
                                 nextOffsetIndex = i;
@@ -3593,7 +3621,7 @@
                     break;
                 case 'g':
                     const currentTimeMissile = performance.now();
-                    let missileSlotIndex = -1;
+                    var missileSlotIndex = -1;
                     for (let i = 0; i < missileSlots.length; i++) {
                         if (missileSlots[i].readyTime <= currentTimeMissile) {
                             missileSlotIndex = i;
@@ -3701,43 +3729,47 @@
 
 
         // --- Mobile Touch Controls ---
+        // These are intentionally kept in the desktop version as they are part of the full game code.
+        // They will be hidden via CSS for larger screens.
 
         // Left Joystick (Movement)
-        joystickArea.addEventListener('touchstart', (e) => {
-            e.preventDefault(); 
-            if (gameOver) return;
+        if (joystickArea) { // Check if element exists before adding listener
+            joystickArea.addEventListener('touchstart', (e) => {
+                e.preventDefault(); 
+                if (gameOver) return;
 
-            const touch = e.touches[0];
-            const rect = joystickArea.getBoundingClientRect();
-            joystickCenterX = rect.left + rect.width / 2;
-            joystickCenterY = rect.top + rect.height / 2;
+                const touch = e.touches[0];
+                const rect = joystickArea.getBoundingClientRect();
+                joystickCenterX = rect.left + rect.width / 2;
+                joystickCenterY = rect.top + rect.height / 2;
 
-            joystickActive = true;
-            joystickInner.classList.add('active');
-            updateJoystick(touch.clientX, touch.clientY);
-        }, { passive: false });
+                joystickActive = true;
+                joystickInner.classList.add('active');
+                updateJoystick(touch.clientX, touch.clientY);
+            }, { passive: false });
 
-        joystickArea.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            if (gameOver || !joystickActive) return;
+            joystickArea.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (gameOver || !joystickActive) return;
 
-            const touch = e.touches[0];
-            updateJoystick(touch.clientX, touch.clientY);
-        }, { passive: false });
+                const touch = e.touches[0];
+                updateJoystick(touch.clientX, touch.clientY);
+            }, { passive: false });
 
-        joystickArea.addEventListener('touchend', (e) => {
-            if (gameOver) return;
+            joystickArea.addEventListener('touchend', (e) => {
+                if (gameOver) return;
 
-            joystickActive = false;
-            joystickInner.style.transform = `translate(0px, 0px)`;
-            joystickInner.classList.remove('active');
-            joystickDeltaX = 0;
-            joystickDeltaY = 0;
-        });
+                joystickActive = false;
+                joystickInner.style.transform = `translate(0px, 0px)`;
+                joystickInner.classList.remove('active');
+                joystickDeltaX = 0;
+                joystickDeltaY = 0;
+            });
+        }
 
         function updateJoystick(touchX, touchY) {
-            let dx = touchX - joystickCenterX;
-            let dy = touchY - joystickCenterY;
+            var dx = touchX - joystickCenterX;
+            var dy = touchY - joystickCenterY;
             const distance = Math.hypot(dx, dy);
 
             if (distance > JOYSTICK_MAX_DIST) {
@@ -3751,41 +3783,43 @@
         }
 
         // Right Joystick (Aim/Fire)
-        aimJoystickArea.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameOver) return;
+        if (aimJoystickArea) { // Check if element exists before adding listener
+            aimJoystickArea.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                if (gameOver) return;
 
-            const touch = e.touches[0];
-            const rect = aimJoystickArea.getBoundingClientRect();
-            aimJoystickCenterX = rect.left + rect.width / 2;
-            aimJoystickCenterY = rect.top + rect.height / 2;
+                const touch = e.touches[0];
+                const rect = aimJoystickArea.getBoundingClientRect();
+                aimJoystickCenterX = rect.left + rect.width / 2;
+                aimJoystickCenterY = rect.top + rect.height / 2;
 
-            aimJoystickActive = true; // This now also triggers firing for mobile
-            aimJoystickInner.classList.add('active');
-            updateAimJoystick(touch.clientX, touch.clientY);
-        }, { passive: false });
+                aimJoystickActive = true; // This now also triggers firing for mobile
+                aimJoystickInner.classList.add('active');
+                updateAimJoystick(touch.clientX, touch.clientY);
+            }, { passive: false });
 
-        aimJoystickArea.addEventListener('touchmove', (e) => {
-            e.preventDefault();
-            if (gameOver || !aimJoystickActive) return;
+            aimJoystickArea.addEventListener('touchmove', (e) => {
+                e.preventDefault();
+                if (gameOver || !aimJoystickActive) return;
 
-            const touch = e.touches[0];
-            updateAimJoystick(touch.clientX, touch.clientY);
-        }, { passive: false });
+                const touch = e.touches[0];
+                updateAimJoystick(touch.clientX, touch.clientY);
+            }, { passive: false });
 
-        aimJoystickArea.addEventListener('touchend', (e) => {
-            if (gameOver) return;
+            aimJoystickArea.addEventListener('touchend', (e) => {
+                if (gameOver) return;
 
-            aimJoystickActive = false; // Deactivate aim joystick, stop firing
-            aimJoystickInner.style.transform = `translate(0px, 0px)`;
-            aimJoystickInner.classList.remove('active');
-            aimJoystickDeltaX = 0;
-            aimJoystickDeltaY = 0;
-        });
+                aimJoystickActive = false; // Deactivate aim joystick, stop firing
+                aimJoystickInner.style.transform = `translate(0px, 0px)`;
+                aimJoystickInner.classList.remove('active');
+                aimJoystickDeltaX = 0;
+                aimJoystickDeltaY = 0;
+            });
+        }
 
         function updateAimJoystick(touchX, touchY) {
-            let dx = touchX - aimJoystickCenterX;
-            let dy = touchY - aimJoystickCenterY;
+            var dx = touchX - aimJoystickCenterX;
+            var dy = touchY - aimJoystickCenterY;
             const distance = Math.hypot(dx, dy);
 
             if (distance > AIM_JOYSTICK_MAX_DIST) {
@@ -3800,7 +3834,7 @@
 
 
         // Mobile Ability Buttons - remain the same
-        btnShield.addEventListener('touchstart', (e) => {
+        if (btnShield) { btnShield.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
             const currentRealTime = performance.now();
@@ -3810,9 +3844,9 @@
                 lastShieldActivation = currentRealTime;
                 updateMenuDisplay();
             }
-        }, { passive: false });
+        }, { passive: false }); }
 
-        btnDash.addEventListener('touchstart', (e) => {
+        if (btnDash) { btnDash.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
             if (player && !player.dashActive && currentEnergy >= DASH_COST) {
@@ -3823,14 +3857,14 @@
                 createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
                 updateMenuDisplay();
             }
-        }, { passive: false });
+        }, { passive: false }); }
 
-        btnCombatDrone.addEventListener('touchstart', (e) => {
+        if (btnCombatDrone) { btnCombatDrone.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
             if (droneCharge >= DRONE_ACTIVATION_COST && drones.length < DRONE_MAX_DRONES) {
-                let nextOffsetIndex = 0;
-                let foundSlot = false;
+                var nextOffsetIndex = 0;
+                var foundSlot = false;
                 for (let i = 0; i < DRONE_OFFSETS.length; i++) {
                     if (!drones.some(d => d.offsetIndex === i)) {
                         nextOffsetIndex = i;
@@ -3844,13 +3878,13 @@
                     updateMenuDisplay();
                 }
             }
-        }, { passive: false });
+        }, { passive: false }); }
 
-        btnMissile.addEventListener('touchstart', (e) => {
+        if (btnMissile) { btnMissile.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
             const currentTime = performance.now();
-            let missileSlotIndex = -1;
+            var missileSlotIndex = -1;
             for (let i = 0; i < missileSlots.length; i++) {
                 if (missileSlots[i].readyTime <= currentTime) {
                     missileSlotIndex = i;
@@ -3866,9 +3900,9 @@
                 missileSlots[missileSlotIndex].readyTime = currentTime + MISSILE_COOLDOWN_PER_SLOT;
                 updateMenuDisplay();
             }
-        }, { passive: false });
+        }, { passive: false }); }
 
-        btnDefenseDrone.addEventListener('touchstart', (e) => {
+        if (btnDefenseDrone) { btnDefenseDrone.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
             if (droneCharge >= DEFENSE_DRONE_COST && defenseDrones.length < DEFENSE_DRONE_MAX) {
@@ -3876,9 +3910,9 @@
                 droneCharge -= DEFENSE_DRONE_COST;
                 updateMenuDisplay();
             }
-        }, { passive: false });
+        }, { passive: false }); }
 
-        btnMultiplier.addEventListener('touchstart', (e) => {
+        if (btnMultiplier) { btnMultiplier.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
             const currentRealTimeT = performance.now();
@@ -3888,9 +3922,9 @@
                 lastScoreMultiplierActivation = currentRealTimeT;
                 updateMenuDisplay();
             }
-        }, { passive: false });
+        }, { passive: false }); }
 
-        btnPredator.addEventListener('touchstart', (e) => {
+        if (btnPredator) { btnPredator.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
             const currentTime = performance.now();
@@ -3900,9 +3934,9 @@
                 lastPredatorActivation = currentTime;
                 updateMenuDisplay();
             }
-        }, { passive: false });
+        }, { passive: false }); }
 
-        btnBomb.addEventListener('touchstart', (e) => {
+        if (btnBomb) { btnBomb.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
             if (bombCount > 0) { 
@@ -3912,7 +3946,7 @@
                 bombCount--; 
                 updateMenuDisplay();
             }
-        }, { passive: false });
+        }, { passive: false }); }
 
     </script>
 </body>
