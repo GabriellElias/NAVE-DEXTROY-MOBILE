@@ -891,6 +891,7 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
@@ -956,6 +957,84 @@
         const btnPredator = document.getElementById('btn-predator');
         const btnBomb = document.getElementById('btn-bomb');
 
+        // --- Configurações de Áudio (Tone.js) ---
+        let playerBulletSynth;
+        let enemyBulletSynth;
+        let explosionNoise;
+        let masterLimiter;
+
+        function setupAudio() {
+            // Inicializa Tone.js quando o usuário interage pela primeira vez
+            document.documentElement.addEventListener('mousedown', () => {
+                if (Tone.context.state !== 'running') {
+                    Tone.start();
+                    console.log("Audio context started!");
+                }
+            });
+            document.documentElement.addEventListener('touchstart', () => {
+                if (Tone.context.state !== 'running') {
+                    Tone.start();
+                    console.log("Audio context started!");
+                }
+            });
+
+            masterLimiter = new Tone.Limiter(-6).toDestination(); // Limiter para evitar clipping
+            
+            // Sintetizador para tiros do jogador
+            playerBulletSynth = new Tone.Synth({
+                oscillator: { type: "sawtooth" },
+                envelope: {
+                    attack: 0.001,
+                    decay: 0.05,
+                    sustain: 0.01,
+                    release: 0.05,
+                },
+            }).connect(masterLimiter);
+            playerBulletSynth.volume.value = -15; // Volume ajustado
+
+            // Sintetizador para tiros inimigos
+            enemyBulletSynth = new Tone.Synth({
+                oscillator: { type: "sine" },
+                envelope: {
+                    attack: 0.001,
+                    decay: 0.1,
+                    sustain: 0.02,
+                    release: 0.1,
+                },
+            }).connect(masterLimiter);
+            enemyBulletSynth.volume.value = -20; // Volume ajustado
+
+            // Gerador de ruído para explosões
+            explosionNoise = new Tone.NoiseSynth({
+                noise: { type: "white" },
+                envelope: {
+                    attack: 0.005,
+                    decay: 0.2,
+                    sustain: 0,
+                    release: 0.05,
+                },
+            }).connect(masterLimiter);
+            explosionNoise.volume.value = -10; // Volume ajustado
+        }
+
+        function playPlayerBulletSound() {
+            if (Tone.context.state === 'running') {
+                playerBulletSynth.triggerAttackRelease("C4", "32n");
+            }
+        }
+
+        function playEnemyBulletSound() {
+            if (Tone.context.state === 'running') {
+                enemyBulletSynth.triggerAttackRelease("A3", "16n");
+            }
+        }
+
+        function playExplosionSound(intensity = 1) { // intensity pode ser usada para variar o som
+            if (Tone.context.state === 'running') {
+                explosionNoise.volume.value = -10 + (intensity * 5); // Aumenta o volume com a intensidade
+                explosionNoise.triggerAttackRelease("0.2");
+            }
+        }
 
         // --- Variáveis Globais do Jogo ---
         var player = null;
@@ -1643,6 +1722,7 @@
             takeDamage(damage) {
                 if (!shieldActive && !playerInvulnerable) {
                     lives--;
+                    playExplosionSound(0.8); // Som de dano leve
                     playerFlashTimer = PLAYER_FLASH_DURATION; 
                     if (lives <= 0) {
                         gameOver = true;
@@ -2167,6 +2247,7 @@
                                                          bulletSpeed, this.bulletColor, false, false, this.explosiveBullets, 0, bulletExplosionRadius, bulletDamage));
                         }
                     }
+                    playEnemyBulletSound(); // Toca o som do tiro inimigo
                     this.lastShotTime = currentTime;
                     this.shotCooldown = Math.random() * ((ENEMY_BASE_TYPES[this.type].bulletCooldownMax || ENEMY_BULLET_COOLDOWN_MAX) - (ENEMY_BASE_TYPES[this.type].bulletCooldownMin || ENEMY_BASE_TYPES.bulletCooldownMin)) + (ENEMY_BASE_TYPES[this.type].bulletCooldownMin || ENEMY_BASE_TYPES.bulletCooldownMin);
                 }
@@ -2259,6 +2340,7 @@
                     if (targetEnemy) {
                         this.currentTarget = targetEnemy;
                         bullets.push(new Bullet(this.x, this.y, targetEnemy.x + targetEnemy.width / 2, targetEnemy.y + targetEnemy.height / 2, DRONE_BULLET_SPEED, 'purple'));
+                        playPlayerBulletSound(); // Drones também tocam o som de tiro do jogador
                     }
                     this.lastShotTime = currentTime;
                 }
@@ -2400,6 +2482,7 @@
                                                 this.y + Math.sin(angle) * 100,
                                                 SPECIAL_DRONE_BULLET_SPEED, 'gold', true, false, true, 0, SPECIAL_DRONE_BULLET_EXPLOSION_RADIUS, SPECIAL_DRONE_BULLET_DAMAGE)); 
                     }
+                    playPlayerBulletSound(); // Drones especiais também tocam o som de tiro do jogador
                     this.lastShotTime = currentTime;
                 }
             }
@@ -2474,6 +2557,7 @@
                 const currentTime = performance.now();
                 if (currentTime - this.lastShotTime > this.bulletCooldown) {
                     enemyBullets.push(new Bullet(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2, this.bulletSpeed, this.color, false));
+                    playEnemyBulletSound(); // Drones do chefe tocam o som de tiro inimigo
                     this.lastShotTime = currentTime;
                 }
             }
@@ -2544,6 +2628,7 @@
         }
 
         function createExplosion(x, y, baseColor, numParticles = 20, particleSpeed = 250, particleDecay = 2, minRadius = 1, maxRadius = 3, hasGravity = false) { 
+            playExplosionSound(); // Toca o som da explosão
             for (let i = 0; i < numParticles; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const speed = Math.random() * particleSpeed + (particleSpeed * 0.5);
@@ -2736,9 +2821,6 @@
             // Aplica o multiplicador de pontuação global após 10000 pontos
             if (score >= 10000) { 
                 pointsToAdd *= 20;
-                if (globalScoreMultiplier === 1) { 
-                    console.log("Multiplicador de pontuação global ativado! Todos os pontos x20.");
-                }
                 globalScoreMultiplier = 20;
             } else {
                 globalScoreMultiplier = 1;
@@ -2750,7 +2832,6 @@
             while (score >= pointsForNextLife) {
                 lives++;
                 pointsForNextLife += 200; 
-                console.log("Vida extra concedida!");
             }
 
             // Lógica de progressão da onda baseada na pontuação
@@ -2763,7 +2844,6 @@
 
             if (newCalculatedWave > currentWave) {
                 currentWave = newCalculatedWave;
-                console.log(`Onda avançou para ${currentWave} com base na pontuação!`);
             }
 
             // Lógica de spawn do chefe baseada na pontuação
@@ -3021,19 +3101,6 @@
             
             enemies.push(new Enemy('boss', 1 + (currentWave * 0.05), 1 + (currentWave * 0.1)));
             bossActive = true;
-            console.log(`Chefe da onda ${currentWave} apareceu!`);
-
-            // Spawna 30 inimigos de elite que atiram mísseis
-            for (let i = 0; i < 30; i++) {
-                enemies.push(new Enemy('elite', 1, 1)); 
-            }
-            console.log("30 inimigos de elite atiradores de mísseis apareceram com o chefe!");
-
-            // Spawna 30 inimigos heavy_shooter que atiram explosivos
-            for (let i = 0; i < 30; i++) {
-                enemies.push(new Enemy('heavy_shooter', 1, 1)); 
-            }
-            console.log("30 inimigos heavy_shooter atiradores de explosivos apareceram com o chefe!");
         }
 
 
@@ -3115,7 +3182,6 @@
             if (bombCount < MAX_BOMBS && currentRealTime - lastBombChargeTime > BOMB_CHARGE_INTERVAL) {
                 bombCount++;
                 lastBombChargeTime = currentRealTime;
-                console.log("Bomba carregada por tempo! Total: " + bombCount);
             }
 
 
@@ -3133,7 +3199,7 @@
             // O disparo é ativado pelo clique do mouse no desktop (mouseIsDown) OU pelo joystick de mira ativo no mobile (aimJoystickActive)
             if (player && ((window.innerWidth > 768 && mouseIsDown) || (window.innerWidth <= 768 && aimJoystickActive)) && currentRealTime - lastPlayerShotTime > playerBulletCooldown) {
                 // Tanto para desktop quanto para mobile, as balas devem ser disparadas na direção em que a nave do jogador está atualmente apontando.
-                // O player.angle já é atualizado com base no mouse (desktop) ou joystick de mira (mobile).
+                // O player.angle é atualizado com base no mouse (desktop) ou joystick de mira (mobile).
                 const targetBulletAngle = player.angle;
                 const bulletStartX = player.x + player.width / 2 + Math.cos(targetBulletAngle) * (player.height / 2);
                 const bulletStartY = player.y + player.height / 2 + Math.sin(targetBulletAngle) * (player.height / 2);
@@ -3164,6 +3230,7 @@
                 } else {
                     bullets.push(new Bullet(bulletStartX, bulletStartY, bulletTargetX, bulletTargetY, PLAYER_BULLET_SPEED, '#66FFFF'));
                 }
+                playPlayerBulletSound(); // Toca o som do tiro do jogador
                 lastPlayerShotTime = currentRealTime;
             }
 
@@ -3338,7 +3405,6 @@
                                                 if (!specialDrone) specialDrone = new SpecialDrone(); 
                                                 bossDrones = []; 
                                                 bossActive = false; 
-                                                console.log("Chefe derrotado por explosão! +10 vidas, +1 drone especial.");
                                                 givePostBossRewards(); 
                                             }
                                         }
@@ -3364,7 +3430,6 @@
                                         if (!specialDrone) specialDrone = new SpecialDrone();
                                         bossDrones = []; 
                                         bossActive = false; 
-                                        console.log("Chefe derrotado! +10 vidas, +1 drone especial.");
                                         givePostBossRewards(); 
                                     }
                                 }
@@ -3712,7 +3777,10 @@
         restartGameButton.addEventListener('click', startGame); 
         backToMainFromGameoverButton.addEventListener('click', () => showScreen('main')); 
 
-        window.addEventListener('load', () => showScreen('main'));
+        window.addEventListener('load', () => {
+            setupAudio(); // Inicializa o áudio quando a janela carrega
+            showScreen('main');
+        });
         window.addEventListener('resize', resizeCanvas);
 
 
@@ -3810,12 +3878,18 @@
             var dy = touchY - aimJoystickCenterY;
             const distance = Math.hypot(dx, dy);
 
-            if (distance > AIM_JOYSTICK_MAX_DIST) {
-                dx = dx / distance * AIM_JOYSTICK_MAX_DIST;
-                dy = dy / distance * AIM_JOYSTICK_MAX_DIST;
+            // Calcula o ângulo com base na posição do toque em relação ao centro do joystick
+            // Isso garante que a mira seja controlada em todas as direções.
+            if (distance > 0) {
+                // Apenas move o inner joystick se o toque estiver fora do centro, mas dentro do limite.
+                const clampedDx = dx / distance * AIM_JOYSTICK_MAX_DIST;
+                const clampedDy = dy / distance * AIM_JOYSTICK_MAX_DIST;
+                aimJoystickInner.style.transform = `translate(${clampedDx}px, ${clampedDy}px)`;
+            } else {
+                aimJoystickInner.style.transform = `translate(0px, 0px)`;
             }
 
-            aimJoystickInner.style.transform = `translate(${dx}px, ${dy}px)`;
+            // Define os deltas para serem usados na atualização do ângulo da nave
             aimJoystickDeltaX = dx;
             aimJoystickDeltaY = dy;
         }
