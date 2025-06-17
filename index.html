@@ -9,13 +9,13 @@
 
         body {
             margin: 0;
-            overflow: hidden; /* Evita toda a rolagem, incluindo horizontal */
+            overflow: hidden; /* Prevent all scrolling, including horizontal */
             background-color: #050510;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            font-family: 'Share Tech Mono', monospace; /* Fonte tecnológica */
+            font-family: 'Share Tech Mono', monospace; /* Tech font */
             color: #eee;
             flex-direction: column;
         }
@@ -38,7 +38,7 @@
         }
 
         #main-screen h1, #tutorial-screen h2, #game-over-screen h2 {
-            font-family: 'Orbitron', sans-serif; /* Fonte futurista para títulos */
+            font-family: 'Orbitron', sans-serif; /* Futuristic font for titles */
             color: #00ff00;
             text-shadow: 0 0 10px #00ff00, 0 0 20px rgba(0, 255, 0, 0.5);
             margin-bottom: 20px;
@@ -135,13 +135,13 @@
         #high-scores tr:nth-child(even) td {
             background-color: rgba(0, 0, 0, 0.6);
         }
-        #high-scores tr:first-child td { /* Destaca a pontuação mais alta */
+        #high-scores tr:first-child td { /* Highlight top score */
             color: #ffd700;
             font-weight: bold;
             text-shadow: 0 0 5px #ffd700;
         }
 
-        /* Tela de Tutorial */
+        /* Tutorial Screen */
         #tutorial-screen {
             position: absolute;
             top: 50%;
@@ -154,7 +154,7 @@
             display: none;
             flex-direction: column;
             gap: 20px;
-            padding: 30px; /* Ajusta o preenchimento para melhor rolagem */
+            padding: 30px; /* Adjust padding for better scroll */
         }
         #tutorial-screen::-webkit-scrollbar {
             width: 8px;
@@ -247,7 +247,7 @@
             transform: translateY(-2px);
         }
 
-        /* Tela de Fim de Jogo */
+        /* Game Over Screen */
         #game-over-screen {
             position: absolute;
             top: 50%;
@@ -270,7 +270,7 @@
             text-shadow: 0 0 20px #00ff00, 0 0 30px rgba(0, 255, 0, 0.7);
         }
 
-        /* Menu da Barra Inferior - Estilos para Desktop */
+        /* Bottom Bar Menu */
         #bottom-bar-menu {
             position: absolute;
             bottom: 8px;
@@ -278,19 +278,19 @@
             transform: translateX(-50%);
             z-index: 10;
             background: rgba(0, 0, 0, 0.8);
-            padding: 4px 6px; /* Preenchimento reduzido para mais compactação */
+            padding: 8px 10px; /* Increased padding */
             border-radius: 10px;
             border: 2px solid rgba(0, 255, 0, 0.5);
             box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
             display: flex;
-            flex-wrap: nowrap; /* Impede quebra de linha no desktop */
+            flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            gap: 6px 4px; /* Espaçamento reduzido entre os itens */
+            gap: 10px 8px; /* Increased gap */
             font-family: 'Share Tech Mono', monospace;
             color: #E0E0E0;
             display: none;
-            max-width: 98%; 
+            max-width: 98%; /* Ensure it doesn't exceed screen width */
             height: auto;
         }
 
@@ -299,14 +299,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-width: 50px; /* Largura mínima reduzida para mais compactação */
-            height: 40px; /* Altura reduzida para mais compactação */
-            padding: 3px; /* Preenchimento reduzido */
+            min-width: 60px; /* Increased min-width */
+            height: 50px; /* Increased height */
+            padding: 5px; /* Increased padding */
             border: 1px solid rgba(0, 255, 0, 0.2);
             border-radius: 6px;
             background-color: rgba(0, 0, 0, 0.3);
             box-shadow: inset 0 0 3px rgba(0, 255, 0, 0.1);
-            font-size: 0.8em; /* Tamanho da fonte reduzido */
+            font-size: 0.9em; /* Increased font size */
             text-align: center;
             transition: background-color 0.2s ease, transform 0.1s ease;
         }
@@ -317,26 +317,26 @@
         }
 
         .menu-item .label {
-            font-size: 0.6em; /* Tamanho da fonte do rótulo reduzido */
+            font-size: 0.7em; /* Increased label font size */
             color: #999;
-            margin-bottom: 1px; /* Margem reduzida */
+            margin-bottom: 2px; /* Increased margin */
             white-space: nowrap;
         }
 
         .menu-item span:not(.label) {
             font-weight: bold;
             color: #0f0;
-            font-size: 0.9em; /* Tamanho da fonte do valor reduzido */
+            font-size: 1em; /* Increased value font size */
             white-space: nowrap;
         }
 
         .menu-item svg {
-            margin-bottom: 1px; /* Margem reduzida */
-            width: 16px; /* Tamanho do ícone reduzido */
-            height: 16px; /* Tamanho do ícone reduzido */
+            margin-bottom: 2px; /* Increased margin */
+            width: 20px; /* Increased icon size */
+            height: 20px; /* Increased icon size */
         }
 
-        /* Estilos específicos para status de habilidade/power-up */
+        /* Specific styles for ability/power-up status */
         .ready {
             color: #00ff00;
             font-weight: bold;
@@ -349,7 +349,7 @@
         }
         .recharging {
             color: #ffaa00;
-            font-size: 0.8em !important; /* Ajustado para novo tamanho de fonte */
+            font-size: 0.9em !important; /* Adjusted for new font size */
         }
         .not-ready {
             color: #888;
@@ -357,9 +357,9 @@
         
         .missile-display {
             display: inline-block;
-            margin: 0 1px; /* Margem ajustada */
+            margin: 0 2px; /* Adjusted margin */
             font-weight: normal;
-            font-size: 0.8em; /* Tamanho da fonte ajustado */
+            font-size: 0.9em; /* Adjusted font size */
         }
         .missile-display.ready {
             color: #00ff00;
@@ -413,7 +413,7 @@
             transform: translate(-50%, -50%);
         }
 
-        /* Animações Keyframe */
+        /* Keyframe Animations */
         @keyframes fadeIn {
             from { opacity: 0; transform: scale(0.95); }
             to { opacity: 1; transform: scale(1); }
@@ -424,7 +424,7 @@
             100% { box-shadow: 0 0 10px rgba(0, 200, 255, 0.7); }
         }
 
-        /* Estilos de Ícones SVG para uso no jogo */
+        /* SVG Icon Styles for in-game use */
         .icon {
             fill: currentColor;
             width: 1em;
@@ -437,7 +437,7 @@
             height: 1.1em;
         }
 
-        /* Cores específicas para ícones de coleta */
+        /* Specific colors for pickup icons */
         .pickup-icon-life { color: limegreen; }
         .pickup-icon-shield { color: dodgerblue; }
         .pickup-icon-drone { color: gold; }
@@ -446,7 +446,7 @@
         .pickup-icon-rapidfire { color: hotpink; }
         .pickup-icon-tripleshot { color: orange; }
 
-        /* Ícone para itens de menu */
+        /* Icon for menu items */
         .menu-icon-score { fill: #0f0; }
         .menu-icon-wave { fill: #00ffff; }
         .menu-icon-lives { fill: limegreen; }
@@ -463,7 +463,7 @@
         .menu-icon-multiplier { fill: #f0f; }
 
 
-        /* Controles Móveis */
+        /* Mobile Controls */
         #mobile-controls {
             position: absolute;
             top: 0;
@@ -472,7 +472,7 @@
             height: 100%;
             z-index: 50;
             pointer-events: none;
-            display: none;
+            display: none; /* Hidden by default, shown via media query */
         }
 
         @media (max-width: 768px) {
@@ -485,61 +485,45 @@
             canvas {
                 cursor: default;
             }
-            /* Reverte os estilos de #bottom-bar-menu para mobile */
-            #bottom-bar-menu {
-                padding: 0px 1px; /* Preenchimento ainda menor */
-                gap: 1px 0.5px; /* Espaçamento ainda menor */
-                flex-wrap: wrap; /* Permite quebra de linha no mobile */
+            #bottom-bar-menu { /* Adjust for mobile */
+                padding: 4px 5px; /* Reduced padding */
+                gap: 5px 4px; /* Reduced gap */
+                bottom: 4px; /* Move slightly up */
             }
-            .menu-item {
-                min-width: 25px; /* Largura mínima reduzida */
-                height: 25px; /* Altura reduzida */
-                padding: 0px; /* Preenchimento reduzido */
-                font-size: 0.6em; /* Tamanho da fonte reduzido */
+            .menu-item { /* Adjust for mobile */
+                min-width: 45px; /* Reduced min-width */
+                height: 35px; /* Reduced height */
+                padding: 2px; /* Reduced padding */
+                font-size: 0.8em; /* Reduced font size */
             }
-            .menu-item .label {
-                font-size: 0.45em; /* Tamanho da fonte do rótulo reduzido */
-                margin-bottom: 0px; /* Margem reduzida */
+            .menu-item .label { /* Adjust for mobile */
+                font-size: 0.6em; /* Reduced label font size */
+                margin-bottom: 1px;
             }
-            .menu-item span:not(.label) {
-                font-size: 0.6em; /* Tamanho da fonte do valor reduzido */
+            .menu-item span:not(.label) { /* Adjust for mobile */
+                font-size: 0.8em; /* Reduced value font size */
             }
-            .menu-item svg {
-                width: 12px; /* Tamanho do ícone reduzido */
-                height: 12px; /* Tamanho do ícone reduzido */
-                margin-bottom: 0px; /* Margem reduzida */
+            .menu-item svg { /* Adjust for mobile */
+                width: 16px; /* Reduced icon size */
+                height: 16px; /* Reduced icon size */
+                margin-bottom: 1px;
             }
-            .recharging {
-                font-size: 0.6em !important; /* Ajustado para novo tamanho de fonte */
+            .recharging { /* Adjust for new font size */
+                font-size: 0.8em !important;
             }
-            .missile-display {
-                margin: 0 0.5px; /* Margem reduzida */
-                font-size: 0.6em; /* Tamanho da fonte reduzido */
-            }
-            /* Aumento do tamanho do Joystick de Mira */
-            #aim-joystick-area {
-                width: 80px; /* Tamanho aumentado para o joystick de mira */
-                height: 80px; /* Tamanho aumentado para o joystick de mira */
-                right: 10px; /* Posição ajustada */
-                bottom: 10px; /* Posição ajustada */
-            }
-            #aim-joystick-inner {
-                width: 40px; /* Tamanho aumentado */
-                height: 40px; /* Tamanho aumentado */
-            }
-            #ability-buttons-container {
-                right: 95px; /* Posição ajustada */
-                bottom: 70px; /* Posição ajustada */
+            .missile-display { /* Adjust for mobile */
+                margin: 0 1px;
+                font-size: 0.8em;
             }
         }
 
-        /* Joystick Esquerdo (Movimento) */
+        /* Left Joystick (Movement) */
         #joystick-area {
             position: absolute;
-            bottom: 15px;
-            left: 15px;
-            width: 90px; /* Tamanho reduzido */
-            height: 90px; /* Tamanho reduzido */
+            bottom: 10px;
+            left: 10px;
+            width: 80px; /* Reduced size */
+            height: 80px; /* Reduced size */
             background: rgba(50, 50, 50, 0.4);
             border: 2px solid rgba(0, 255, 0, 0.6);
             border-radius: 50%;
@@ -551,11 +535,12 @@
             -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            touch-action: none; /* Prevent default touch actions like scrolling */
         }
 
         #joystick-inner {
-            width: 35px; /* Tamanho reduzido */
-            height: 35px; /* Tamanho reduzido */
+            width: 30px; /* Reduced size */
+            height: 30px; /* Reduced size */
             background: rgba(0, 255, 0, 0.7);
             border: 2px solid rgba(0, 200, 0, 0.9);
             border-radius: 50%;
@@ -567,13 +552,13 @@
             background-color: rgba(0, 255, 0, 1);
         }
 
-        /* Joystick Direito (Mira/Disparo) */
+        /* Right Joystick (Aim/Fire) */
         #aim-joystick-area {
             position: absolute;
-            bottom: 15px;
-            right: 15px;
-            width: 60px; /* Tamanho ainda mais reduzido para o joystick de mira */
-            height: 60px; /* Tamanho ainda mais reduzido para o joystick de mira */
+            bottom: 10px;
+            right: 10px;
+            width: 50px; /* Further reduced size for aiming joystick */
+            height: 50px; /* Further reduced size for aiming joystick */
             background: rgba(255, 0, 0, 0.6);
             border: 2px solid rgba(255, 50, 50, 0.8);
             border-radius: 50%;
@@ -581,18 +566,19 @@
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 1em; /* Tamanho da fonte ajustado */
+            font-size: 0.9em; /* Adjusted font size */
             font-weight: bold;
             pointer-events: all;
             box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
             -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            touch-action: none; /* Prevent default touch actions like scrolling */
         }
 
         #aim-joystick-inner {
-            width: 25px; /* Tamanho ainda mais reduzido */
-            height: 25px; /* Tamanho ainda mais reduzido */
+            width: 20px; /* Further reduced size */
+            height: 20px; /* Further reduced size */
             background: rgba(255, 0, 0, 0.7);
             border: 2px solid rgba(200, 0, 0, 0.9);
             border-radius: 50%;
@@ -604,44 +590,45 @@
             background-color: rgba(255, 0, 0, 1);
         }
         #aim-joystick-inner svg {
-            width: 20px; /* Tamanho do ícone ajustado */
-            height: 20px; /* Tamanho do ícone ajustado */
+            width: 18px; /* Adjusted icon size */
+            height: 18px; /* Adjusted icon size */
             fill: white;
         }
 
         #ability-buttons-container {
             position: absolute;
-            bottom: 75px; /* Posição ligeiramente para cima */
-            right: 85px; /* Posição ajustada para dar espaço ao joystick de mira */
+            bottom: 65px; /* Adjusted position slightly up */
+            right: 70px; /* Adjusted position to make space for aim joystick */
             display: flex;
             flex-direction: column;
-            gap: 5px; /* Espaçamento reduzido */
+            gap: 4px; /* Reduced gap */
             pointer-events: all;
         }
 
         .ability-button {
-            width: 40px; /* Tamanho reduzido */
-            height: 40px; /* Tamanho reduzido */
+            width: 35px; /* Reduced size */
+            height: 35px; /* Reduced size */
             background: rgba(50, 50, 200, 0.6);
             border: 2px solid rgba(100, 100, 255, 0.8);
-            border-radius: 10px;
+            border-radius: 8px; /* Reduced border-radius */
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             color: white;
-            font-size: 0.55em; /* Tamanho da fonte reduzido */
+            font-size: 0.5em; /* Reduced font size */
             font-weight: bold;
             box-shadow: 0 0 10px rgba(50, 50, 200, 0.5);
             transition: background-color 0.1s ease, transform 0.1s ease;
             -webkit-user-select: none;
             -ms-user-select: none;
             user-select: none;
+            touch-action: manipulation; /* Allow tap gestures without delays */
         }
         .ability-button svg {
-            width: 18px; /* Tamanho reduzido */
-            height: 18px; /* Tamanho reduzido */
-            margin-bottom: 2px;
+            width: 16px; /* Reduced size */
+            height: 16px; /* Reduced size */
+            margin-bottom: 1px; /* Reduced margin */
         }
 
         .ability-button:active {
@@ -650,7 +637,7 @@
             transform: scale(0.95);
         }
 
-        /* Cores específicas para botões de habilidade */
+        /* Specific colors for ability buttons */
         #btn-shield { background-color: rgba(0, 100, 150, 0.6); border-color: rgba(0, 150, 200, 0.8); }
         #btn-dash { background-color: rgba(150, 100, 0, 0.6); border-color: rgba(200, 150, 0, 0.8); }
         #btn-combat-drone { background-color: rgba(80, 0, 80, 0.6); border-color: rgba(120, 0, 120, 0.8); }
@@ -660,7 +647,7 @@
         #btn-predator { background-color: rgba(150, 75, 0, 0.6); border-color: rgba(200, 100, 0, 0.8); }
         #btn-bomb { background-color: rgba(75, 0, 75, 0.6); border-color: rgba(100, 0, 100, 0.8); }
 
-        /* Desativa seleção do usuário em controles de toque */
+        /* Disable user select on touch controls */
         #joystick-area, #aim-joystick-area, .ability-button {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
@@ -673,31 +660,31 @@
 </head>
 <body>
     <div id="svg-icons" style="display: none;">
-        <!-- Ícone de Vida (+) -->
+        <!-- Life Icon (+) -->
         <svg id="icon-life" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11h-4v4h-2v-4H7v-2h4V7h2v4h4v2z"/></svg>
-        <!-- Ícone de Escudo (S) -->
+        <!-- Shield Icon (S) -->
         <svg id="icon-shield" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.29-3.58 8.16-7 9.87V12H5V5.27L12 2.2z"/></svg>
-        <!-- Ícone de Drone (D) -->
+        <!-- Drone Icon (D) -->
         <svg id="icon-drone" viewBox="0 0 24 24" fill="currentColor"><path d="M16 9h-3V5h-2v4H8l4 4zm-1 8h-2v-4h-2v4H7l4 4zm6-7v2h3v-2h-3zm-14 0v2H2v-2h3zM12 0c-6.63 0-12 5.37-12 12s5.37 12 12 12 12-5.37 12-12S18.63 0 12 0z"/></svg>
-        <!-- Ícone de Míssil (M) -->
+        <!-- Missile Icon (M) -->
         <svg id="icon-missile" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L6 8h12zm0 20l6-6H6zM15 11h-2V7h-2v4H9l3 3zm0 2v4h-2v-4h-2l3-3z"/></svg>
-        <!-- Ícone de Bomba (B) -->
+        <!-- Bomb Icon (B) -->
         <svg id="icon-bomb" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v2h-2zm0 4h2v6h-2z"/></svg>
-        <!-- Ícone de Tiro Rápido (F) -->
+        <!-- Rapid Fire Icon (F) -->
         <svg id="icon-rapidfire" viewBox="0 0 24 24" fill="currentColor"><path d="M12 11c1.66 0 2.99-1.34 2.99-3S13.66 5 12 5 9.01 6.34 9.01 8s1.33 3 2.99 3zm0 9c-1.66 0-2.99-1.34-2.99-3S10.34 14 12 14s2.99 1.34 2.99 3-1.33 3-2.99 3zm0-14c1.66 0 2.99-1.34 2.99-3S13.66 0 12 0 9.01 1.34 9.01 3s1.33 3 2.99 3z"/></svg>
-        <!-- Ícone de Tiro Triplo (T) -->
+        <!-- Triple Shot Icon (T) -->
         <svg id="icon-tripleshot" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-8zm0 18c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
-        <!-- Pontuação (Estrela) -->
+        <!-- Score (Star) -->
         <svg id="icon-score" viewBox="0 0 24 24" fill="currentColor"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-        <!-- Onda (Nuvem) -->
+        <!-- Wave (Cloud) -->
         <svg id="icon-wave" viewBox="0 0 24 24" fill="currentColor"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4c-3.72 0-6.81 2.87-7.25 6.5-.83 2.37.6 4.76 2.7 5.75C8.03 17.59 9.87 18 12 18h7.5c2.21 0 4-1.79 4-4s-1.79-4-4-4z"/></svg>
-        <!-- Energia (Bateria) -->
+        <!-- Energy (Battery) -->
         <svg id="icon-energy" viewBox="0 0 24 24" fill="currentColor"><path d="M17 4h-3V2h-4v2H7v18h10V4zm-2 16H9V6h6v14z"/></svg>
-        <!-- Drone de Defesa (Engrenagem) -->
-        <svg id="icon-defense-drone" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.09-.7-1.71-.94L14 2.1c-.05-.2-.25-.3-.46-.3h-4c-.21 0-.4.1-.45.3L9.03 5.05c-.62.24-1.19.55-1.71.94l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.64-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24-.42-.12-.64l2 3.46c.12.22.39.31.61.22l2.49-1c.52.39 1.09.7 1.71.94L9.03 21.9c.05.2.25.3.46.3h4c-.21 0 .4-.1.45.3l.36-2.81c.62-.24 1.19-.55 1.71-.94l2.49 1c-.22.09-.49 0 .61.22l2-3.46c.12.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
-        <!-- Ícone Multiplicador -->
+        <!-- Defense Drone (Gear) -->
+        <svg id="icon-defense-drone" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.09-.7-1.71-.94L14 2.1c-.05-.2-.25-.3-.46-.3h-4c-.21 0-.4.1-.45.3L9.03 5.05c-.62.24-1.19.55-1.71.94l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.64-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24-.42-.12-.64l2 3.46c-.12.22.39.31.61.22l2.49-1c.52.39 1.09.7 1.71.94L9.03 21.9c.05.2.25.3.46.3h4c-.21 0 .4-.1.45.3l.36-2.81c.62-.24 1.19-.55 1.71-.94l2.49 1c-.22.09-.49 0 .61.22l2-3.46c.12.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+        <!-- Multiplier Icon -->
         <svg id="icon-multiplier" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-        <!-- Ícone de Fogo para botão -->
+        <!-- Fire Icon for button -->
         <svg id="icon-fire" viewBox="0 0 24 24" fill="currentColor"><path d="M12 11c1.66 0 2.99-1.34 2.99-3S13.66 5 12 5 9.01 6.34 9.01 8s1.33 3 2.99 3zm0 9c-1.66 0-2.99-1.34-2.99-3S10.34 14 12 14s2.99 1.34 2.99 3-1.33 3-2.99 3zm0-14c1.66 0 2.99-1.34 2.99-3S13.66 0 12 0 9.01 1.34 9.01 3s1.33 3 2.99 3z"/></svg>
     </div>
 
@@ -721,7 +708,7 @@
                     </tr>
                 </thead>
                 <tbody id="high-scores-body">
-                    <!-- As pontuações mais altas serão carregadas aqui pelo JavaScript -->
+                    <!-- High scores will be loaded here by JavaScript -->
                 </tbody>
             </table>
         </div>
@@ -760,7 +747,7 @@
                 <li><svg class="icon icon-small menu-icon-dash"><use xlink:href="#icon-energy"></use></svg><strong>E (Impulso / Dash) / Botão na Tela:</strong> Realiza um rápido impulso na direção do movimento, te tornando invulnerável por um curto período. Consome <strong>Energia</strong>.</li>
                 <li><svg class="icon icon-small menu-icon-defense-drone"><use xlink:href="#icon-defense-drone"></use></svg><strong>C (Drone de Defesa) / Botão na Tela:</strong> Invoca um drone de defesa que protege o jogador de tiros inimigos. Cada drone tem <strong>800 HP</strong>. Custa <strong>80 pontos de drone</strong> e você pode ter até 5.</li>
                 <li><svg class="icon icon-small menu-icon-predator"><use xlink:href="#icon-score"></use></svg><strong>Botão Direito do Mouse (Predador) / Botão na Tela:</strong> Ativa um disparo em leque com 5 tiros. Dura <strong>30 segundos</strong> e tem um tempo de recarga de <strong>40 segundos</strong>.</li>
-                <li><svg class="icon icon-small menu-icon-multiplier"><use xlink:href="#icon-multiplier"></use></svg><strong>T (Multiplicador de Pontuação) / Botão na Tela:</strong> Ativa um multiplicador de <strong>2x</strong> em todos os pontos por <strong>10 segundos</strong>.</li>
+                <li><svg class="icon icon-small menu-icon-multiplier"><use xlink:href="#icon-multiplier"></use></svg><strong>T (Multiplicador de Pontuação) / Botão na Tela:</strong> Ativa um multiplicador de <strong>10x</strong> em todos os pontos por <strong>10 segundos</strong>.</li>
             </ul>
         </div>
         <button id="back-to-main-button" class="back-button">Voltar ao Menu Principal</button>
@@ -851,13 +838,13 @@
     <canvas id="gameCanvas"></canvas>
     <div id="reticle"></div>
 
-    <!-- Overlay de Controles Móveis -->
+    <!-- Mobile Controls Overlay -->
     <div id="mobile-controls">
-        <!-- Joystick Esquerdo (Movimento) -->
+        <!-- Left Joystick (Movement) -->
         <div id="joystick-area">
             <div id="joystick-inner"></div>
         </div>
-        <!-- Joystick Direito (Mira/Disparo) -->
+        <!-- Right Joystick (Aim/Fire) -->
         <div id="aim-joystick-area">
             <div id="aim-joystick-inner">
                 <svg><use xlink:href="#icon-fire"></use></svg>
@@ -891,12 +878,11 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
     <script>
         const canvas = document.getElementById('gameCanvas');
         const ctx = canvas.getContext('2d');
 
-        // Referências de elementos da UI
+        // Referências dos elementos da UI
         const mainScreen = document.getElementById('main-screen');
         const tutorialScreen = document.getElementById('tutorial-screen');
         const gameOverScreen = document.getElementById('game-over-screen');
@@ -908,8 +894,9 @@
         const playerNameInput = document.getElementById('player-name-input');
         const highScoresBody = document.getElementById('high-scores-body');
         const finalScoreDisplay = document.getElementById('final-score');
+        const svgIconsContainer = document.getElementById('svg-icons');
 
-        // Novas referências da Barra de Menu Inferior
+        // Novas referências do Menu Inferior da Barra
         const bottomBarMenu = document.getElementById('bottom-bar-menu');
         const scoreDisplay = document.getElementById('score');
         const waveDisplay = document.getElementById('wave-number');
@@ -941,7 +928,7 @@
 
         const reticle = document.getElementById('reticle');
 
-        // Elementos de Controles Móveis (serão ocultados no desktop, mas referenciados)
+        // Elementos de Controles Móveis (serão ocultados na área de trabalho, mas referenciados)
         const mobileControls = document.getElementById('mobile-controls');
         const joystickArea = document.getElementById('joystick-area'); // Joystick esquerdo
         const joystickInner = document.getElementById('joystick-inner');
@@ -957,146 +944,67 @@
         const btnPredator = document.getElementById('btn-predator');
         const btnBomb = document.getElementById('btn-bomb');
 
-        // --- Configurações de Áudio (Tone.js) ---
-        let playerBulletSynth;
-        let enemyBulletSynth;
-        let explosionNoise;
-        let masterLimiter;
-
-        function setupAudio() {
-            // Inicializa Tone.js quando o usuário interage pela primeira vez
-            document.documentElement.addEventListener('mousedown', () => {
-                if (Tone.context.state !== 'running') {
-                    Tone.start();
-                    console.log("Audio context started!");
-                }
-            });
-            document.documentElement.addEventListener('touchstart', () => {
-                if (Tone.context.state !== 'running') {
-                    Tone.start();
-                    console.log("Audio context started!");
-                }
-            });
-
-            masterLimiter = new Tone.Limiter(-6).toDestination(); // Limiter para evitar clipping
-            
-            // Sintetizador para tiros do jogador
-            playerBulletSynth = new Tone.Synth({
-                oscillator: { type: "sawtooth" },
-                envelope: {
-                    attack: 0.001,
-                    decay: 0.05,
-                    sustain: 0.01,
-                    release: 0.05,
-                },
-            }).connect(masterLimiter);
-            playerBulletSynth.volume.value = -15; // Volume ajustado
-
-            // Sintetizador para tiros inimigos
-            enemyBulletSynth = new Tone.Synth({
-                oscillator: { type: "sine" },
-                envelope: {
-                    attack: 0.001,
-                    decay: 0.1,
-                    sustain: 0.02,
-                    release: 0.1,
-                },
-            }).connect(masterLimiter);
-            enemyBulletSynth.volume.value = -20; // Volume ajustado
-
-            // Gerador de ruído para explosões
-            explosionNoise = new Tone.NoiseSynth({
-                noise: { type: "white" },
-                envelope: {
-                    attack: 0.005,
-                    decay: 0.2,
-                    sustain: 0,
-                    release: 0.05,
-                },
-            }).connect(masterLimiter);
-            explosionNoise.volume.value = -10; // Volume ajustado
-        }
-
-        function playPlayerBulletSound() {
-            if (Tone.context.state === 'running') {
-                playerBulletSynth.triggerAttackRelease("C4", "32n");
-            }
-        }
-
-        function playEnemyBulletSound() {
-            if (Tone.context.state === 'running') {
-                enemyBulletSynth.triggerAttackRelease("A3", "16n");
-            }
-        }
-
-        function playExplosionSound(intensity = 1) { // intensity pode ser usada para variar o som
-            if (Tone.context.state === 'running') {
-                explosionNoise.volume.value = -10 + (intensity * 5); // Aumenta o volume com a intensidade
-                explosionNoise.triggerAttackRelease("0.2");
-            }
-        }
 
         // --- Variáveis Globais do Jogo ---
-        var player = null;
-        var bullets = [];
-        var enemies = [];
-        var enemyBullets = [];
-        var particles = [];
-        var thrustParticles = [];
-        var spaceParticles = [];
-        var stars = [];
-        var drones = []; // Drones de combate do jogador
-        var defenseDrones = []; // Drones de defesa do jogador
-        var specialDrone = null; // Drone especial do chefe
-        var bossDrones = []; // Drones de ataque do chefe
-        var pickups = [];
-        var score = 0;
-        var lives = 5;
-        var gameOver = false;
-        var mouseIsDown = false; // Usado apenas para disparo no desktop
-        var aimJoystickActive = false; // Variável para o estado ativo do joystick direito / disparo (apenas mobile)
-        var joystickActive = false;
-        var droneCharge = 0;
-        var lastFrameTime = performance.now();
-        var playerName = "Jogador"; 
-        var currentWave = 1;
-        var pointsForNextLife = 200;
+        let player = null;
+        let bullets = [];
+        let enemies = [];
+        let enemyBullets = [];
+        let particles = [];
+        let thrustParticles = [];
+        let spaceParticles = [];
+        let stars = [];
+        let drones = []; // Drones de combate do jogador
+        let defenseDrones = []; // Drones de defesa do jogador
+        let specialDrone = null; // Drone especial do chefe
+        let bossDrones = []; // Drones de ataque do chefe
+        let pickups = [];
+        let score = 0;
+        let lives = 5;
+        let gameOver = false;
+        let mouseIsDown = false; // Usado apenas para disparo no desktop
+        let aimJoystickActive = false; // Variável para o estado ativo/disparo do joystick direito (apenas para celular)
+        let droneCharge = 0;
+        let lastFrameTime = performance.now();
+        let playerName = "Jogador"; 
+        let currentWave = 1;
+        let pointsForNextLife = 200;
 
-        var bombCount = 0; 
+        let bombCount = 0; 
         const BOMB_CHARGE_INTERVAL = 10000; // 10 segundos
-        var lastBombChargeTime = 0; 
+        let lastBombChargeTime = 0; 
         const MAX_BOMBS = 20; // Bombas máximas (alterado para 20)
 
-        var globalScoreMultiplier = 1; 
-        var scoreMultiplierActive = false; 
-        var scoreMultiplierTimer = 0; 
-        var lastScoreMultiplierActivation = -Infinity; // Para o cooldown do multiplicador
+        let globalScoreMultiplier = 1; 
+        let scoreMultiplierActive = false; 
+        let scoreMultiplierTimer = 0; 
+        let lastScoreMultiplierActivation = -Infinity; // Para cooldown do multiplicador
         const SCORE_MULTIPLIER_DURATION = 10000; // 10 segundos
-        const GAME_SCORE_MULTIPLIER_AMOUNT = 2; // Multiplica por 2
+        const GAME_SCORE_MULTIPLIER_AMOUNT = 10; // Multiplica por 10
         const SCORE_MULTIPLIER_COOLDOWN = 30000; // 30 segundos de cooldown
 
-        var nextBossSpawnScore = 10000; 
+        let nextBossSpawnScore = 10000; 
 
         // Configurações do jogador
         const PLAYER_SIZE = 45; 
         const PLAYER_BASE_SPEED = 300; // unidades por segundo
         const PLAYER_SLOW_SPEED_FACTOR = 0.5; 
-        var playerSpeed = PLAYER_BASE_SPEED; 
+        let playerSpeed = PLAYER_BASE_SPEED; 
         const PLAYER_BULLET_SPEED = 500; // unidades por segundo
         const PLAYER_BASE_BULLET_COOLDOWN = 100;
-        var playerBulletCooldown = PLAYER_BASE_BULLET_COOLDOWN; 
-        var lastPlayerShotTime = 0;
+        let playerBulletCooldown = PLAYER_BASE_BULLET_COOLDOWN; 
+        let lastPlayerShotTime = 0;
         const BULLET_TRAIL_LENGTH = 3;
         const PLAYER_TURN_SPEED = Math.PI * 2.5; // Radianos por segundo
-        var playerInvulnerable = false; 
-        var playerInvulnerableTimer = 0;
-        var playerFlashTimer = 0;
+        let playerInvulnerable = false; 
+        let playerInvulnerableTimer = 0;
+        let playerFlashTimer = 0;
         const PLAYER_FLASH_DURATION = 1000;
         const PLAYER_MISSILE_HACKER_EXPLOSION_DAMAGE = 200;
 
         // Debuffs do jogador
-        var playerBulletCooldownSlowed = false;
-        var playerBulletCooldownSlowedTimer = 0;
+        let playerBulletCooldownSlowed = false;
+        let playerBulletCooldownSlowedTimer = 0;
         const PLAYER_SLOW_BULLET_DURATION = 5000; 
         const PLAYER_SLOW_BULLET_FACTOR = 2;
 
@@ -1104,27 +1012,28 @@
         const SHIELD_DURATION = 20000; 
         const SHIELD_COOLDOWN = 20000;
         const COLLECTED_SHIELD_DURATION = 20000;
-        var shieldActive = false;
-        var shieldTimer = 0;
-        var lastShieldActivation = -SHIELD_COOLDOWN;
+        let shieldActive = false;
+        let shieldTimer = 0;
+        let lastShieldActivation = -SHIELD_COOLDOWN;
 
-        // Configurações de Energia (Dash)
+        // Configurações de energia (Dash)
         const MAX_ENERGY = 100;
         const DASH_COST = 25;
         const ENERGY_REGEN_RATE = 10; // unidades por segundo
         const DASH_DURATION = 200; 
-        var currentEnergy = MAX_ENERGY;
-        var lastEnergyRegenTime = performance.now();
+        let currentEnergy = MAX_ENERGY;
+        let lastEnergyRegenTime = performance.now();
 
-        // Configurações do Míssil Hacker
+        // Configurações de mísseis hacker
         const MAX_MISSILES = 10; 
         const MISSILE_COOLDOWN_PER_SLOT = 50000; 
+        const MISSILE_COUNT_HACKER = 1; 
         const MISSILE_HACKER_SPEED = 600; // unidades por segundo
-        var missileSlots = []; 
+        let missileSlots = []; 
         const EXPLOSION_RADIUS = 80;
         const ELITE_BOSS_EXPLOSION_DAMAGE_MULTIPLIER = 0.1; 
 
-        // Configurações da Bomba (limpar mapa)
+        // Configurações de bomba (limpar mapa)
         const BOMB_EXPLOSION_PARTICLE_COUNT = 50; 
         const BOMB_EXPLOSION_RADIUS_MAX = 400; 
 
@@ -1133,22 +1042,22 @@
         const PREDATOR_COOLDOWN = 40000; 
         const PREDATOR_BULLET_COUNT = 5;
         const PREDATOR_BULLET_SPREAD = Math.PI / 4; 
-        var predatorActive = false;
-        var predatorTimer = 0;
-        var lastPredatorActivation = -PREDATOR_COOLDOWN; 
+        let predatorActive = false;
+        let predatorTimer = 0;
+        let lastPredatorActivation = -PREDATOR_COOLDOWN; 
 
         // Configurações do inimigo
         const ENEMY_SPAWN_INTERVAL_BASE = 900;
-        var lastEnemySpawnTime = 0;
+        let lastEnemySpawnTime = 0;
         const ENEMY_BULLET_SPEED = 250; // unidades por segundo
         const ENEMY_BULLET_COOLDOWN_MIN = 700;
         const ENEMY_BULLET_COOLDOWN_MAX = 2000;
         const ENEMY_ELITE_MISSILE_DAMAGE_MIN = 0.01; 
         const ENEMY_ELITE_MISSILE_DAMAGE_MAX = 0.05; 
 
-        var bossActive = false;
+        let bossActive = false;
 
-        // Propriedades de HP do Chefe por onda
+        // Propriedades de HP do chefe por onda
         const BOSS_HP_SCALING = {
             1: 1000,
             2: 2000,
@@ -1194,10 +1103,11 @@
             },
             'boss': {
                 size: 70, speed: { min: 40, max: 80 }, hp: 1000, score: 500 * 2, droneCharge: 100,
-                color: '#FFD700', detailColor: '#FFFF00', shootMultiple: 8, bulletColor: '#FF0000', isBoss: true, isElite: false, 
-                bulletSpeed: 280, explosiveBullets: true, explosionRadius: 50, explosionDamage: 5, /* As balas do chefe agora explodem */
+                color: '#FFD700', detailColor: '#FFFF00', shootMultiple: 8, bulletColor: '#FF0000', isBoss: true, isElite: false, /* Increased shootMultiple to 8 */
+                bulletSpeed: 280, 
                 bulletCooldownMin: 300, bulletCooldownMax: 800,
                 maxBossDrones: 3, bossDroneSpawnCooldown: 10000,
+                explosionDamage: 0
             },
             'disruptor': {
                 size: 20, speed: { min: 160, max: 280 }, hp: 40, score: 18 * 2, droneCharge: 18,
@@ -1207,7 +1117,7 @@
             'heavy_shooter': {
                 size: 45, speed: { min: 40, max: 100 }, hp: 180, score: 28 * 2, droneCharge: 28,
                 color: '#556B2F', detailColor: '#8FBC8F', shootMultiple: 3, bulletColor: '#FF0000', isBoss: false, isElite: false,
-                bulletCooldownMin: 1500, bulletCooldownMax: 3000, explosiveBullets: true, explosionRadius: 40, explosionDamage: 2 /* Dano de explosão para heavy shooter */
+                bulletCooldownMin: 1500, bulletCooldownMax: 3000, explosiveBullets: true, explosionDamage: 0
             },
             'exploder': {
                 size: 35, speed: { min: 200, max: 360 }, hp: 70, score: 22 * 2, droneCharge: 22,
@@ -1222,7 +1132,7 @@
             }
         };
 
-        // Configurações das ondas
+        // Configurações de onda
         const WAVE_CONFIG = {
             1: { spawnRate: 900, enemies: ['standard'], maxOnScreen: 8, speedMultiplier: 1, hpMultiplier: 1, eliteMaxOnScreen: 0 },
             2: { spawnRate: 850, enemies: ['standard', 'chaser', 'elite'], maxOnScreen: 10, speedMultiplier: 1.05, hpMultiplier: 1.1, eliteMaxOnScreen: 1 }, 
@@ -1258,14 +1168,14 @@
         const STAR_SPEED_MAX = 50; 
         const STAR_COLOR_VARIATIONS = ['#FFFFFF', '#E0E0E0', '#D0D0FF', '#FFFFA0']; 
 
-        // Configurações de partículas de fundo (Espaço)
+        // Configurações de Partículas de Fundo (Espaço)
         const NUM_SPACE_PARTICLES = 150; 
         const SPACE_PARTICLE_SPEED_MIN = 30; 
         const SPACE_PARTICLE_SPEED_MAX = 120; 
         const SPACE_PARTICLE_RADIUS_MIN = 0.8;
         const SPACE_PARTICLE_RADIUS_MAX = 1.5; 
 
-        // Configurações de partículas de propulsor (Nave do jogador)
+        // Configurações de partículas de propulsão (Nave do jogador)
         const THRUST_PARTICLE_COUNT_PER_FRAME = 1; 
         const THRUST_PARTICLE_MAX_SPEED = 250; 
         const THRUST_PARTICLE_MIN_RADIUS = 1; 
@@ -1317,7 +1227,7 @@
         const BOSS_DRONE_BULLET_SPEED = 280; 
 
 
-        // Configurações de drops - frequência ligeiramente aumentada
+        // Configurações de drop - frequência ligeiramente aumentada
         const DROP_CHANCE = {
             'life': 0.008,
             'shield': 0.02,
@@ -1328,13 +1238,13 @@
         };
 
         // Power-ups temporários
-        var rapidFireActive = false;
-        var rapidFireTimer = 0;
+        let rapidFireActive = false;
+        let rapidFireTimer = 0;
         const RAPID_FIRE_DURATION = 5000;
         const RAPID_FIRE_COOLDOWN_FACTOR = 0.4; 
 
-        var tripleShotActive = false;
-        var tripleShotTimer = 0;
+        let tripleShotActive = false;
+        let tripleShotTimer = 0;
         const TRIPLE_SHOT_DURATION = 5000;
 
         // Entradas do jogador (teclas pressionadas)
@@ -1343,22 +1253,23 @@
         };
 
         // Mira do jogador (Mouse/Toque)
-        var mouseX = 0; // Usado para mira no desktop
-        var mouseY = 0; // Usado para mira no desktop
+        let mouseX = 0; // Usado para mira no desktop
+        let mouseY = 0; // Usado para mira no desktop
 
         // Variáveis do Joystick Virtual (Joystick Esquerdo - Movimento)
-        var joystickCenterX = 0;
-        var joystickCenterY = 0;
+        let joystickActive = false;
+        let joystickCenterX = 0;
+        let joystickCenterY = 0;
         const JOYSTICK_MAX_DIST = 25; // Ajustado
-        var joystickDeltaX = 0;
-        var joystickDeltaY = 0;
+        let joystickDeltaX = 0;
+        let joystickDeltaY = 0;
 
         // Variáveis do Joystick de Mira (Joystick Direito - Mira/Disparo)
-        var aimJoystickCenterX = 0;
-        var aimJoystickCenterY = 0;
+        let aimJoystickCenterX = 0;
+        let aimJoystickCenterY = 0;
         const AIM_JOYSTICK_MAX_DIST = 20; // Nova constante
-        var aimJoystickDeltaX = 0;
-        var aimJoystickDeltaY = 0;
+        let aimJoystickDeltaX = 0;
+        let aimJoystickDeltaY = 0;
 
 
         // --- Funções Auxiliares e Classes ---
@@ -1370,7 +1281,7 @@
             if (player) {
                 player.resetPosition();
             }
-            // Redefine a posição do mouse/mira para o centro inicialmente
+            // Redefinir a posição do mouse/mira para o centro inicialmente
             mouseX = canvas.width / 2;
             mouseY = canvas.height / 2;
 
@@ -1409,8 +1320,8 @@
             update(deltaTime) {
                 this.x += this.vx * deltaTime;
                 this.y += (this.vy + this.gravityY) * deltaTime;
-                this.life -= deltaTime; // Decaimento da vida por delta time
-                this.opacity -= this.decayRate * deltaTime; // Decaimento da opacidade por delta time
+                this.life -= deltaTime; // Decair a vida pelo delta time
+                this.opacity -= this.decayRate * deltaTime; // Decair a opacidade pelo delta time
                 this.radius = this.initialRadius * (this.life / (this.life + (1 / this.decayRate)));
                 if (this.radius < 0) this.radius = 0;
             }
@@ -1491,7 +1402,7 @@
             update(deltaTime) {
                 // As partículas de fundo devem se mover em relação ao movimento simulado do jogador
                 const backgroundMovementScale = 0.05; 
-                // Move o fundo apenas se o jogador estiver se movendo ativamente, não apenas com o joystick ativo
+                // Mover o fundo apenas se o jogador estiver se movendo ativamente, não apenas o joystick ativo
                 if (Math.hypot(joystickDeltaX, joystickDeltaY) > 0 || keys.w || keys.s || keys.a || keys.d) {
                     if (joystickDeltaY < 0 || keys.w) this.y += playerSpeed * backgroundMovementScale * deltaTime;
                     if (joystickDeltaY > 0 || keys.s) this.y -= playerSpeed * backgroundMovementScale * deltaTime;
@@ -1645,8 +1556,8 @@
                 this.prevX = this.x;
                 this.prevY = this.y;
 
-                var currentMoveX = 0;
-                var currentMoveY = 0;
+                let currentMoveX = 0;
+                let currentMoveY = 0;
 
                 if (window.innerWidth <= 768) { // Entrada do joystick móvel
                     const magnitudeJoystick = Math.hypot(joystickDeltaX, joystickDeltaY);
@@ -1654,15 +1565,15 @@
                         currentMoveX = joystickDeltaX / JOYSTICK_MAX_DIST;
                         currentMoveY = joystickDeltaY / JOYSTICK_MAX_DIST;
                     }
-                    // No mobile, o movimento é puramente baseado no joystick, as teclas do teclado não são usadas para o movimento do jogador.
-                } else { // Entrada do teclado desktop
+                    // No celular, o movimento é puramente baseado no joystick, as teclas do teclado não são usadas para o movimento do jogador.
+                } else { // Entrada do teclado no desktop
                     if (keys.w) currentMoveY -= 1;
                     if (keys.s) currentMoveY += 1;
                     if (keys.a) currentMoveX -= 1;
                     if (keys.d) currentMoveX += 1;
                 }
 
-                if (keys.shift) {
+                if (keys.shift && window.innerWidth > 768) { // Shift é apenas para desktop
                     playerSpeed = PLAYER_BASE_SPEED * PLAYER_SLOW_SPEED_FACTOR;
                 } else {
                     playerSpeed = PLAYER_BASE_SPEED;
@@ -1687,19 +1598,39 @@
                 this.x = Math.max(0, Math.min(canvas.width - this.width, this.x));
                 this.y = Math.max(0, Math.min(canvas.height - this.height, this.y));
 
-                var targetAngle;
-                if (window.innerWidth <= 768) { // Lógica de mira para mobile
+                let targetAngle;
+                if (window.innerWidth <= 768) { // Lógica de mira móvel
                     const magnitudeAimJoystick = Math.hypot(aimJoystickDeltaX, aimJoystickDeltaY);
-                    if (aimJoystickActive && magnitudeAimJoystick > 0) { // Joystick direito está ativo e sendo movido
+                    // Adicionando um pequeno limiar para evitar que movimentos mínimos acionem a mira direcional
+                    if (aimJoystickActive && magnitudeAimJoystick > 5) { // Joystick de mira está ativo e sendo movido significativamente
                         targetAngle = Math.atan2(aimJoystickDeltaY, aimJoystickDeltaX);
-                    } else { // Se o joystick de mira não estiver ativo ou estiver no centro, mantém o ângulo atual
+                    } else if (aimJoystickActive) { // Joystick de mira está ativo (tocado), mas não movido significativamente, mira automática para o inimigo mais próximo
+                        let closestEnemy = null;
+                        let minDist = Infinity;
+                        enemies.forEach(enemy => {
+                            const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
+                                                    player.y + player.height / 2 - (enemy.y + enemy.height / 2));
+                            if (dist < minDist) {
+                                minDist = dist;
+                                closestEnemy = enemy;
+                            }
+                        });
+
+                        if (closestEnemy) {
+                            targetAngle = Math.atan2((closestEnemy.y + closestEnemy.height / 2) - (player.y + player.height / 2),
+                                                     (closestEnemy.x + closestEnemy.width / 2) - (player.x + player.width / 2));
+                        } else { // Nenhum inimigo mais próximo, mas joystick de mira tocado, manter o ângulo atual
+                            targetAngle = this.angle;
+                        }
+                    } else { // Joystick de mira não ativo, manter o ângulo atual
                         targetAngle = this.angle;
                     }
-                } else { // Lógica de mira para desktop
+
+                } else { // Lógica de mira do desktop
                     targetAngle = Math.atan2(mouseY - (this.y + this.height / 2), mouseX - (this.x + this.width / 2));
                 }
                 
-                var angleDiff = targetAngle - this.angle;
+                let angleDiff = targetAngle - this.angle;
 
                 if (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
                 if (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
@@ -1722,7 +1653,6 @@
             takeDamage(damage) {
                 if (!shieldActive && !playerInvulnerable) {
                     lives--;
-                    playExplosionSound(0.8); // Som de dano leve
                     playerFlashTimer = PLAYER_FLASH_DURATION; 
                     if (lives <= 0) {
                         gameOver = true;
@@ -1761,8 +1691,8 @@
 
             findHomingTarget() {
                 if (enemies.length > 0) {
-                    var closestEnemy = null;
-                    var minDist = Infinity;
+                    let closestEnemy = null;
+                    let minDist = Infinity;
                     enemies.forEach(enemy => {
                         const dist = Math.hypot(this.x - (enemy.x + enemy.width / 2), this.y - (enemy.y + enemy.height / 2));
                         if (dist < minDist) {
@@ -1774,11 +1704,11 @@
                 } else {
                     if (this.isPlayerBullet && this.isHoming) {
                         // Se não houver inimigo, o míssil ainda tenta seguir a mira atual do jogador
-                        const angle = player.angle; // Usa o ângulo atual do jogador para a direção
+                        const angle = player.angle; // Usar o ângulo atual do jogador para a direção
                         this.dx = Math.cos(angle) * this.speed;
                         this.dy = Math.sin(angle) * this.speed;
                     } else if (!this.isPlayerBullet && this.isHoming) {
-                        // Mantém a última trajetória se não houver alvo
+                        // Manter a última trajetória se não houver alvo
                     } else {
                         // Fallback se o alvo for inválido
                         this.dx = Math.random() * this.speed * 2 - this.speed;
@@ -1853,8 +1783,8 @@
                 this.color = baseConfig.color;
                 this.detailColor = baseConfig.detailColor;
                 
-                var currentHpMultiplier = waveHpMultiplier;
-                var currentSpeedMultiplier = waveSpeedMultiplier;
+                let currentHpMultiplier = waveHpMultiplier;
+                let currentSpeedMultiplier = waveSpeedMultiplier;
                 if (this.type === 'elite' && currentWave > 1) {
                     currentHpMultiplier *= Math.pow(baseConfig.hpMultiplierPerWave, currentWave - 1);
                     currentSpeedMultiplier *= Math.pow(baseConfig.speedMultiplierPerWave, currentWave - 1);
@@ -1876,9 +1806,6 @@
                 this.isBoss = baseConfig.isBoss;
                 this.isElite = baseConfig.isElite;
                 this.explosionDamage = baseConfig.explosionDamage;
-                this.explosiveBullets = baseConfig.explosiveBullets || false; 
-                this.bulletDamage = baseConfig.bulletDamage || 0; 
-                this.explosionRadius = baseConfig.explosionRadius || 0;
 
                 this.speed = (Math.random() * (baseConfig.speed.max - baseConfig.speed.min) + baseConfig.speed.min) * currentSpeedMultiplier;
                 
@@ -2178,7 +2105,7 @@
                     this.dy = Math.sin(angleToPlayer) * this.speed;
                 } else if (this.isElite && player) { 
                     const baseConfig = ENEMY_BASE_TYPES['elite'];
-                    var currentSpeed = this.speed;
+                    let currentSpeed = this.speed;
 
                     // Lógica de aceleração
                     if (this.isAccelerating) {
@@ -2209,8 +2136,6 @@
 
                 if (player && currentTime - this.lastShotTime > this.shotCooldown && this.shootMultiple > 0) {
                     const bulletSpeed = this.isBoss ? ENEMY_BASE_TYPES['boss'].bulletSpeed : ENEMY_BULLET_SPEED;
-                    const bulletExplosionRadius = this.explosiveBullets ? this.explosionRadius : 0; 
-                    const bulletDamage = this.explosiveBullets ? this.explosionDamage : 0;
 
                     if (this.type === 'elite' && ENEMY_BASE_TYPES['elite'].hasMissile) {
                         const missileDamagePercent = Math.random() * (ENEMY_ELITE_MISSILE_DAMAGE_MAX - ENEMY_ELITE_MISSILE_DAMAGE_MIN) + ENEMY_ELITE_MISSILE_DAMAGE_MIN;
@@ -2224,7 +2149,7 @@
                     } else if (this.shootMultiple === 1) {
                         enemyBullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2,
                                                      player.x + player.width / 2, player.y + player.height / 2,
-                                                     bulletSpeed, this.bulletColor, false, false, this.explosiveBullets, 0, bulletExplosionRadius, bulletDamage));
+                                                     bulletSpeed, this.bulletColor, false));
                     }
                     else if (this.shootMultiple === 3) {
                         const targetAngle = Math.atan2(player.y + player.height / 2 - (this.y + this.height / 2),
@@ -2235,19 +2160,18 @@
                             enemyBullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2,
                                                          this.x + this.width / 2 + Math.cos(angle) * 100,
                                                          this.y + Math.sin(angle) * 100,
-                                                         bulletSpeed, this.bulletColor, false, false, this.explosiveBullets, 0, bulletExplosionRadius, bulletDamage)); 
+                                                         bulletSpeed, this.bulletColor, false, false, this.type === 'heavy_shooter' ? true : false, 0, 40)); 
                         }
-                    } else if (this.shootMultiple === 8 && this.isBoss) { 
+                    } else if (this.shootMultiple === 8 && this.isBoss) { /* Changed shootMultiple to 8 for boss */
                         const angleStep = Math.PI * 2 / 8;
                         for (let i = 0; i < 8; i++) {
                             const angle = i * angleStep + performance.now() * 0.0005;
                             enemyBullets.push(new Bullet(this.x + this.width / 2, this.y + this.height / 2,
                                                          this.x + this.width / 2 + Math.cos(angle) * 100,
                                                          this.y + Math.sin(angle) * 100,
-                                                         bulletSpeed, this.bulletColor, false, false, this.explosiveBullets, 0, bulletExplosionRadius, bulletDamage));
+                                                         bulletSpeed, this.bulletColor, false));
                         }
                     }
-                    playEnemyBulletSound(); // Toca o som do tiro inimigo
                     this.lastShotTime = currentTime;
                     this.shotCooldown = Math.random() * ((ENEMY_BASE_TYPES[this.type].bulletCooldownMax || ENEMY_BULLET_COOLDOWN_MAX) - (ENEMY_BASE_TYPES[this.type].bulletCooldownMin || ENEMY_BASE_TYPES.bulletCooldownMin)) + (ENEMY_BASE_TYPES[this.type].bulletCooldownMin || ENEMY_BASE_TYPES.bulletCooldownMin);
                 }
@@ -2327,8 +2251,8 @@
                         this.currentTarget = null;
                     }
 
-                    var targetEnemy = null;
-                    var minDist = Infinity;
+                    let targetEnemy = null;
+                    let minDist = Infinity;
                     enemies.forEach(enemy => {
                         const dist = Math.hypot(this.x - (enemy.x + enemy.width / 2), this.y - (enemy.y + enemy.height / 2));
                         if (dist < minDist) {
@@ -2340,7 +2264,6 @@
                     if (targetEnemy) {
                         this.currentTarget = targetEnemy;
                         bullets.push(new Bullet(this.x, this.y, targetEnemy.x + targetEnemy.width / 2, targetEnemy.y + targetEnemy.height / 2, DRONE_BULLET_SPEED, 'purple'));
-                        playPlayerBulletSound(); // Drones também tocam o som de tiro do jogador
                     }
                     this.lastShotTime = currentTime;
                 }
@@ -2482,7 +2405,6 @@
                                                 this.y + Math.sin(angle) * 100,
                                                 SPECIAL_DRONE_BULLET_SPEED, 'gold', true, false, true, 0, SPECIAL_DRONE_BULLET_EXPLOSION_RADIUS, SPECIAL_DRONE_BULLET_DAMAGE)); 
                     }
-                    playPlayerBulletSound(); // Drones especiais também tocam o som de tiro do jogador
                     this.lastShotTime = currentTime;
                 }
             }
@@ -2548,16 +2470,15 @@
             update(deltaTime) {
                 if (!player) return;
 
-                // Move em direção ao jogador
+                // Mover em direção ao jogador
                 const angleToPlayer = Math.atan2(player.y + player.height / 2 - this.y, player.x + player.width / 2 - this.x);
                 this.x += Math.cos(angleToPlayer) * this.speed * deltaTime;
                 this.y += Math.sin(angleToPlayer) * this.speed * deltaTime;
 
-                // Atira no jogador
+                // Atirar no jogador
                 const currentTime = performance.now();
                 if (currentTime - this.lastShotTime > this.bulletCooldown) {
                     enemyBullets.push(new Bullet(this.x, this.y, player.x + player.width / 2, player.y + player.height / 2, this.bulletSpeed, this.color, false));
-                    playEnemyBulletSound(); // Drones do chefe tocam o som de tiro inimigo
                     this.lastShotTime = currentTime;
                 }
             }
@@ -2607,7 +2528,7 @@
                 ctx.font = 'bold 18px Share Tech Mono'; 
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
-                var displayText = '';
+                let displayText = '';
                 switch(this.type) {
                     case 'life': displayText = '+'; break;
                     case 'shield': displayText = 'S'; break;
@@ -2628,7 +2549,6 @@
         }
 
         function createExplosion(x, y, baseColor, numParticles = 20, particleSpeed = 250, particleDecay = 2, minRadius = 1, maxRadius = 3, hasGravity = false) { 
-            playExplosionSound(); // Toca o som da explosão
             for (let i = 0; i < numParticles; i++) {
                 const angle = Math.random() * Math.PI * 2;
                 const speed = Math.random() * particleSpeed + (particleSpeed * 0.5);
@@ -2636,7 +2556,7 @@
                 const vy = Math.sin(angle) * speed;
                 const radius = Math.random() * (maxRadius - minRadius) + minRadius;
                 const life = Math.random() * 0.8 + 0.4; 
-                var color;
+                let color;
                 if (baseColor === 'red' || baseColor === 'orange' || baseColor === '#FF4500' || baseColor === '#FF6600') {
                     color = `rgb(${Math.floor(Math.random() * 80 + 175)}, ${Math.floor(Math.random() * 100)}, 0)`;
                 } else if (baseColor === 'white' || baseColor === 'cyan' || baseColor === 'lightblue' || baseColor === '#66FFFF') {
@@ -2669,9 +2589,9 @@
             }
         }
 
-        // --- Funções de UI e Gerenciamento do Jogo ---
+        // --- Funções de UI e Gerenciamento de Jogo ---
 
-        var animationFrameId = null;
+        let animationFrameId = null;
 
         function showScreen(screenId) {
             if (animationFrameId) {
@@ -2733,8 +2653,7 @@
             score = 0;
             lives = 5; 
             gameOver = false;
-            mouseIsDown = false; // Redefine o estado de disparo do desktop
-            aimJoystickActive = false; // Redefine o estado de disparo do mobile
+            mouseIsDown = false; // Reiniciar o estado de disparo do desktop
             droneCharge = 0;
             pointsForNextLife = 200;
             currentWave = 1;
@@ -2749,7 +2668,7 @@
 
             nextBossSpawnScore = 10000; 
 
-            // Começa com 2 slots de mísseis prontos
+            // Começar com 2 slots de mísseis prontos
             missileSlots = [
                 { readyTime: 0 },
                 { readyTime: 0 }
@@ -2780,7 +2699,7 @@
             playerInvulnerableTimer = 0;
             playerFlashTimer = 0;
 
-            // Redefine os estados do joystick (apenas para mobile, mas redefine para segurança)
+            // Reiniciar estados do joystick (apenas para celular, mas reiniciar de qualquer forma por segurança)
             joystickActive = false;
             joystickDeltaX = 0;
             joystickDeltaY = 0;
@@ -2812,15 +2731,18 @@
         }
 
         function addScore(points) {
-            var pointsToAdd = points;
-            // Aplica o multiplicador de pontuação temporário primeiro
+            let pointsToAdd = points;
+            // Aplicar multiplicador de pontuação temporário primeiro
             if (scoreMultiplierActive) {
                 pointsToAdd *= GAME_SCORE_MULTIPLIER_AMOUNT;
             }
 
-            // Aplica o multiplicador de pontuação global após 10000 pontos
+            // Aplicar multiplicador de pontuação global após 10000 pontos
             if (score >= 10000) { 
                 pointsToAdd *= 20;
+                if (globalScoreMultiplier === 1) { 
+                    console.log("Multiplicador de pontuação global ativado! Todos os pontos x20.");
+                }
                 globalScoreMultiplier = 20;
             } else {
                 globalScoreMultiplier = 1;
@@ -2828,14 +2750,15 @@
             
             score += pointsToAdd;
 
-            // Concede uma vida extra a cada 200 pontos (ou múltiplos de 200)
+            // Conceder uma vida extra a cada 200 pontos (ou múltiplos de 200)
             while (score >= pointsForNextLife) {
                 lives++;
                 pointsForNextLife += 200; 
+                console.log("Vida extra concedida!");
             }
 
-            // Lógica de progressão da onda baseada na pontuação
-            var newCalculatedWave = 1;
+            // Lógica de progressão de onda baseada na pontuação
+            let newCalculatedWave = 1;
             if (score >= 31000) { 
                 newCalculatedWave = 8 + Math.floor((score - 31000) / 10000);
             } else if (score >= 1000) { 
@@ -2844,6 +2767,7 @@
 
             if (newCalculatedWave > currentWave) {
                 currentWave = newCalculatedWave;
+                console.log(`Onda avançou para ${currentWave} com base na pontuação!`);
             }
 
             // Lógica de spawn do chefe baseada na pontuação
@@ -2856,7 +2780,7 @@
         }
 
         function saveHighScore(name, score) {
-            var highScores = JSON.parse(localStorage.getItem('spaceGameHighScores')) || [];
+            let highScores = JSON.parse(localStorage.getItem('spaceGameHighScores')) || [];
             highScores.push({ name: name, score: score });
             
             highScores.sort((a, b) => b.score - a.score);
@@ -2867,11 +2791,11 @@
         }
 
         function loadHighScores() {
-            var highScores = JSON.parse(localStorage.getItem('spaceGameHighScores')) || [];
+            let highScores = JSON.parse(localStorage.getItem('spaceGameHighScores')) || [];
             highScoresBody.innerHTML = '';
 
             if (highScores.length === 0) {
-                highScoresBody.innerHTML = '<tr><td colspan="3">Nenhuma pontuação alta ainda!</td></tr>';
+                highScoresBody.innerHTML = '<tr><td colspan="3">Nenhum recorde ainda!</td></tr>';
                 return;
             }
 
@@ -2890,7 +2814,7 @@
             waveDisplay.textContent = `${currentWave}`;
             livesDisplay.textContent = `${lives}`;
             
-            // Atualização do Escudo
+            // Atualização do escudo
             const timeSinceLastShield = currentTime - lastShieldActivation;
             if (shieldActive) {
                 shieldStatusText.textContent = `Ativo`;
@@ -2928,7 +2852,7 @@
             }
             
             missileSlotsText.innerHTML = '';
-            var missilesReadyCount = 0;
+            let missilesReadyCount = 0;
             missileSlots.forEach((slot) => {
                 const span = document.createElement('span');
                 span.classList.add('missile-display');
@@ -3050,7 +2974,7 @@
                 if (missileSlots.length < MAX_MISSILES) {
                     missileSlots.push({ readyTime: performance.now() });
                 } else {
-                    var foundRecharging = false;
+                    let foundRecharging = false;
                     for (let j = 0; j < missileSlots.length; j++) {
                         if (missileSlots[j].readyTime > performance.now()) { 
                             missileSlots[j].readyTime = performance.now(); 
@@ -3075,13 +2999,13 @@
             const eliteEnemiesOnScreen = enemies.filter(e => e.isElite).length;
             const nonEliteEnemiesOnScreen = enemies.filter(e => !e.isElite && !e.isBoss).length;
 
-            var eliteMaxOnScreen = currentWaveConfig.eliteMaxOnScreen;
+            let eliteMaxOnScreen = currentWaveConfig.eliteMaxOnScreen;
             if (currentWave > 1) { 
                  eliteMaxOnScreen *= Math.pow(ENEMY_BASE_TYPES['elite'].maxOnScreenMultiplierPerWave, currentWave - 1);
             }
             eliteMaxOnScreen = Math.max(1, eliteMaxOnScreen); 
 
-            var typeToSpawn = '';
+            let typeToSpawn = '';
             if (eliteEnemiesOnScreen < eliteMaxOnScreen && availableEnemyTypes.includes('elite') && Math.random() < 0.3) { 
                 typeToSpawn = 'elite';
             } else if (nonEliteEnemiesOnScreen < currentWaveConfig.maxOnScreen) {
@@ -3101,11 +3025,18 @@
             
             enemies.push(new Enemy('boss', 1 + (currentWave * 0.05), 1 + (currentWave * 0.1)));
             bossActive = true;
+            console.log(`Chefe da onda ${currentWave} apareceu!`);
+
+            // Spawn 30 inimigos de elite que disparam mísseis
+            for (let i = 0; i < 30; i++) {
+                enemies.push(new Enemy('elite', 1, 1)); // Usar multiplicadores base para consistência
+            }
+            console.log("30 inimigos de elite que disparam mísseis apareceram com o chefe!");
         }
 
 
         // --- Loop Principal do Jogo ---
-        var elapsed = 0;
+        let elapsed = 0;
         function gameLoop(currentTime) {
             if (gameOver) {
                 if (animationFrameId) {
@@ -3178,10 +3109,11 @@
                 playerBulletCooldown = PLAYER_BASE_BULLET_COOLDOWN * PLAYER_SLOW_BULLET_FACTOR;
             }
 
-            // Lógica de carga da bomba por tempo
+            // Lógica de carregamento de bomba por tempo
             if (bombCount < MAX_BOMBS && currentRealTime - lastBombChargeTime > BOMB_CHARGE_INTERVAL) {
                 bombCount++;
                 lastBombChargeTime = currentRealTime;
+                console.log("Bomba carregada por tempo! Total: " + bombCount);
             }
 
 
@@ -3196,29 +3128,55 @@
             }
 
             // Lógica de disparo do jogador
-            // O disparo é ativado pelo clique do mouse no desktop (mouseIsDown) OU pelo joystick de mira ativo no mobile (aimJoystickActive)
+            // O disparo é acionado pelo clique do mouse no desktop (mouseIsDown) OU pelo joystick de mira ativo no celular (aimJoystickActive)
             if (player && ((window.innerWidth > 768 && mouseIsDown) || (window.innerWidth <= 768 && aimJoystickActive)) && currentRealTime - lastPlayerShotTime > playerBulletCooldown) {
-                // Tanto para desktop quanto para mobile, as balas devem ser disparadas na direção em que a nave do jogador está atualmente apontando.
-                // O player.angle é atualizado com base no mouse (desktop) ou joystick de mira (mobile).
-                const targetBulletAngle = player.angle;
-                const bulletStartX = player.x + player.width / 2 + Math.cos(targetBulletAngle) * (player.height / 2);
-                const bulletStartY = player.y + player.height / 2 + Math.sin(targetBulletAngle) * (player.height / 2);
+                let targetX, targetY;
 
-                // Esses alvos são usados para calcular o dx/dy da bala com base no ângulo atual do jogador.
-                const bulletTargetX = bulletStartX + Math.cos(targetBulletAngle) * 100; // Projeta longe
-                const bulletTargetY = bulletStartY + Math.sin(targetBulletAngle) * 100; // Projeta longe
+                if (window.innerWidth <= 768) { // Mira automática móvel e mira baseada no joystick
+                    const magnitudeAimJoystick = Math.hypot(aimJoystickDeltaX, aimJoystickDeltaY);
+                    // Adicionando um pequeno limiar (5) para que o arrastar tenha precedência sobre a mira automática
+                    if (aimJoystickActive && magnitudeAimJoystick > 5) { // Joystick de mira está sendo movido significativamente
+                        targetX = player.x + player.width / 2 + aimJoystickDeltaX * 100;
+                        targetY = player.y + player.height / 2 + aimJoystickDeltaY * 100;
+                    } else { // Joystick de mira é tocado, mas não movido significativamente, mira automática para o inimigo mais próximo
+                        let closestEnemy = null;
+                        let minDist = Infinity;
+                        enemies.forEach(enemy => {
+                            const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
+                                                    player.y + player.height / 2 - (enemy.y + enemy.height / 2));
+                            if (dist < minDist) {
+                                minDist = dist;
+                                closestEnemy = enemy;
+                            }
+                        });
+
+                        if (closestEnemy) {
+                            targetX = closestEnemy.x + closestEnemy.width / 2;
+                            targetY = closestEnemy.y + closestEnemy.height / 2;
+                        } else { // Nenhum inimigo mais próximo, e joystick de mira não movido, mirar para cima (ângulo inicial do jogador)
+                            targetX = player.x + player.width / 2 + Math.cos(player.angle) * 100;
+                            targetY = player.y + player.height / 2 + Math.sin(player.angle) * 100;
+                        }
+                    }
+                } else { // Lógica de mira do desktop
+                    targetX = mouseX;
+                    targetY = mouseY;
+                }
+
+                const bulletStartX = player.x + player.width / 2 + Math.cos(player.angle) * (player.height / 2);
+                const bulletStartY = player.y + player.height / 2 + Math.sin(player.angle) * (player.height / 2);
 
                 if (tripleShotActive) {
-                    const spread = Math.PI / 10;
+                    const spread = Math.PI / 10; 
                     for (let i = -1; i <= 1; i++) {
-                        const angle = targetBulletAngle + i * spread;
+                        const angle = player.angle + i * spread;
                         bullets.push(new Bullet(bulletStartX, bulletStartY,
                                                 bulletStartX + Math.cos(angle) * 100,
                                                 bulletStartY + Math.sin(angle) * 100,
                                                 PLAYER_BULLET_SPEED, '#66FFFF'));
                     }
-                } else if (predatorActive) {
-                    const baseAngle = targetBulletAngle - (PREDATOR_BULLET_SPREAD / 2);
+                } else if (predatorActive) { 
+                    const baseAngle = player.angle - (PREDATOR_BULLET_SPREAD / 2);
                     const angleIncrement = PREDATOR_BULLET_SPREAD / (PREDATOR_BULLET_COUNT - 1);
                     for (let i = 0; i < PREDATOR_BULLET_COUNT; i++) {
                         const angle = baseAngle + i * angleIncrement;
@@ -3228,9 +3186,8 @@
                                                 PLAYER_BULLET_SPEED, '#FFD700'));
                     }
                 } else {
-                    bullets.push(new Bullet(bulletStartX, bulletStartY, bulletTargetX, bulletTargetY, PLAYER_BULLET_SPEED, '#66FFFF'));
+                    bullets.push(new Bullet(bulletStartX, bulletStartY, targetX, targetY, PLAYER_BULLET_SPEED, '#66FFFF'));
                 }
-                playPlayerBulletSound(); // Toca o som do tiro do jogador
                 lastPlayerShotTime = currentRealTime;
             }
 
@@ -3279,8 +3236,8 @@
                             break;
                         case 'drone':
                             if (drones.length < DRONE_MAX_DRONES) {
-                                var nextOffsetIndex = 0;
-                                var foundSlot = false;
+                                let nextOffsetIndex = 0;
+                                let foundSlot = false;
                                 for (let j = 0; j < DRONE_OFFSETS.length; j++) {
                                     if (!drones.some(d => d.offsetIndex === j)) {
                                         nextOffsetIndex = j;
@@ -3294,7 +3251,7 @@
                             }
                             break;
                         case 'missile':
-                            var foundMissileSlotToSpeedUp = false;
+                            let foundMissileSlotToSpeedUp = false;
                             for (let j = 0; j < missileSlots.length; j++) {
                                 if (missileSlots[j].readyTime > currentTime) { 
                                     missileSlots[j].readyTime = currentTime; 
@@ -3338,7 +3295,7 @@
                 bullet.update(deltaTime);
                 bullet.draw();
 
-                var bulletHit = false;
+                let bulletHit = false;
 
                 if (bullet.isPlayerBullet) {
                     for (let bdIndex = bossDrones.length - 1; bdIndex >= 0; bdIndex--) {
@@ -3378,7 +3335,7 @@
                                 }
 
                                 for(let otherEnemy of enemiesHitByExplosion) {
-                                    var damageAmount;
+                                    let damageAmount;
                                     if (bullet.damageAmount > 0) { 
                                         damageAmount = bullet.damageAmount;
                                     } else if (otherEnemy.isElite || otherEnemy.isBoss) { 
@@ -3405,6 +3362,7 @@
                                                 if (!specialDrone) specialDrone = new SpecialDrone(); 
                                                 bossDrones = []; 
                                                 bossActive = false; 
+                                                console.log("Chefe derrotado por explosão! +10 vidas, +1 drone especial.");
                                                 givePostBossRewards(); 
                                             }
                                         }
@@ -3430,6 +3388,7 @@
                                         if (!specialDrone) specialDrone = new SpecialDrone();
                                         bossDrones = []; 
                                         bossActive = false; 
+                                        console.log("Chefe derrotado! +10 vidas, +1 drone especial.");
                                         givePostBossRewards(); 
                                     }
                                 }
@@ -3464,12 +3423,12 @@
                 enemy.draw();
 
                 if (player && checkCollision(player, enemy)) {
-                    if (enemy.isBoss) { // Se for um chefe, elimina o jogador instantaneamente
-                        lives = 0; // Define as vidas para 0 para ativar o game over
+                    if (enemy.isBoss) { // Se for um chefe, elimina instantaneamente o jogador
+                        lives = 0; // Define as vidas como 0 para acionar o game over
                         gameOver = true;
                         endGame();
                         // Não há necessidade de remover o chefe ou adicionar pontuação aqui, o jogo acabou.
-                        return; // Sai do loop e da função imediatamente
+                        return; // Sair do loop e da função imediatamente
                     } else if (enemy.type === 'exploder' && enemy.explosionDamage > 0) {
                         createExplosion(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2, enemy.color, 35, 600, 1.5, 3, 8); 
                         player.takeDamage(enemy.explosionDamage);
@@ -3480,7 +3439,7 @@
                     enemies.splice(i, 1);
                     addScore(enemy.scoreValue / 2); 
                     droneCharge += enemy.droneChargeValue / 2;
-                    // O chefe é tratado pela verificação específica acima, então este bloco é apenas para inimigos não-chefes
+                    // O chefe é tratado pela verificação específica acima, então este bloco é apenas para inimigos que não são chefes
                 }
             }
 
@@ -3489,7 +3448,7 @@
                 bullet.update(deltaTime);
                 bullet.draw();
 
-                var bulletHit = false;
+                let bulletHit = false;
 
                 for (let ddIndex = defenseDrones.length - 1; ddIndex >= 0; ddIndex--) {
                     const dDrone = defenseDrones[ddIndex];
@@ -3533,7 +3492,7 @@
                 if (player && checkCollision(bullet, player)) {
                     if (bullet.isExplosive) { 
                         createExplosion(bullet.x, bullet.y, bullet.color, 15, 300, 2, 1.5, 4); 
-                        player.takeDamage(bullet.damageAmount); // Usa o dano específico da bala para explosivos
+                        player.takeDamage(2); 
                     } else if (bullet.isDebuff) { 
                         playerBulletCooldownSlowed = true;
                         playerBulletCooldownSlowedTimer = currentRealTime;
@@ -3578,7 +3537,7 @@
 
         function dropItem(x, y) {
             const roll = Math.random();
-            var cumulativeChance = 0;
+            let cumulativeChance = 0;
             for (const type in DROP_CHANCE) {
                 cumulativeChance += DROP_CHANCE[type];
                 if (roll < cumulativeChance) {
@@ -3622,7 +3581,7 @@
         document.addEventListener('keydown', (e) => {
             if (gameOver && e.key.toLowerCase() !== 'enter') return;
 
-            // Processa apenas as teclas de movimento para desktop
+            // Processar apenas as teclas de movimento para desktop
             if (window.innerWidth > 768) {
                 switch (e.key.toLowerCase()) {
                     case 'w': keys.w = true; break;
@@ -3633,7 +3592,7 @@
                 }
             }
 
-            // Habilidades são globais (teclas do desktop ou botões do mobile)
+            // Habilidades são globais (teclas do desktop ou botões do celular)
             switch (e.key.toLowerCase()) {
                 case 'q':
                     const currentRealTimeShield = performance.now();
@@ -3656,8 +3615,8 @@
                     break;
                 case 'f':
                     if (droneCharge >= DRONE_ACTIVATION_COST && drones.length < DRONE_MAX_DRONES) {
-                        var nextOffsetIndex = 0;
-                        var foundSlot = false;
+                        let nextOffsetIndex = 0;
+                        let foundSlot = false;
                         for (let i = 0; i < DRONE_OFFSETS.length; i++) {
                             if (!drones.some(d => d.offsetIndex === i)) {
                                 nextOffsetIndex = i;
@@ -3674,7 +3633,7 @@
                     break;
                 case 'g':
                     const currentTimeMissile = performance.now();
-                    var missileSlotIndex = -1;
+                    let missileSlotIndex = -1;
                     for (let i = 0; i < missileSlots.length; i++) {
                         if (missileSlots[i].readyTime <= currentTimeMissile) {
                             missileSlotIndex = i;
@@ -3725,7 +3684,7 @@
         });
 
         document.addEventListener('mousemove', (e) => {
-            // Atualiza mouseX/Y apenas para mira no desktop
+            // Atualizar mouseX/Y apenas para mira no desktop
             if (window.innerWidth > 768) {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
@@ -3734,7 +3693,7 @@
 
         document.addEventListener('mousedown', (e) => {
             if (e.button === 0 && !gameOver && window.innerWidth > 768) { // Apenas clique esquerdo do mouse no desktop
-                mouseIsDown = true; // Usado apenas para desktop para acionar o disparo
+                mouseIsDown = true; // Usar isso apenas para desktop para acionar o disparo
             } else if (e.button === 2 && !gameOver && window.innerWidth > 768) { // Apenas clique direito do mouse no desktop para Predador
                 const currentTime = performance.now();
                 if (currentTime - lastPredatorActivation >= PREDATOR_COOLDOWN) {
@@ -3749,7 +3708,7 @@
 
         document.addEventListener('mouseup', (e) => {
             if (e.button === 0 && window.innerWidth > 768) { // Apenas clique esquerdo do mouse no desktop
-                mouseIsDown = false; // Usado apenas para desktop
+                mouseIsDown = false; // Usar isso apenas para desktop
             }
         });
 
@@ -3777,19 +3736,16 @@
         restartGameButton.addEventListener('click', startGame); 
         backToMainFromGameoverButton.addEventListener('click', () => showScreen('main')); 
 
-        window.addEventListener('load', () => {
-            setupAudio(); // Inicializa o áudio quando a janela carrega
-            showScreen('main');
-        });
+        window.addEventListener('load', () => showScreen('main'));
         window.addEventListener('resize', resizeCanvas);
 
 
         // --- Controles de Toque Móveis ---
-        // Estes são intencionalmente mantidos na versão desktop, pois fazem parte do código completo do jogo.
+        // Eles são intencionalmente mantidos na versão desktop, pois fazem parte do código completo do jogo.
         // Eles serão ocultados via CSS para telas maiores.
 
         // Joystick Esquerdo (Movimento)
-        if (joystickArea) { // Verifica se o elemento existe antes de adicionar o ouvinte
+        if (joystickArea) { // Verificar se o elemento existe antes de adicionar o ouvinte
             joystickArea.addEventListener('touchstart', (e) => {
                 e.preventDefault(); 
                 if (gameOver) return;
@@ -3824,8 +3780,8 @@
         }
 
         function updateJoystick(touchX, touchY) {
-            var dx = touchX - joystickCenterX;
-            var dy = touchY - joystickCenterY;
+            let dx = touchX - joystickCenterX;
+            let dy = touchY - joystickCenterY;
             const distance = Math.hypot(dx, dy);
 
             if (distance > JOYSTICK_MAX_DIST) {
@@ -3839,7 +3795,7 @@
         }
 
         // Joystick Direito (Mira/Disparo)
-        if (aimJoystickArea) { // Verifica se o elemento existe antes de adicionar o ouvinte
+        if (aimJoystickArea) { // Verificar se o elemento existe antes de adicionar o ouvinte
             aimJoystickArea.addEventListener('touchstart', (e) => {
                 e.preventDefault();
                 if (gameOver) return;
@@ -3849,7 +3805,7 @@
                 aimJoystickCenterX = rect.left + rect.width / 2;
                 aimJoystickCenterY = rect.top + rect.height / 2;
 
-                aimJoystickActive = true; // Isso agora também aciona o disparo para mobile
+                aimJoystickActive = true; // Isso agora também aciona o disparo para celular
                 aimJoystickInner.classList.add('active');
                 updateAimJoystick(touch.clientX, touch.clientY);
             }, { passive: false });
@@ -3865,7 +3821,7 @@
             aimJoystickArea.addEventListener('touchend', (e) => {
                 if (gameOver) return;
 
-                aimJoystickActive = false; // Desativa o joystick de mira, para de disparar
+                aimJoystickActive = false; // Desativar o joystick de mira, parar o disparo
                 aimJoystickInner.style.transform = `translate(0px, 0px)`;
                 aimJoystickInner.classList.remove('active');
                 aimJoystickDeltaX = 0;
@@ -3874,28 +3830,22 @@
         }
 
         function updateAimJoystick(touchX, touchY) {
-            var dx = touchX - aimJoystickCenterX;
-            var dy = touchY - aimJoystickCenterY;
+            let dx = touchX - aimJoystickCenterX;
+            let dy = touchY - aimJoystickCenterY;
             const distance = Math.hypot(dx, dy);
 
-            // Calcula o ângulo com base na posição do toque em relação ao centro do joystick
-            // Isso garante que a mira seja controlada em todas as direções.
-            if (distance > 0) {
-                // Apenas move o inner joystick se o toque estiver fora do centro, mas dentro do limite.
-                const clampedDx = dx / distance * AIM_JOYSTICK_MAX_DIST;
-                const clampedDy = dy / distance * AIM_JOYSTICK_MAX_DIST;
-                aimJoystickInner.style.transform = `translate(${clampedDx}px, ${clampedDy}px)`;
-            } else {
-                aimJoystickInner.style.transform = `translate(0px, 0px)`;
+            if (distance > AIM_JOYSTICK_MAX_DIST) {
+                dx = dx / distance * AIM_JOYSTICK_MAX_DIST;
+                dy = dy / distance * AIM_JOYSTICK_MAX_DIST;
             }
 
-            // Define os deltas para serem usados na atualização do ângulo da nave
+            aimJoystickInner.style.transform = `translate(${dx}px, ${dy}px)`;
             aimJoystickDeltaX = dx;
             aimJoystickDeltaY = dy;
         }
 
 
-        // Botões de Habilidade para Mobile - permanecem os mesmos
+        // Botões de Habilidade Móvel - permanecem os mesmos
         if (btnShield) { btnShield.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
@@ -3925,8 +3875,8 @@
             e.preventDefault();
             if (gameOver) return;
             if (droneCharge >= DRONE_ACTIVATION_COST && drones.length < DRONE_MAX_DRONES) {
-                var nextOffsetIndex = 0;
-                var foundSlot = false;
+                let nextOffsetIndex = 0;
+                let foundSlot = false;
                 for (let i = 0; i < DRONE_OFFSETS.length; i++) {
                     if (!drones.some(d => d.offsetIndex === i)) {
                         nextOffsetIndex = i;
@@ -3946,7 +3896,7 @@
             e.preventDefault();
             if (gameOver) return;
             const currentTime = performance.now();
-            var missileSlotIndex = -1;
+            let missileSlotIndex = -1;
             for (let i = 0; i < missileSlots.length; i++) {
                 if (missileSlots[i].readyTime <= currentTime) {
                     missileSlotIndex = i;
@@ -4006,7 +3956,7 @@
                 enemies = enemies.filter(enemy => enemy.isBoss); 
                 enemyBullets = []; 
                 bombCount--; 
-                updateMenuDisplay();
+                updateMenuDisplay(); 
             }
         }, { passive: false }); }
 
