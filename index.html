@@ -747,7 +747,7 @@
                 <li><svg class="icon icon-small menu-icon-dash"><use xlink:href="#icon-energy"></use></svg><strong>E (Impulso / Dash) / Botão na Tela:</strong> Realiza um rápido impulso na direção do movimento, te tornando invulnerável por um curto período. Consome <strong>Energia</strong>.</li>
                 <li><svg class="icon icon-small menu-icon-defense-drone"><use xlink:href="#icon-defense-drone"></use></svg><strong>C (Drone de Defesa) / Botão na Tela:</strong> Invoca um drone de defesa que protege o jogador de tiros inimigos. Cada drone tem <strong>800 HP</strong>. Custa <strong>80 pontos de drone</strong> e você pode ter até 5.</li>
                 <li><svg class="icon icon-small menu-icon-predator"><use xlink:href="#icon-score"></use></svg><strong>Botão Direito do Mouse (Predador) / Botão na Tela:</strong> Ativa um disparo em leque com 5 tiros. Dura <strong>30 segundos</strong> e tem um tempo de recarga de <strong>40 segundos</strong>.</li>
-                <li><svg class="icon icon-small menu-icon-multiplier"><use xlink:href="#icon-multiplier"></use></svg><strong>T (Multiplicador de Pontuação) / Botão na Tela:</strong> Ativa um multiplicador de <strong>10x</strong> em todos os pontos por <strong>10 segundos</strong>.</li>
+                <li><svg class="icon icon-small menu-icon-multiplier"><use xlink:href="#icon-multiplier"></use></svg><strong>T (Multiplicador de Pontuação) / Botão na Tela:</strong> Ativa um multiplicador de <strong>2x</strong> em todos os pontos por <strong>10 segundos</strong>.</li>
             </ul>
         </div>
         <button id="back-to-main-button" class="back-button">Voltar ao Menu Principal</button>
@@ -980,10 +980,11 @@
         let scoreMultiplierTimer = 0; 
         let lastScoreMultiplierActivation = -Infinity; // Para cooldown do multiplicador
         const SCORE_MULTIPLIER_DURATION = 10000; // 10 segundos
-        const GAME_SCORE_MULTIPLIER_AMOUNT = 10; // Multiplica por 10
+        const GAME_SCORE_MULTIPLIER_AMOUNT = 2; // Multiplica por 2 (ALTERADO DE 10)
         const SCORE_MULTIPLIER_COOLDOWN = 30000; // 30 segundos de cooldown
 
-        let nextBossSpawnScore = 10000; 
+        let nextBossSpawnScore = 1000; // Chefão a cada 1000 pontos (ALTERADO)
+        let nextMegaBossSpawnScore = 10000; // Mega Onda de Chefões a cada 10000 pontos (NOVO)
 
         // Configurações do jogador
         const PLAYER_SIZE = 45; 
@@ -995,7 +996,7 @@
         let playerBulletCooldown = PLAYER_BASE_BULLET_COOLDOWN; 
         let lastPlayerShotTime = 0;
         const BULLET_TRAIL_LENGTH = 3;
-        const PLAYER_TURN_SPEED = Math.PI * 2.5; // Radianos por segundo
+        const PLAYER_TURN_SPEED = Math.PI * 6; // Radianos por segundo (AUMENTADO para 6 para maior agilidade)
         let playerInvulnerable = false; 
         let playerInvulnerableTimer = 0;
         let playerFlashTimer = 0;
@@ -1055,7 +1056,8 @@
         const ENEMY_ELITE_MISSILE_DAMAGE_MIN = 0.01; 
         const ENEMY_ELITE_MISSILE_DAMAGE_MAX = 0.05; 
 
-        let bossActive = false;
+        let bossActive = false; // Indica se há um chefão 'boss' comum na tela
+        let megaBossWaveActive = false; // Indica se a mega onda de chefões está ativa
 
         // Propriedades de HP do chefe por onda
         const BOSS_HP_SCALING = {
@@ -1838,7 +1840,7 @@
                 }
 
                 if (this.isBoss) {
-                    this.x = canvas.width / 2 - this.width / 2;
+                    this.x = Math.random() * (canvas.width - this.width); // Posição X aleatória para chefes
                     this.y = -this.height; 
                     this.dx = 0; 
                     this.dy = this.speed * 0.5; 
@@ -2666,7 +2668,8 @@
             scoreMultiplierTimer = 0;
             lastScoreMultiplierActivation = -SCORE_MULTIPLIER_COOLDOWN; 
 
-            nextBossSpawnScore = 10000; 
+            nextBossSpawnScore = 1000; // Resetar para o primeiro chefão em 1000 pontos
+            nextMegaBossSpawnScore = 10000; // Resetar para a primeira mega onda em 10000 pontos
 
             // Começar com 2 slots de mísseis prontos
             missileSlots = [
@@ -2680,6 +2683,7 @@
             lastShieldActivation = -SHIELD_COOLDOWN;
             lastEnemySpawnTime = 0;
             bossActive = false; 
+            megaBossWaveActive = false; // Resetar estado da mega onda
             
             rapidFireActive = false;
             rapidFireTimer = 0;
@@ -2737,16 +2741,8 @@
                 pointsToAdd *= GAME_SCORE_MULTIPLIER_AMOUNT;
             }
 
-            // Aplicar multiplicador de pontuação global após 10000 pontos
-            if (score >= 10000) { 
-                pointsToAdd *= 20;
-                if (globalScoreMultiplier === 1) { 
-                    console.log("Multiplicador de pontuação global ativado! Todos os pontos x20.");
-                }
-                globalScoreMultiplier = 20;
-            } else {
-                globalScoreMultiplier = 1;
-            }
+            // A pontuação global de 20x foi removida, o multiplicador agora é apenas o temporário
+            globalScoreMultiplier = 1; 
             
             score += pointsToAdd;
 
@@ -2770,10 +2766,18 @@
                 console.log(`Onda avançou para ${currentWave} com base na pontuação!`);
             }
 
-            // Lógica de spawn do chefe baseada na pontuação
-            if (score >= nextBossSpawnScore && !bossActive) { 
+            // Lógica de spawn do chefe individual
+            if (score >= nextBossSpawnScore && !bossActive && !megaBossWaveActive) { 
                  spawnBoss();
-                 nextBossSpawnScore += 10000; 
+                 nextBossSpawnScore += 1000; // Próximo chefão em mais 1000 pontos
+                 console.log(`Próximo chefão aparecerá em ${nextBossSpawnScore} pontos.`);
+            }
+
+            // Lógica de spawn da Mega Onda de Chefões
+            if (score >= nextMegaBossSpawnScore && !megaBossWaveActive) {
+                spawnMegaBossWave();
+                nextMegaBossSpawnScore += 10000; // Próxima mega onda em mais 10000 pontos
+                console.log(`Próxima Mega Onda de Chefões em ${nextMegaBossSpawnScore} pontos.`);
             }
             
             updateMenuDisplay();
@@ -3021,17 +3025,40 @@
         }
 
         function spawnBoss() {
+            // Limpa alvos de drones existentes
             drones.forEach(d => d.currentTarget = null); 
             
             enemies.push(new Enemy('boss', 1 + (currentWave * 0.05), 1 + (currentWave * 0.1)));
             bossActive = true;
-            console.log(`Chefe da onda ${currentWave} apareceu!`);
+            console.log(`Chefão individual da onda ${currentWave} apareceu!`);
 
-            // Spawn 30 inimigos de elite que disparam mísseis
-            for (let i = 0; i < 30; i++) {
-                enemies.push(new Enemy('elite', 1, 1)); // Usar multiplicadores base para consistência
+            // Removida a lógica de spawn de elites aqui, será movida para megaBossWave
+        }
+
+        function spawnMegaBossWave() {
+            // Limpa alvos de drones existentes
+            drones.forEach(d => d.currentTarget = null); 
+            
+            // Remove todos os inimigos existentes para focar na mega onda
+            enemies = enemies.filter(enemy => enemy.isBoss); // Mantém chefões se já houver
+            enemyBullets = []; // Limpa projéteis inimigos existentes
+
+            // Spawn de 10 chefões
+            for (let i = 0; i < 10; i++) {
+                enemies.push(new Enemy('boss', 1 + (currentWave * 0.05), 1 + (currentWave * 0.1))); // Escala de HP e velocidade como chefões normais
             }
-            console.log("30 inimigos de elite que disparam mísseis apareceram com o chefe!");
+            console.log("Mega Onda de Chefões: 10 chefões apareceram!");
+
+            // Spawn de 30 drones de ataque (BossDrones)
+            for (let i = 0; i < 30; i++) {
+                const randomX = Math.random() * canvas.width;
+                const randomY = Math.random() * canvas.height * 0.5; // Spawn na metade superior da tela
+                bossDrones.push(new BossDrone(randomX, randomY));
+            }
+            console.log("Mega Onda de Chefões: 30 drones de ataque apareceram!");
+
+            megaBossWaveActive = true;
+            bossActive = true; // Define como true para que o menu de chefão seja exibido
         }
 
 
@@ -3360,9 +3387,13 @@
                                             if (otherEnemy.isBoss) {
                                                 lives += 10; 
                                                 if (!specialDrone) specialDrone = new SpecialDrone(); 
-                                                bossDrones = []; 
-                                                bossActive = false; 
-                                                console.log("Chefe derrotado por explosão! +10 vidas, +1 drone especial.");
+                                                // Se for um chefe da mega onda e ele for o último, desativa a flag
+                                                if (enemies.filter(e => e.isBoss).length === 0) { 
+                                                    megaBossWaveActive = false; 
+                                                    bossActive = false; // Desativa também a flag geral de boss
+                                                    bossDrones = []; // Limpa drones do chefe
+                                                }
+                                                console.log("Chefão derrotado por explosão! +10 vidas, +1 drone especial.");
                                                 givePostBossRewards(); 
                                             }
                                         }
@@ -3381,15 +3412,19 @@
                                     enemies.splice(eIndex, 1);
                                     addScore(enemy.scoreValue); 
                                     droneCharge += enemy.droneChargeValue;
-                                    if (!enemy.isBoss) {
-                                        dropItem(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
-                                    } else {
+                                    if (enemy.isBoss) {
                                         lives += 10;
                                         if (!specialDrone) specialDrone = new SpecialDrone();
-                                        bossDrones = []; 
-                                        bossActive = false; 
-                                        console.log("Chefe derrotado! +10 vidas, +1 drone especial.");
+                                        // Se for um chefe da mega onda e ele for o último, desativa a flag
+                                        if (enemies.filter(e => e.isBoss).length === 0) { 
+                                            megaBossWaveActive = false; 
+                                            bossActive = false; // Desativa também a flag geral de boss
+                                            bossDrones = []; // Limpa drones do chefe
+                                        }
+                                        console.log("Chefão derrotado! +10 vidas, +1 drone especial.");
                                         givePostBossRewards(); 
+                                    } else { // Para inimigos não-chefes, ainda dropa item
+                                        dropItem(enemy.x + enemy.width / 2, enemy.y + enemy.height / 2);
                                     }
                                 }
                             }
@@ -3410,7 +3445,8 @@
 
             const currentWaveConfig = WAVE_CONFIG[currentWave] || WAVE_CONFIG.default;
             
-            if (currentRealTime - lastEnemySpawnTime > currentWaveConfig.spawnRate) {
+            // Só spawna inimigos normais se não houver chefões ativos (nem chefão individual nem mega onda)
+            if (currentRealTime - lastEnemySpawnTime > currentWaveConfig.spawnRate && !bossActive && !megaBossWaveActive) {
                 spawnEnemy();
                 lastEnemySpawnTime = currentRealTime;
             }
