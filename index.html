@@ -499,15 +499,15 @@
         .menu-icon-multiplier { fill: #f0f; }
 
 
-        /* Mobile Controls */
+        /* Mobile Controls Overlay */
         #mobile-controls {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 50;
-            pointer-events: none; /* Allows clicks to pass through by default */
+            z-index: 50; /* Ensure this is above canvas but below other UI elements if they have z-index */
+            pointer-events: none; /* Allows clicks to pass through by default, child elements enable it */
             display: none; /* Hidden by default, shown via media query */
         }
 
@@ -531,35 +531,85 @@
             canvas {
                 cursor: default;
             }
-            #bottom-bar-menu { /* Adjust for mobile */
-                padding: 4px 5px; /* Reduced padding */
-                gap: 5px 4px; /* Reduced gap */
-                bottom: 4px; /* Move slightly up */
+            /* Simplified and smaller bottom bar menu for mobile */
+            #bottom-bar-menu {
+                bottom: 2px; /* Closer to the very bottom */
+                padding: 3px 4px;
+                gap: 3px 3px;
+                max-width: 95%; /* Make it slightly wider to accommodate items */
+                height: 38px; /* Fixed smaller height */
+                justify-content: space-around; /* Distribute items evenly */
             }
-            .menu-item { /* Adjust for mobile */
-                min-width: 45px; /* Reduced min-width */
-                height: 35px; /* Reduced height */
-                padding: 2px; /* Reduced padding */
-                font-size: 0.8em; /* Reduced font size */
+            .menu-item {
+                min-width: 35px; /* Even smaller */
+                height: 32px;
+                font-size: 0.65em;
+                padding: 0 1px;
             }
-            .menu-item .label { /* Adjust for mobile */
-                font-size: 0.6em; /* Reduced label font size */
-                margin-bottom: 1px;
+            .menu-item .label {
+                font-size: 0.5em;
+                margin-bottom: 0px;
             }
-            .menu-item span:not(.label) { /* Adjust for mobile */
-                font-size: 0.8em; /* Reduced value font size */
+            .menu-item span:not(.label) {
+                font-size: 0.7em;
             }
-            .menu-item svg { /* Adjust for mobile */
-                width: 16px; /* Reduced icon size */
-                height: 16px; /* Reduced icon size */
-                margin-bottom: 1px;
+            .menu-item svg {
+                width: 12px;
+                height: 12px;
+                margin-bottom: 0px;
             }
-            .recharging { /* Adjust for new font size */
-                font-size: 0.8em !important;
+
+            /* Joystick */
+            #joystick-area {
+                width: 80px;
+                height: 80px;
+                bottom: 50px; /* Adjusted to not overlap with bottom bar */
+                left: 10px;
+                z-index: 51; /* Higher z-index to ensure it's tappable */
             }
-            .missile-display { /* Adjust for mobile */
-                margin: 0 1px;
-                font-size: 0.8em;
+            #joystick-inner {
+                width: 30px;
+                height: 30px;
+            }
+
+            /* Tap-to-Fire area */
+            #tap-to-fire-area {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%; /* Covers entire canvas */
+                height: 100%; /* Covers entire canvas */
+                pointer-events: all; /* Allows touch events on its surface */
+                background: transparent; /* Ensure it's invisible */
+            }
+
+            /* Ability buttons container */
+            #ability-buttons-container {
+                position: absolute;
+                bottom: 50px; /* Aligned with joystick bottom for consistency */
+                right: 10px;
+                display: grid; /* Use grid for better layout control */
+                grid-template-columns: repeat(4, 1fr); /* 4 columns */
+                grid-template-rows: repeat(2, 1fr); /* 2 rows */
+                gap: 8px; /* Gap between grid items */
+                width: auto; /* Let content determine width */
+                max-width: calc(100vw - 120px - 20px); /* Max width to fit beside joystick, minus its width and padding */
+                z-index: 51; /* Higher z-index */
+                pointer-events: all; /* Important to make buttons tappable */
+            }
+
+            .ability-button {
+                width: 40px; /* Fixed size */
+                height: 40px;
+                font-size: 0.6em; /* Smaller font */
+                padding: 0;
+                border-radius: 8px; /* Standard rounded corners */
+                box-shadow: 0 0 8px rgba(50, 50, 200, 0.5);
+            }
+            .ability-button svg {
+                width: 18px; /* Icon size */
+                height: 18px;
+                margin-bottom: 0px;
             }
 
             /* Adjust main menu and game over screens for smaller screens */
@@ -599,104 +649,6 @@
                 font-size: 0.9em;
             }
         }
-
-        /* Left Joystick (Movement) */
-        #joystick-area {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            width: 80px; /* Reduced size */
-            height: 80px; /* Reduced size */
-            background: rgba(50, 50, 50, 0.4);
-            border: 2px solid rgba(0, 255, 0, 0.6);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            pointer-events: all;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.5);
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            touch-action: none; /* Prevent default touch actions like scrolling */
-        }
-
-        #joystick-inner {
-            width: 30px; /* Reduced size */
-            height: 30px; /* Reduced size */
-            background: rgba(0, 255, 0, 0.7);
-            border: 2px solid rgba(0, 200, 0, 0.9);
-            border-radius: 50%;
-            position: absolute;
-            box-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
-            transition: background-color 0.1s ease;
-        }
-        #joystick-inner.active {
-            background-color: rgba(0, 255, 0, 1);
-        }
-
-        /* Right Half for Tap-to-Fire */
-        #tap-to-fire-area {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 50vw; /* Right half of the screen */
-            height: 100vh;
-            pointer-events: all; /* Allows touch events */
-            /* background: rgba(255, 0, 0, 0.1); /* For debugging visual area */
-        }
-
-        #ability-buttons-container {
-            position: absolute;
-            bottom: 65px; /* Adjusted position slightly up */
-            right: 10px; /* Aligned to the right */
-            display: flex;
-            flex-direction: column;
-            gap: 4px; /* Reduced gap */
-            pointer-events: all;
-        }
-
-        .ability-button {
-            width: 35px; /* Reduced size */
-            height: 35px; /* Reduced size */
-            background: rgba(50, 50, 200, 0.6);
-            border: 2px solid rgba(100, 100, 255, 0.8);
-            border-radius: 8px; /* Reduced border-radius */
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 0.5em; /* Reduced font size */
-            font-weight: bold;
-            box-shadow: 0 0 10px rgba(50, 50, 200, 0.5);
-            transition: background-color 0.1s ease, transform 0.1s ease;
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            touch-action: manipulation; /* Allow tap gestures without delays */
-        }
-        .ability-button svg {
-            width: 16px; /* Reduced size */
-            height: 16px; /* Reduced size */
-            margin-bottom: 1px; /* Reduced margin */
-        }
-
-        .ability-button:active {
-            background: rgba(50, 50, 200, 0.9);
-            box-shadow: 0 0 15px rgba(50, 50, 200, 0.8);
-            transform: scale(0.95);
-        }
-
-        /* Specific colors for ability buttons */
-        #btn-shield { background-color: rgba(0, 100, 150, 0.6); border-color: rgba(0, 150, 200, 0.8); }
-        #btn-dash { background-color: rgba(150, 100, 0, 0.6); border-color: rgba(200, 150, 0, 0.8); }
-        #btn-combat-drone { background-color: rgba(80, 0, 80, 0.6); border-color: rgba(120, 0, 120, 0.8); }
-        #btn-missile { background-color: rgba(150, 0, 0, 0.6); border-color: rgba(200, 0, 0, 0.8); }
-        #btn-defense-drone { background-color: rgba(0, 80, 0, 0.6); border-color: rgba(0, 120, 0, 0.8); }
-        #btn-multiplier { background-color: rgba(120, 0, 120, 0.6); border-color: rgba(160, 0, 160, 0.8); }
-        #btn-predator { background-color: rgba(150, 75, 0, 0.6); border-color: rgba(200, 100, 0, 0.8); }
-        #btn-bomb { background-color: rgba(75, 0, 75, 0.6); border-color: rgba(100, 0, 100, 0.8); }
 
         /* Disable user select on touch controls */
         #joystick-area, #tap-to-fire-area, .ability-button {
@@ -900,7 +852,7 @@
         <div id="joystick-area">
             <div id="joystick-inner"></div>
         </div>
-        <!-- Right Half for Tap-to-Fire -->
+        <!-- Right Half for Tap-to-Fire: This now covers the whole canvas, but other elements overlay -->
         <div id="tap-to-fire-area"></div>
         
         <div id="ability-buttons-container">
@@ -1348,6 +1300,7 @@
         function checkOrientation() {
             if (window.innerHeight > window.innerWidth) { // Portrait mode
                 orientationMessage.style.display = 'flex';
+                // Hide all game/menu screens
                 mainScreen.style.display = 'none';
                 tutorialScreen.style.display = 'none';
                 gameOverScreen.style.display = 'none';
@@ -1357,7 +1310,20 @@
                 mobileControls.style.display = 'none';
             } else { // Landscape mode
                 orientationMessage.style.display = 'none';
-                // Show game elements based on current game state, handled by showScreen
+                // Re-show the appropriate screen based on the last game state
+                // This is typically handled by showScreen() after a resize/orientation change
+                // or when starting/resuming the game.
+                if (mainScreen.style.display === 'flex' || tutorialScreen.style.display === 'flex' || gameOverScreen.style.display === 'flex') {
+                    // Do nothing, the screens are already visible or will be managed by showScreen
+                } else {
+                    // If no main screen is active, and in landscape, show the game canvas if a game is active
+                    // This is for cases where orientation changes while game is running
+                    if (player && !gameOver) { // If player exists and game is not over, show game screen
+                        showScreen('game');
+                    } else { // Otherwise, go to main screen
+                        showScreen('main');
+                    }
+                }
             }
         }
 
@@ -2675,7 +2641,7 @@
             orientationMessage.style.display = 'none'; // Ensure orientation message is hidden by default
 
             // Check orientation and decide what to show
-            if (window.innerHeight > window.innerWidth && screenId !== 'tutorial') { // Portrait mode, and not tutorial screen (tutorial should display a message if needed)
+            if (window.innerHeight > window.innerWidth && screenId !== 'tutorial') { // Portrait mode, and not tutorial screen (tutorial screen shows its own message)
                 orientationMessage.style.display = 'flex';
                 // Do not proceed with showing other screens if in portrait
                 return; 
@@ -2894,6 +2860,22 @@
             waveDisplay.textContent = `${currentWave}`;
             livesDisplay.textContent = `${lives}`;
             
+            // --- Mobile vs Desktop Menu Item Visibility ---
+            const isMobile = window.innerWidth <= 768;
+
+            document.querySelectorAll('#bottom-bar-menu .menu-item').forEach(item => {
+                const itemId = item.id;
+                // Always visible items (Score, Wave, Lives)
+                if (itemId === 'score-item' || itemId === 'wave-item' || itemId === 'lives-item') {
+                    item.style.display = 'flex';
+                } else if (isMobile) {
+                    // Hide other items on mobile simplified bar
+                    item.style.display = 'none'; 
+                } else { // Desktop: show all
+                    item.style.display = 'flex';
+                }
+            });
+
             // Atualização do escudo
             const timeSinceLastShield = currentTime - lastShieldActivation;
             if (shieldActive) {
@@ -3146,6 +3128,14 @@
                 }
                 return;
             }
+            if (window.innerHeight > window.innerWidth) { // Pause game loop if in portrait
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+                return;
+            }
+
 
             elapsed = currentTime - lastFrameTime; // elapsed em milissegundos
             const deltaTime = elapsed / 1000; // deltaTime em segundos
@@ -3840,7 +3830,12 @@
         // Inicializar verificação de orientação ao carregar
         window.onload = function() {
             checkOrientation();
-            showScreen('main'); // Ensure main screen is shown after orientation check
+            // Start game loop only if not in portrait
+            if (window.innerWidth > window.innerHeight) {
+                 // Game loop will be started by startGame() when user clicks
+                 // If main screen is shown, it will start the game when user clicks start
+                 // If game is resumed after orientation change, gameLoop will be called by showScreen('game')
+            }
         };
 
 
@@ -3932,7 +3927,6 @@
 
 
         // Botões de Habilidade Móvel
-        // Note: I will ensure these are only active on touch devices and for relevant buttons.
         const allAbilityButtons = [
             btnShield, btnDash, btnCombatDrone, btnMissile, 
             btnDefenseDrone, btnMultiplier, btnPredator, btnBomb
@@ -3962,6 +3956,12 @@
                                 playerInvulnerable = true; 
                                 player.dashTimer = currentTime;
                                 currentEnergy -= DASH_COST;
+                                // Set player angle to current joystick direction or facing direction for dash
+                                if (Math.hypot(joystickDeltaX, joystickDeltaY) > JOYSTICK_DEADZONE) {
+                                    player.angle = Math.atan2(joystickDeltaY, joystickDeltaX);
+                                } else {
+                                    // If joystick is neutral, dash in current facing direction
+                                }
                                 createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
                                 updateMenuDisplay();
                             }
