@@ -20,6 +20,42 @@
             flex-direction: column;
         }
 
+        /* Mensagem de Orientação */
+        #orientation-message {
+            display: none; /* Hidden by default */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            color: #00ff00;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8em;
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 100;
+            padding: 20px;
+            box-sizing: border-box;
+            text-shadow: 0 0 10px #00ff00;
+        }
+        #orientation-message svg {
+            width: 80px;
+            height: 80px;
+            fill: #00ff00;
+            margin-bottom: 20px;
+            animation: rotateHint 2s infinite ease-in-out;
+        }
+
+        @keyframes rotateHint {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(90deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+
         #main-screen, #tutorial-screen, #game-over-screen {
             background: rgba(0, 0, 0, 0.85);
             padding: 40px;
@@ -475,7 +511,17 @@
             display: none; /* Hidden by default, shown via media query */
         }
 
-        @media (max-width: 768px) {
+        /* Media Query para Forçar Orientação Paisagem e Ajustes Móveis */
+        @media (orientation: portrait) {
+            #main-screen, #tutorial-screen, #game-over-screen, canvas, #bottom-bar-menu, #mobile-controls, #reticle {
+                display: none !important;
+            }
+            #orientation-message {
+                display: flex !important; /* Show orientation message in portrait */
+            }
+        }
+
+        @media (orientation: landscape) and (max-width: 768px) {
             #mobile-controls {
                 display: block;
             }
@@ -689,8 +735,13 @@
         <svg id="icon-defense-drone" viewBox="0 0 24 24" fill="currentColor"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.39-1.09-.7-1.71-.94L14 2.1c-.05-.2-.25-.3-.46-.3h-4c-.21 0-.4.1-.45.3L9.03 5.05c-.62.24-1.19.55-1.71.94l-2.49-1c-.22-.09-.49 0-.61.22l-2 3.46c-.12.22-.07.49.12.64l2.11 1.65c-.04.32-.07.64-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24-.42-.12-.64l2 3.46c-.12.22.39.31.61.22l2.49-1c.52.39 1.09.7 1.71.94L9.03 21.9c.05.2.25.3.46.3h4c-.21 0 .4-.1.45.3l.36-2.81c.62-.24 1.19-.55 1.71-.94l2.49 1c-.22.09-.49 0 .61.22l2-3.46c.12.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
         <!-- Multiplier Icon -->
         <svg id="icon-multiplier" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-        <!-- Fire Icon for button -->
-        <svg id="icon-fire" viewBox="0 0 24 24" fill="currentColor"><path d="M12 11c1.66 0 2.99-1.34 2.99-3S13.66 5 12 5 9.01 6.34 9.01 8s1.33 3 2.99 3zm0 9c-1.66 0-2.99-1.34-2.99-3S10.34 14 12 14s2.99 1.34 2.99 3-1.33 3-2.99 3zm0-14c1.66 0 2.99-1.34 2.99-3S13.66 0 12 0 9.01 1.34 9.01 3s1.33 3 2.99 3z"/></svg>
+        <!-- Rotate Device Icon (for orientation message) -->
+        <svg id="icon-rotate-device" viewBox="0 0 24 24" fill="currentColor"><path d="M15.5 17h-7l1.37-1.37c-.64-.47-1.1-1.07-1.38-1.77L6 14.5c.6 1.73 1.96 3.14 3.73 3.99L10 20.5h4.5l-1.37-1.37c.64-.47 1.1-1.07 1.38-1.77l.5-.5c-.6-1.73-1.96-3.14-3.73-3.99zm-4.73-9.5c.6-.47 1.1-1.07 1.38-1.77l.5-.5c-.6-1.73-1.96-3.14-3.73-3.99L6 3.5h7l-1.37 1.37c.64.47 1.1 1.07 1.38 1.77l.5.5c-.6 1.73-1.96 3.14-3.73 3.99zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+    </div>
+
+    <div id="orientation-message">
+        <svg><use xlink:href="#icon-rotate-device"></use></svg>
+        <p>Por favor, gire seu dispositivo para a orientação horizontal para jogar.</p>
     </div>
 
     <div id="main-screen">
@@ -749,7 +800,7 @@
                 <li><svg class="icon icon-small pickup-icon-drone"><use xlink:href="#icon-drone"></use></svg><strong>F (Drone de Combate) / Botão na Tela:</strong> Invoca um drone de combate que ataca inimigos automaticamente. Acumule <strong>100 pontos de drone</strong> (coletando itens ou destruindo inimigos) para ativá-lo. Você pode ter múltiplos drones (até 5). Drones têm HP e podem ser destruídos.</li>
                 <li><svg class="icon icon-small pickup-icon-missile"><use xlink:href="#icon-missile"></use></svg><strong>G (Míssil Hacker) / Botão na Tela:</strong> Lança um míssil que persegue o inimigo mais próximo. Ele explode ao atingir o primeiro inimigo, causando dano massivo em área (dano reduzido contra chefões e elites). Você começa com <strong>2 mísseis</strong>, e cada um tem um tempo de recarga de <strong>50 segundos</strong>. Pode ser coletado como item para reduzir o tempo de recarga de um míssil ou adicionar um novo.</li>
                 <li><svg class="icon icon-small pickup-icon-bomb"><use xlink:href="#icon-bomb"></use></svg><strong>Scroll do Mouse (Bomba) / Botão na Tela:</strong> Ativa uma bomba que destrói todos os inimigos e projéteis inimigos na tela. Carregada a cada <strong>10 segundos</strong> e acumulável até <strong>20</strong>.</li>
-                <li><svg class="icon icon-small menu-icon-dash"><use xlink:href="#icon-energy"></use></svg><strong>E (Impulso / Dash) / Arraste Rápido no Joystick Esquerdo:</strong> Realiza um rápido impulso na direção do movimento, te tornando invulnerável por um curto período. Consome <strong>Energia</strong>.</li>
+                <li><svg class="icon icon-small menu-icon-dash"><use xlink:href="#icon-energy"></use></svg><strong>E (Impulso / Dash) / Botão na Tela:</strong> Realiza um rápido impulso na direção do movimento, te tornando invulnerável por um curto período. Consome <strong>Energia</strong>.</li>
                 <li><svg class="icon icon-small menu-icon-defense-drone"><use xlink:href="#icon-defense-drone"></use></svg><strong>C (Drone de Defesa) / Botão na Tela:</strong> Invoca um drone de defesa que protege o jogador de tiros inimigos. Cada drone tem <strong>800 HP</strong>. Custa <strong>80 pontos de drone</strong> e você pode ter até 5.</li>
                 <li><svg class="icon icon-small menu-icon-predator"><use xlink:href="#icon-score"></use></svg><strong>Botão Direito do Mouse (Predador) / Botão na Tela:</strong> Ativa um disparo em leque com 5 tiros. Dura <strong>30 segundos</strong> e tem um tempo de recarga de <strong>40 segundos</strong>.</li>
                 <li><svg class="icon icon-small menu-icon-multiplier"><use xlink:href="#icon-multiplier"></use></svg><strong>T (Multiplicador de Pontuação) / Botão na Tela:</strong> Ativa um multiplicador de <strong>2x</strong> em todos os pontos por <strong>10 segundos</strong>.</li>
@@ -856,7 +907,9 @@
             <div class="ability-button" id="btn-shield">
                 <svg><use xlink:href="#icon-shield"></use></svg> ESC
             </div>
-            <!-- REMOVIDO BOTÃO DASH: AGORA É GESTO DE ARRASTE -->
+            <div class="ability-button" id="btn-dash">
+                <svg><use xlink:href="#icon-energy"></use></svg> IMP
+            </div>
             <div class="ability-button" id="btn-combat-drone">
                 <svg><use xlink:href="#icon-drone"></use></svg> DC
             </div>
@@ -895,6 +948,7 @@
         const highScoresBody = document.getElementById('high-scores-body');
         const finalScoreDisplay = document.getElementById('final-score');
         const svgIconsContainer = document.getElementById('svg-icons');
+        const orientationMessage = document.getElementById('orientation-message');
 
         // Novas referências do Menu Inferior da Barra
         const bottomBarMenu = document.getElementById('bottom-bar-menu');
@@ -935,7 +989,7 @@
         const tapToFireArea = document.getElementById('tap-to-fire-area'); // Nova área de toque para atirar
         const abilityButtonsContainer = document.getElementById('ability-buttons-container');
         const btnShield = document.getElementById('btn-shield');
-        // const btnDash = document.getElementById('btn-dash'); // Removido, agora é um gesto
+        const btnDash = document.getElementById('btn-dash'); // Re-adicionado o botão de Dash
         const btnCombatDrone = document.getElementById('btn-combat-drone');
         const btnMissile = document.getElementById('btn-missile');
         const btnDefenseDrone = document.getElementById('btn-defense-drone');
@@ -1026,12 +1080,6 @@
         const DASH_DURATION = 200; 
         let currentEnergy = MAX_ENERGY;
         let lastEnergyRegenTime = performance.now();
-
-        // Variáveis para o gesto de Dash
-        let dashStartTouchX = 0;
-        let dashStartTouchY = 0;
-        const DASH_SWIPE_THRESHOLD = 50; // Distância mínima de arraste para ativar o dash
-        const DASH_SWIPE_MAX_TIME = 200; // Tempo máximo em ms para o arraste ser considerado um dash
 
         // Configurações de mísseis hacker
         const MAX_MISSILES = 10; 
@@ -1293,6 +1341,24 @@
             initStars();
             spaceParticles = [];
             initSpaceParticles();
+            checkOrientation(); // Check orientation on resize
+        }
+
+        // Função para verificar a orientação
+        function checkOrientation() {
+            if (window.innerHeight > window.innerWidth) { // Portrait mode
+                orientationMessage.style.display = 'flex';
+                mainScreen.style.display = 'none';
+                tutorialScreen.style.display = 'none';
+                gameOverScreen.style.display = 'none';
+                canvas.style.display = 'none';
+                bottomBarMenu.style.display = 'none';
+                reticle.style.display = 'none';
+                mobileControls.style.display = 'none';
+            } else { // Landscape mode
+                orientationMessage.style.display = 'none';
+                // Show game elements based on current game state, handled by showScreen
+            }
         }
 
         class Particle {
@@ -2598,18 +2664,27 @@
         let animationFrameId = null;
 
         function showScreen(screenId) {
-            if (animationFrameId) {
-                cancelAnimationFrame(animationFrameId);
-                animationFrameId = null;
-            }
-
+            // First, hide everything
             mainScreen.style.display = 'none';
             tutorialScreen.style.display = 'none';
             gameOverScreen.style.display = 'none';
             canvas.style.display = 'none';
             bottomBarMenu.style.display = 'none'; 
             reticle.style.display = 'none';
-            mobileControls.style.display = 'none'; 
+            mobileControls.style.display = 'none';
+            orientationMessage.style.display = 'none'; // Ensure orientation message is hidden by default
+
+            // Check orientation and decide what to show
+            if (window.innerHeight > window.innerWidth && screenId !== 'tutorial') { // Portrait mode, and not tutorial screen (tutorial should display a message if needed)
+                orientationMessage.style.display = 'flex';
+                // Do not proceed with showing other screens if in portrait
+                return; 
+            }
+
+            if (animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+            }
 
             if (screenId === 'main') {
                 mainScreen.style.display = 'flex';
@@ -2632,6 +2707,7 @@
                 finalScoreDisplay.textContent = score;
             }
         }
+
 
         function startGame() {
             playerName = playerNameInput.value.trim();
@@ -2838,7 +2914,7 @@
             }
 
             energyStatusText.textContent = `${Math.floor(currentEnergy)}%`;
-            // Dash agora é um gesto, então o status de energia é para o Dash
+            // Dash agora é um botão, então o status de energia é para o Dash
             if (currentEnergy >= DASH_COST) {
                 dashAbilityText.textContent = 'Pronto';
                 dashItem.classList.add('ready');
@@ -3607,37 +3683,30 @@
 
         // --- Ouvintes de Eventos ---
         document.addEventListener('keydown', (e) => {
-            if (gameOver && e.key.toLowerCase() !== 'enter') return;
+            if (gameOver || window.innerWidth <= 768) return; // Apenas para desktop
 
-            // Processar apenas as teclas de movimento para desktop
-            if (window.innerWidth > 768) {
-                switch (e.key.toLowerCase()) {
-                    case 'w': keys.w = true; break;
-                    case 'a': keys.a = true; break;
-                    case 's': keys.s = true; break;
-                    case 'd': keys.d = true; break;
-                    case 'shift': keys.shift = true; break;
-                    case 'e': // Dash no desktop via tecla 'E'
-                        if (player && !player.dashActive && currentEnergy >= DASH_COST) {
-                            player.dashActive = true;
-                            playerInvulnerable = true; 
-                            player.dashTimer = performance.now();
-                            currentEnergy -= DASH_COST;
-                            createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
-                            updateMenuDisplay();
-                        }
-                        break;
-                }
-            }
-
-            // Habilidades são globais (teclas do desktop ou botões do celular)
             switch (e.key.toLowerCase()) {
+                case 'w': keys.w = true; break;
+                case 'a': keys.a = true; break;
+                case 's': keys.s = true; break;
+                case 'd': keys.d = true; break;
+                case 'shift': keys.shift = true; break;
                 case 'q':
                     const currentRealTimeShield = performance.now();
                     if (currentRealTimeShield - lastShieldActivation >= SHIELD_COOLDOWN) {
                         shieldActive = true;
                         shieldTimer = currentRealTimeShield;
                         lastShieldActivation = currentRealTimeShield;
+                        updateMenuDisplay();
+                    }
+                    break;
+                case 'e': 
+                    if (player && !player.dashActive && currentEnergy >= DASH_COST) {
+                        player.dashActive = true;
+                        playerInvulnerable = true; 
+                        player.dashTimer = performance.now();
+                        currentEnergy -= DASH_COST;
+                        createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
                         updateMenuDisplay();
                     }
                     break;
@@ -3698,31 +3767,30 @@
         });
 
         document.addEventListener('keyup', (e) => {
-            if (gameOver) return;
+            if (gameOver || window.innerWidth <= 768) return; // Apenas para desktop
 
-            if (window.innerWidth > 768) {
-                switch (e.key.toLowerCase()) {
-                    case 'w': keys.w = false; break;
-                    case 'a': keys.a = false; break;
-                    case 's': keys.s = false; break;
-                    case 'd': keys.d = false; break;
-                    case 'shift': keys.shift = false; break;
-                }
+            switch (e.key.toLowerCase()) {
+                case 'w': keys.w = false; break;
+                case 'a': keys.a = false; break;
+                case 's': keys.s = false; break;
+                case 'd': keys.d = false; break;
+                case 'shift': keys.shift = false; break;
             }
         });
 
         document.addEventListener('mousemove', (e) => {
-            // Atualizar mouseX/Y apenas para mira no desktop
-            if (window.innerWidth > 768) {
+            if (window.innerWidth > 768) { // Apenas para desktop
                 mouseX = e.clientX;
                 mouseY = e.clientY;
             }
         });
 
         document.addEventListener('mousedown', (e) => {
-            if (e.button === 0 && !gameOver && window.innerWidth > 768) { // Apenas clique esquerdo do mouse no desktop
+            if (window.innerWidth <= 768) return; // Apenas para desktop
+
+            if (e.button === 0 && !gameOver) { // Apenas clique esquerdo do mouse
                 mouseIsDown = true; // Usar isso apenas para desktop para acionar o disparo
-            } else if (e.button === 2 && !gameOver && window.innerWidth > 768) { // Apenas clique direito do mouse no desktop para Predador
+            } else if (e.button === 2 && !gameOver) { // Apenas clique direito do mouse para Predador
                 const currentTime = performance.now();
                 if (currentTime - lastPredatorActivation >= PREDATOR_COOLDOWN) {
                     predatorActive = true;
@@ -3735,7 +3803,9 @@
         });
 
         document.addEventListener('mouseup', (e) => {
-            if (e.button === 0 && window.innerWidth > 768) { // Apenas clique esquerdo do mouse no desktop
+            if (window.innerWidth <= 768) return; // Apenas para desktop
+
+            if (e.button === 0) { // Apenas clique esquerdo do mouse
                 mouseIsDown = false; // Usar isso apenas para desktop
             }
         });
@@ -3765,16 +3835,21 @@
         backToMainFromGameoverButton.addEventListener('click', () => showScreen('main')); 
 
         window.addEventListener('load', () => showScreen('main'));
-        window.addEventListener('resize', resizeCanvas);
+        window.addEventListener('resize', resizeCanvas); // Attach resize listener to handle orientation
+
+        // Inicializar verificação de orientação ao carregar
+        window.onload = function() {
+            checkOrientation();
+            showScreen('main'); // Ensure main screen is shown after orientation check
+        };
 
 
-        // --- Controles de Toque Móveis ---
+        // --- Controles de Toque Móveis (apenas para mobile) ---
 
         // Joystick Esquerdo (Movimento)
         if (joystickArea) { 
-            let dashStartTouchTime = 0;
-
             joystickArea.addEventListener('touchstart', (e) => {
+                if (window.innerWidth > 768) return; // Apenas para mobile
                 e.preventDefault(); 
                 if (gameOver) return;
 
@@ -3786,14 +3861,10 @@
                 joystickActive = true;
                 joystickInner.classList.add('active');
                 updateJoystick(touch.clientX, touch.clientY);
-
-                dashStartTouchX = touch.clientX;
-                dashStartTouchY = touch.clientY;
-                dashStartTouchTime = performance.now();
-
             }, { passive: false });
 
             joystickArea.addEventListener('touchmove', (e) => {
+                if (window.innerWidth > 768) return; // Apenas para mobile
                 e.preventDefault();
                 if (gameOver || !joystickActive) return;
 
@@ -3802,41 +3873,12 @@
             }, { passive: false });
 
             joystickArea.addEventListener('touchend', (e) => {
+                if (window.innerWidth > 768) return; // Apenas para mobile
                 if (gameOver) return;
 
                 joystickActive = false;
                 joystickInner.style.transform = `translate(0px, 0px)`;
                 joystickInner.classList.remove('active');
-                
-                const endTouchTime = performance.now();
-                // Check for dash gesture if movement joystick was used
-                if (player && currentEnergy >= DASH_COST && (endTouchTime - dashStartTouchTime < DASH_SWIPE_MAX_TIME)) {
-                    // Check if the current touch is the one that started the dash gesture
-                    // Find the initial touch corresponding to the end touch
-                    // (This part is a bit tricky with multi-touch, simplified for single touch release)
-                    let dashEndTouchX = e.changedTouches[0].clientX;
-                    let dashEndTouchY = e.changedTouches[0].clientY;
-
-                    const swipeDistance = Math.hypot(dashEndTouchX - dashStartTouchX, dashEndTouchY - dashStartTouchY);
-                    
-                    if (swipeDistance > DASH_SWIPE_THRESHOLD) {
-                        // Determine dash direction from swipe if joystick delta is negligible
-                        const currentMagnitude = Math.hypot(joystickDeltaX, joystickDeltaY);
-                        if (currentMagnitude < JOYSTICK_DEADZONE * 2) { // If player wasn't actively moving the joystick much
-                            const swipeAngle = Math.atan2(dashEndTouchY - dashStartTouchY, dashEndTouchX - dashStartTouchX);
-                            player.angle = swipeAngle; // Set player angle to swipe direction for dash
-                        }
-                        
-                        // Execute Dash
-                        player.dashActive = true;
-                        playerInvulnerable = true; 
-                        player.dashTimer = performance.now();
-                        currentEnergy -= DASH_COST;
-                        createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
-                        updateMenuDisplay();
-                    }
-                }
-
                 joystickDeltaX = 0;
                 joystickDeltaY = 0;
             });
@@ -3863,7 +3905,8 @@
         // Tap-to-Fire Area
         if (tapToFireArea) {
             tapToFireArea.addEventListener('touchstart', (e) => {
-                e.preventDefault(); // Prevent scrolling/zooming
+                if (window.innerWidth > 768) return; // Apenas para mobile
+                e.preventDefault(); 
                 if (gameOver) return;
                 const touch = e.touches[0];
                 tapToFireActive = true;
@@ -3872,7 +3915,8 @@
             }, { passive: false });
 
             tapToFireArea.addEventListener('touchmove', (e) => {
-                e.preventDefault(); // Prevent scrolling/zooming
+                if (window.innerWidth > 768) return; // Apenas para mobile
+                e.preventDefault(); 
                 if (gameOver || !tapToFireActive) return;
                 const touch = e.touches[0];
                 tapToFireTargetX = touch.clientX;
@@ -3880,6 +3924,7 @@
             }, { passive: false });
 
             tapToFireArea.addEventListener('touchend', (e) => {
+                if (window.innerWidth > 768) return; // Apenas para mobile
                 if (gameOver) return;
                 tapToFireActive = false;
             }, { passive: false });
@@ -3887,110 +3932,131 @@
 
 
         // Botões de Habilidade Móvel
-        if (btnShield) { btnShield.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameOver) return;
-            const currentRealTime = performance.now();
-            if (currentRealTime - lastShieldActivation >= SHIELD_COOLDOWN) {
-                shieldActive = true;
-                shieldTimer = currentRealTime;
-                lastShieldActivation = currentRealTime;
-                updateMenuDisplay();
-            }
-        }, { passive: false }); }
+        // Note: I will ensure these are only active on touch devices and for relevant buttons.
+        const allAbilityButtons = [
+            btnShield, btnDash, btnCombatDrone, btnMissile, 
+            btnDefenseDrone, btnMultiplier, btnPredator, btnBomb
+        ];
 
-        // REMOVIDO: btnDash - agora é um gesto
+        allAbilityButtons.forEach(button => {
+            if (button) { // Ensure button exists
+                button.addEventListener('touchstart', (e) => {
+                    if (window.innerWidth > 768) return; // Apenas para mobile
+                    e.preventDefault();
+                    if (gameOver) return;
 
+                    const currentTime = performance.now();
 
-        if (btnCombatDrone) { btnCombatDrone.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameOver) return;
-            if (droneCharge >= DRONE_ACTIVATION_COST && drones.length < DRONE_MAX_DRONES) {
-                let nextOffsetIndex = 0;
-                let foundSlot = false;
-                for (let i = 0; i < DRONE_OFFSETS.length; i++) {
-                    if (!drones.some(d => d.offsetIndex === i)) {
-                        nextOffsetIndex = i;
-                        foundSlot = true;
-                        break;
+                    switch (button.id) {
+                        case 'btn-shield':
+                            if (currentTime - lastShieldActivation >= SHIELD_COOLDOWN) {
+                                shieldActive = true;
+                                shieldTimer = currentTime;
+                                lastShieldActivation = currentTime;
+                                updateMenuDisplay();
+                            }
+                            break;
+                        case 'btn-dash': // DASH agora ativado por botão
+                            if (player && !player.dashActive && currentEnergy >= DASH_COST) {
+                                player.dashActive = true;
+                                playerInvulnerable = true; 
+                                player.dashTimer = currentTime;
+                                currentEnergy -= DASH_COST;
+                                createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
+                                updateMenuDisplay();
+                            }
+                            break;
+                        case 'btn-combat-drone':
+                            if (droneCharge >= DRONE_ACTIVATION_COST && drones.length < DRONE_MAX_DRONES) {
+                                let nextOffsetIndex = 0;
+                                let foundSlot = false;
+                                for (let i = 0; i < DRONE_OFFSETS.length; i++) {
+                                    if (!drones.some(d => d.offsetIndex === i)) {
+                                        nextOffsetIndex = i;
+                                        foundSlot = true;
+                                        break;
+                                    }
+                                }
+                                if (foundSlot) {
+                                    drones.push(new Drone(nextOffsetIndex));
+                                    droneCharge -= DRONE_ACTIVATION_COST;
+                                    updateMenuDisplay();
+                                }
+                            }
+                            break;
+                        case 'btn-missile':
+                            let missileSlotIndex = -1;
+                            for (let i = 0; i < missileSlots.length; i++) {
+                                if (missileSlots[i].readyTime <= currentTime) {
+                                    missileSlotIndex = i;
+                                    break;
+                                }
+                            }
+
+                            if (missileSlotIndex !== -1) {
+                                const missileStartX = player.x + player.width / 2 + Math.cos(player.angle) * (player.height / 2);
+                                const missileStartY = player.y + player.height / 2 + Math.sin(player.angle) * (player.height / 2);
+                                // For mobile, missile will target the closest enemy, not tapToFireTargetX/Y
+                                let targetEnemy = null;
+                                let minDist = Infinity;
+                                enemies.forEach(enemy => {
+                                    const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
+                                                            player.y + player.height / 2 - (enemy.y + enemy.height / 2));
+                                    if (dist < minDist) {
+                                        minDist = dist;
+                                        targetEnemy = enemy;
+                                    }
+                                });
+
+                                let missileTargetX = player.x + player.width / 2;
+                                let missileTargetY = player.y + player.height / 2 - 100; // Default upwards if no enemy
+                                if (targetEnemy) {
+                                    missileTargetX = targetEnemy.x + targetEnemy.width / 2;
+                                    missileTargetY = targetEnemy.y + targetEnemy.height / 2;
+                                }
+
+                                bullets.push(new Bullet(missileStartX, missileStartY, missileTargetX, missileTargetY, MISSILE_HACKER_SPEED, 'purple', true, true, true, 0, EXPLOSION_RADIUS, 0)); 
+                                
+                                missileSlots[missileSlotIndex].readyTime = currentTime + MISSILE_COOLDOWN_PER_SLOT;
+                                updateMenuDisplay();
+                            }
+                            break;
+                        case 'btn-defense-drone':
+                            if (droneCharge >= DEFENSE_DRONE_COST && defenseDrones.length < DEFENSE_DRONE_MAX) {
+                                defenseDrones.push(new DefenseDrone(defenseDrones.length)); 
+                                droneCharge -= DEFENSE_DRONE_COST;
+                                updateMenuDisplay();
+                            }
+                            break;
+                        case 'btn-multiplier':
+                            if (currentTime - lastScoreMultiplierActivation >= SCORE_MULTIPLIER_COOLDOWN) {
+                                scoreMultiplierActive = true;
+                                scoreMultiplierTimer = currentTime;
+                                lastScoreMultiplierActivation = currentTime;
+                                updateMenuDisplay();
+                            }
+                            break;
+                        case 'btn-predator':
+                            if (currentTime - lastPredatorActivation >= PREDATOR_COOLDOWN) {
+                                predatorActive = true;
+                                predatorTimer = currentTime;
+                                lastPredatorActivation = currentTime;
+                                updateMenuDisplay();
+                            }
+                            break;
+                        case 'btn-bomb':
+                            if (bombCount > 0) { 
+                                createExplosion(canvas.width / 2, canvas.height / 2, '#8B008B', BOMB_EXPLOSION_PARTICLE_COUNT, 1000, 1.5, 8, 30, true); 
+                                enemies = enemies.filter(enemy => enemy.isBoss); 
+                                enemyBullets = []; 
+                                bombCount--; 
+                                updateMenuDisplay(); 
+                            }
+                            break;
                     }
-                }
-                if (foundSlot) {
-                    drones.push(new Drone(nextOffsetIndex));
-                    droneCharge -= DRONE_ACTIVATION_COST;
-                    updateMenuDisplay();
-                }
+                }, { passive: false });
             }
-        }, { passive: false }); }
-
-        if (btnMissile) { btnMissile.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameOver) return;
-            const currentTime = performance.now();
-            let missileSlotIndex = -1;
-            for (let i = 0; i < missileSlots.length; i++) {
-                if (missileSlots[i].readyTime <= currentTime) {
-                    missileSlotIndex = i;
-                    break;
-                }
-            }
-
-            if (missileSlotIndex !== -1) {
-                const missileStartX = player.x + player.width / 2 + Math.cos(player.angle) * (player.height / 2);
-                const missileStartY = player.y + player.height / 2 + Math.sin(player.angle) * (player.height / 2);
-                bullets.push(new Bullet(missileStartX, missileStartY, player.x + player.width / 2, player.y + player.height / 2, MISSILE_HACKER_SPEED, 'purple', true, true, true, 0, EXPLOSION_RADIUS, 0)); 
-                
-                missileSlots[missileSlotIndex].readyTime = currentTime + MISSILE_COOLDOWN_PER_SLOT;
-                updateMenuDisplay();
-            }
-        }, { passive: false }); }
-
-        if (btnDefenseDrone) { btnDefenseDrone.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameOver) return;
-            if (droneCharge >= DEFENSE_DRONE_COST && defenseDrones.length < DEFENSE_DRONE_MAX) {
-                defenseDrones.push(new DefenseDrone(defenseDrones.length)); 
-                droneCharge -= DEFENSE_DRONE_COST;
-                updateMenuDisplay();
-            }
-        }, { passive: false }); }
-
-        if (btnMultiplier) { btnMultiplier.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameOver) return;
-            const currentRealTimeT = performance.now();
-            if (currentRealTimeT - lastScoreMultiplierActivation >= SCORE_MULTIPLIER_COOLDOWN) {
-                scoreMultiplierActive = true;
-                scoreMultiplierTimer = currentRealTimeT;
-                lastScoreMultiplierActivation = currentRealTimeT;
-                updateMenuDisplay();
-            }
-        }, { passive: false }); }
-
-        if (btnPredator) { btnPredator.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameOver) return;
-            const currentTime = performance.now();
-            if (currentTime - lastPredatorActivation >= PREDATOR_COOLDOWN) {
-                predatorActive = true;
-                predatorTimer = currentTime;
-                lastPredatorActivation = currentTime;
-                updateMenuDisplay();
-            }
-        }, { passive: false }); }
-
-        if (btnBomb) { btnBomb.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameOver) return;
-            if (bombCount > 0) { 
-                createExplosion(canvas.width / 2, canvas.height / 2, '#8B008B', BOMB_EXPLOSION_PARTICLE_COUNT, 1000, 1.5, 8, 30, true); 
-                enemies = enemies.filter(enemy => enemy.isBoss); 
-                enemyBullets = []; 
-                bombCount--; 
-                updateMenuDisplay(); 
-            }
-        }, { passive: false }); }
-
+        });
     </script>
 </body>
 </html>
