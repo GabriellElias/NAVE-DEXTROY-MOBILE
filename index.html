@@ -471,7 +471,7 @@
             width: 100%;
             height: 100%;
             z-index: 50;
-            pointer-events: none;
+            pointer-events: none; /* Allows clicks to pass through by default */
             display: none; /* Hidden by default, shown via media query */
         }
 
@@ -589,53 +589,21 @@
             background-color: rgba(0, 255, 0, 1);
         }
 
-        /* Right Joystick (Aim/Fire) */
-        #aim-joystick-area {
+        /* Right Half for Tap-to-Fire */
+        #tap-to-fire-area {
             position: absolute;
-            bottom: 10px;
-            right: 10px;
-            width: 50px; /* Further reduced size for aiming joystick */
-            height: 50px; /* Further reduced size for aiming joystick */
-            background: rgba(255, 0, 0, 0.6);
-            border: 2px solid rgba(255, 50, 50, 0.8);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            font-size: 0.9em; /* Adjusted font size */
-            font-weight: bold;
-            pointer-events: all;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
-            -webkit-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            touch-action: none; /* Prevent default touch actions like scrolling */
-        }
-
-        #aim-joystick-inner {
-            width: 20px; /* Further reduced size */
-            height: 20px; /* Further reduced size */
-            background: rgba(255, 0, 0, 0.7);
-            border: 2px solid rgba(200, 0, 0, 0.9);
-            border-radius: 50%;
-            position: absolute;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-            transition: background-color 0.1s ease;
-        }
-        #aim-joystick-inner.active {
-            background-color: rgba(255, 0, 0, 1);
-        }
-        #aim-joystick-inner svg {
-            width: 18px; /* Adjusted icon size */
-            height: 18px; /* Adjusted icon size */
-            fill: white;
+            top: 0;
+            right: 0;
+            width: 50vw; /* Right half of the screen */
+            height: 100vh;
+            pointer-events: all; /* Allows touch events */
+            /* background: rgba(255, 0, 0, 0.1); /* For debugging visual area */
         }
 
         #ability-buttons-container {
             position: absolute;
             bottom: 65px; /* Adjusted position slightly up */
-            right: 70px; /* Adjusted position to make space for aim joystick */
+            right: 10px; /* Aligned to the right */
             display: flex;
             flex-direction: column;
             gap: 4px; /* Reduced gap */
@@ -685,7 +653,7 @@
         #btn-bomb { background-color: rgba(75, 0, 75, 0.6); border-color: rgba(100, 0, 100, 0.8); }
 
         /* Disable user select on touch controls */
-        #joystick-area, #aim-joystick-area, .ability-button {
+        #joystick-area, #tap-to-fire-area, .ability-button {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             -khtml-user-select: none;
@@ -759,13 +727,13 @@
                 <li><strong>W / A / S / D:</strong> Mover a nave.</li>
                 <li>Mire com o **Mouse** para onde a nave deve apontar.</li>
                 <li>**SHIFT:** Segure para um movimento mais lento e preciso.</li>
-                <li>**Dispositivos Móveis:** Use o **Joystick Virtual** no lado esquerdo da tela para mover, e o **Joystick de Mira/Tiro** no lado direito para mirar e atirar.</li>
+                <li>**Dispositivos Móveis:** Use o **Joystick Virtual** no lado esquerdo da tela para mover, e **toque e segure em qualquer lugar na metade direita da tela** para atirar e mirar automaticamente no inimigo mais próximo.</li>
             </ul>
         </div>
         <div class="section">
             <h3><svg class="icon icon-small" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 6h2v8h-2zm0 9h2v2h-2z"/></svg>Atirar</h3>
             <ul>
-                <li><strong>Botão Esquerdo do Mouse (ou Joystick de Mira/Tiro no Celular):</strong> Atira projéteis padrão.</li>
+                <li><strong>Botão Esquerdo do Mouse (ou Toque e Segure na metade direita da tela no Celular):</strong> Atira projéteis padrão.</li>
                 <li><strong>Power-ups:</strong>
                     <ul>
                         <li><svg class="icon icon-small pickup-icon-rapidfire"><use xlink:href="#icon-rapidfire"></use></svg><strong>Tiro Rápido (F):</strong> Aumenta a velocidade de disparo por um tempo.</li>
@@ -781,7 +749,7 @@
                 <li><svg class="icon icon-small pickup-icon-drone"><use xlink:href="#icon-drone"></use></svg><strong>F (Drone de Combate) / Botão na Tela:</strong> Invoca um drone de combate que ataca inimigos automaticamente. Acumule <strong>100 pontos de drone</strong> (coletando itens ou destruindo inimigos) para ativá-lo. Você pode ter múltiplos drones (até 5). Drones têm HP e podem ser destruídos.</li>
                 <li><svg class="icon icon-small pickup-icon-missile"><use xlink:href="#icon-missile"></use></svg><strong>G (Míssil Hacker) / Botão na Tela:</strong> Lança um míssil que persegue o inimigo mais próximo. Ele explode ao atingir o primeiro inimigo, causando dano massivo em área (dano reduzido contra chefões e elites). Você começa com <strong>2 mísseis</strong>, e cada um tem um tempo de recarga de <strong>50 segundos</strong>. Pode ser coletado como item para reduzir o tempo de recarga de um míssil ou adicionar um novo.</li>
                 <li><svg class="icon icon-small pickup-icon-bomb"><use xlink:href="#icon-bomb"></use></svg><strong>Scroll do Mouse (Bomba) / Botão na Tela:</strong> Ativa uma bomba que destrói todos os inimigos e projéteis inimigos na tela. Carregada a cada <strong>10 segundos</strong> e acumulável até <strong>20</strong>.</li>
-                <li><svg class="icon icon-small menu-icon-dash"><use xlink:href="#icon-energy"></use></svg><strong>E (Impulso / Dash) / Botão na Tela:</strong> Realiza um rápido impulso na direção do movimento, te tornando invulnerável por um curto período. Consome <strong>Energia</strong>.</li>
+                <li><svg class="icon icon-small menu-icon-dash"><use xlink:href="#icon-energy"></use></svg><strong>E (Impulso / Dash) / Arraste Rápido no Joystick Esquerdo:</strong> Realiza um rápido impulso na direção do movimento, te tornando invulnerável por um curto período. Consome <strong>Energia</strong>.</li>
                 <li><svg class="icon icon-small menu-icon-defense-drone"><use xlink:href="#icon-defense-drone"></use></svg><strong>C (Drone de Defesa) / Botão na Tela:</strong> Invoca um drone de defesa que protege o jogador de tiros inimigos. Cada drone tem <strong>800 HP</strong>. Custa <strong>80 pontos de drone</strong> e você pode ter até 5.</li>
                 <li><svg class="icon icon-small menu-icon-predator"><use xlink:href="#icon-score"></use></svg><strong>Botão Direito do Mouse (Predador) / Botão na Tela:</strong> Ativa um disparo em leque com 5 tiros. Dura <strong>30 segundos</strong> e tem um tempo de recarga de <strong>40 segundos</strong>.</li>
                 <li><svg class="icon icon-small menu-icon-multiplier"><use xlink:href="#icon-multiplier"></use></svg><strong>T (Multiplicador de Pontuação) / Botão na Tela:</strong> Ativa um multiplicador de <strong>2x</strong> em todos os pontos por <strong>10 segundos</strong>.</li>
@@ -881,19 +849,14 @@
         <div id="joystick-area">
             <div id="joystick-inner"></div>
         </div>
-        <!-- Right Joystick (Aim/Fire) -->
-        <div id="aim-joystick-area">
-            <div id="aim-joystick-inner">
-                <svg><use xlink:href="#icon-fire"></use></svg>
-            </div>
-        </div>
+        <!-- Right Half for Tap-to-Fire -->
+        <div id="tap-to-fire-area"></div>
+        
         <div id="ability-buttons-container">
             <div class="ability-button" id="btn-shield">
                 <svg><use xlink:href="#icon-shield"></use></svg> ESC
             </div>
-            <div class="ability-button" id="btn-dash">
-                <svg><use xlink:href="#icon-energy"></use></svg> IMP
-            </div>
+            <!-- REMOVIDO BOTÃO DASH: AGORA É GESTO DE ARRASTE -->
             <div class="ability-button" id="btn-combat-drone">
                 <svg><use xlink:href="#icon-drone"></use></svg> DC
             </div>
@@ -969,11 +932,10 @@
         const mobileControls = document.getElementById('mobile-controls');
         const joystickArea = document.getElementById('joystick-area'); // Joystick esquerdo
         const joystickInner = document.getElementById('joystick-inner');
-        const aimJoystickArea = document.getElementById('aim-joystick-area'); // Joystick direito (Mira/Disparo)
-        const aimJoystickInner = document.getElementById('aim-joystick-inner');
+        const tapToFireArea = document.getElementById('tap-to-fire-area'); // Nova área de toque para atirar
         const abilityButtonsContainer = document.getElementById('ability-buttons-container');
         const btnShield = document.getElementById('btn-shield');
-        const btnDash = document.getElementById('btn-dash');
+        // const btnDash = document.getElementById('btn-dash'); // Removido, agora é um gesto
         const btnCombatDrone = document.getElementById('btn-combat-drone');
         const btnMissile = document.getElementById('btn-missile');
         const btnDefenseDrone = document.getElementById('btn-defense-drone');
@@ -1000,7 +962,10 @@
         let lives = 5;
         let gameOver = false;
         let mouseIsDown = false; // Usado apenas para disparo no desktop
-        let aimJoystickActive = false; // Variável para o estado ativo/disparo do joystick direito (apenas para celular)
+        let tapToFireActive = false; // Variável para o estado ativo do toque para atirar (celular)
+        let tapToFireTargetX = 0; // Coordenada X do toque para mira/disparo
+        let tapToFireTargetY = 0; // Coordenada Y do toque para mira/disparo
+
         let droneCharge = 0;
         let lastFrameTime = performance.now();
         let playerName = "Jogador"; 
@@ -1061,6 +1026,12 @@
         const DASH_DURATION = 200; 
         let currentEnergy = MAX_ENERGY;
         let lastEnergyRegenTime = performance.now();
+
+        // Variáveis para o gesto de Dash
+        let dashStartTouchX = 0;
+        let dashStartTouchY = 0;
+        const DASH_SWIPE_THRESHOLD = 50; // Distância mínima de arraste para ativar o dash
+        const DASH_SWIPE_MAX_TIME = 200; // Tempo máximo em ms para o arraste ser considerado um dash
 
         // Configurações de mísseis hacker
         const MAX_MISSILES = 10; 
@@ -1303,14 +1274,6 @@
         const JOYSTICK_DEADZONE = 5; // Adicionada deadzone
         let joystickDeltaX = 0;
         let joystickDeltaY = 0;
-
-        // Variáveis do Joystick de Mira (Joystick Direito - Mira/Disparo)
-        let aimJoystickCenterX = 0;
-        let aimJoystickCenterY = 0;
-        const AIM_JOYSTICK_MAX_DIST = 20; 
-        const AIM_JOYSTICK_DEADZONE = 5; // Adicionada deadzone
-        let aimJoystickDeltaX = 0;
-        let aimJoystickDeltaY = 0;
 
 
         // --- Funções Auxiliares e Classes ---
@@ -1573,7 +1536,7 @@
                         const vx = Math.cos(angle) * speed;
                         const vy = Math.sin(angle) * speed;
                         const radius = Math.random() * (THRUST_PARTICLE_MAX_RADIUS - THRUST_PARTICLE_MIN_RADIUS) + THRUST_PARTICLE_MIN_RADIUS;
-                        const life = Math.random() * THRUST_PARTICLE_LIFE + (THRUST_PARTICLE_LIFE / 2); 
+                        const life = Math.random() * 0.8 + 0.4; 
                         const color = `rgba(255, ${Math.floor(Math.random() * 100 + 155)}, 0, 1)`; 
                         thrustParticles.push(new Particle(thrustX, thrustY, vx, vy, radius, color, life, THRUST_PARTICLE_DECAY, THRUST_PARTICLE_GRAVITY_FACTOR));
                     }
@@ -1606,7 +1569,6 @@
                         currentMoveX = joystickDeltaX / JOYSTICK_MAX_DIST;
                         currentMoveY = joystickDeltaY / JOYSTICK_MAX_DIST;
                     }
-                    // No celular, o movimento é puramente baseado no joystick, as teclas do teclado não são usadas para o movimento do jogador.
                 } else { // Entrada do teclado no desktop
                     if (keys.w) currentMoveY -= 1;
                     if (keys.s) currentMoveY += 1;
@@ -1628,7 +1590,7 @@
                     }
                 } else {
                     const dashSpeed = PLAYER_BASE_SPEED * 3; 
-                    const dashAngle = this.angle; 
+                    const dashAngle = this.angle; // Dash na direção atual da nave
                     const dashVx = Math.cos(dashAngle) * dashSpeed * deltaTime;
                     const dashVy = Math.sin(dashAngle) * dashSpeed * deltaTime;
 
@@ -1640,17 +1602,16 @@
                 this.y = Math.max(0, Math.min(canvas.height - this.height, this.y));
 
                 let targetAngle;
-                if (window.innerWidth <= 768) { // Lógica de mira móvel
-                    const magnitudeAimJoystick = Math.hypot(aimJoystickDeltaX, aimJoystickDeltaY);
-                    if (aimJoystickActive && magnitudeAimJoystick > 0) { // Joystick de mira está ativo e sendo movido significativamente (magnitude > 0 após deadzone)
-                        targetAngle = Math.atan2(aimJoystickDeltaY, aimJoystickDeltaX);
-                    } else if (aimJoystickActive) { // Joystick de mira está ativo (tocado), mas não movido significativamente, mira automática para o inimigo mais próximo
+                if (window.innerWidth <= 768) { // Lógica de mira móvel: toque para atirar ou auto-mira
+                    if (tapToFireActive) {
+                        // Tentar auto-aim no inimigo mais próximo se houver um
                         let closestEnemy = null;
                         let minDist = Infinity;
+                        const autoAimRadius = 400; // Raio para auto-aim
                         enemies.forEach(enemy => {
                             const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
                                                     player.y + player.height / 2 - (enemy.y + enemy.height / 2));
-                            if (dist < minDist) {
+                            if (dist < minDist && dist < autoAimRadius) {
                                 minDist = dist;
                                 closestEnemy = enemy;
                             }
@@ -1659,11 +1620,11 @@
                         if (closestEnemy) {
                             targetAngle = Math.atan2((closestEnemy.y + closestEnemy.height / 2) - (player.y + player.height / 2),
                                                      (closestEnemy.x + closestEnemy.width / 2) - (player.x + player.width / 2));
-                        } else { // Nenhum inimigo mais próximo, mas joystick de mira tocado, manter o ângulo atual
-                            targetAngle = this.angle;
+                        } else { // Se não houver inimigos próximos, aponte para o local do toque
+                            targetAngle = Math.atan2(tapToFireTargetY - (this.y + this.height / 2), tapToFireTargetX - (this.x + this.width / 2));
                         }
-                    } else { // Joystick de mira não ativo, manter o ângulo atual
-                        targetAngle = this.angle;
+                    } else { // Sem toque ativo, manter ângulo atual (ou apontar para cima como padrão)
+                        targetAngle = this.angle; // Manter a última direção da nave
                     }
 
                 } else { // Lógica de mira do desktop
@@ -2697,6 +2658,9 @@
             lives = 5; 
             gameOver = false;
             mouseIsDown = false; // Reiniciar o estado de disparo do desktop
+            tapToFireActive = false; // Reiniciar o estado de disparo do celular
+            tapToFireTargetX = 0;
+            tapToFireTargetY = 0;
             droneCharge = 0;
             pointsForNextLife = 200;
             currentWave = 1;
@@ -2749,11 +2713,6 @@
             joystickDeltaX = 0;
             joystickDeltaY = 0;
             if (joystickInner) joystickInner.style.transform = `translate(0px, 0px)`;
-
-            aimJoystickActive = false;
-            aimJoystickDeltaX = 0;
-            aimJoystickDeltaY = 0;
-            if (aimJoystickInner) aimJoystickInner.style.transform = `translate(0px, 0px)`;
 
 
             resizeCanvas();
@@ -2879,13 +2838,21 @@
             }
 
             energyStatusText.textContent = `${Math.floor(currentEnergy)}%`;
+            // Dash agora é um gesto, então o status de energia é para o Dash
             if (currentEnergy >= DASH_COST) {
-                energyItem.classList.add('ready');
+                dashAbilityText.textContent = 'Pronto';
+                dashItem.classList.add('ready');
+                dashItem.classList.remove('not-ready', 'recharging');
+                energyItem.classList.add('ready'); // Também atualiza o item de energia
                 energyItem.classList.remove('not-ready');
             } else {
+                dashAbilityText.textContent = 'Indisponível';
+                dashItem.classList.remove('ready');
+                dashItem.classList.add('not-ready');
                 energyItem.classList.remove('ready');
                 energyItem.classList.add('not-ready');
             }
+
 
             dronePointsText.textContent = `${droneCharge}/${DRONE_ACTIVATION_COST}`;
             if (droneCharge >= DRONE_ACTIVATION_COST && drones.length < DRONE_MAX_DRONES) {
@@ -2921,16 +2888,6 @@
                 missileItem.classList.add('not-ready');
             }
 
-
-            if (currentEnergy >= DASH_COST) {
-                dashAbilityText.textContent = 'Pronto';
-                dashItem.classList.add('ready');
-                dashItem.classList.remove('not-ready', 'recharging');
-            } else {
-                dashAbilityText.textContent = 'Indisponível';
-                dashItem.classList.remove('ready');
-                dashItem.classList.add('not-ready');
-            }
             
             // Atualização da habilidade Bomba
             if (bombCount > 0) {
@@ -3196,34 +3153,29 @@
             }
 
             // Lógica de disparo do jogador
-            // O disparo é acionado pelo clique do mouse no desktop (mouseIsDown) OU pelo joystick de mira ativo no celular (aimJoystickActive)
-            if (player && ((window.innerWidth > 768 && mouseIsDown) || (window.innerWidth <= 768 && aimJoystickActive)) && currentRealTime - lastPlayerShotTime > playerBulletCooldown) {
+            // O disparo é acionado pelo clique do mouse no desktop (mouseIsDown) OU pelo toque ativo na metade direita da tela (tapToFireActive)
+            if (player && ((window.innerWidth > 768 && mouseIsDown) || (window.innerWidth <= 768 && tapToFireActive)) && currentRealTime - lastPlayerShotTime > playerBulletCooldown) {
                 let targetX, targetY;
 
-                if (window.innerWidth <= 768) { // Mira automática móvel e mira baseada no joystick
-                    const magnitudeAimJoystick = Math.hypot(aimJoystickDeltaX, aimJoystickDeltaY);
-                    if (aimJoystickActive && magnitudeAimJoystick > 0) { // Joystick de mira está sendo movido significativamente (magnitude > 0 após deadzone)
-                        targetX = player.x + player.width / 2 + aimJoystickDeltaX * 500; // Project far away
-                        targetY = player.y + player.height / 2 + aimJoystickDeltaY * 500; // Project far away
-                    } else { // Joystick de mira é tocado, mas não movido significativamente, mira automática para o inimigo mais próximo
-                        let closestEnemy = null;
-                        let minDist = Infinity;
-                        enemies.forEach(enemy => {
-                            const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
-                                                    player.y + player.height / 2 - (enemy.y + enemy.height / 2));
-                            if (dist < minDist) {
-                                minDist = dist;
-                                closestEnemy = enemy;
-                            }
-                        });
-
-                        if (closestEnemy) {
-                            targetX = closestEnemy.x + closestEnemy.width / 2;
-                            targetY = closestEnemy.y + closestEnemy.height / 2;
-                        } else { // Nenhum inimigo mais próximo, e joystick de mira não movido, mirar para cima (ângulo inicial do jogador)
-                            targetX = player.x + player.width / 2 + Math.cos(player.angle) * 100;
-                            targetY = player.y + player.height / 2 + Math.sin(player.angle) * 100;
+                if (window.innerWidth <= 768) { // Mira automática móvel e mira baseada no toque
+                    let closestEnemy = null;
+                    let minDist = Infinity;
+                    const autoAimRadius = 400; // Raio para auto-aim
+                    enemies.forEach(enemy => {
+                        const dist = Math.hypot(player.x + player.width / 2 - (enemy.x + enemy.width / 2),
+                                                player.y + player.height / 2 - (enemy.y + enemy.height / 2));
+                        if (dist < minDist && dist < autoAimRadius) {
+                            minDist = dist;
+                            closestEnemy = enemy;
                         }
+                    });
+
+                    if (closestEnemy) {
+                        targetX = closestEnemy.x + closestEnemy.width / 2;
+                        targetY = closestEnemy.y + closestEnemy.height / 2;
+                    } else { // Se não houver inimigos próximos, aponte para o local do toque
+                        targetX = tapToFireTargetX;
+                        targetY = tapToFireTargetY;
                     }
                 } else { // Lógica de mira do desktop
                     targetX = mouseX;
@@ -3281,7 +3233,7 @@
                 if (player && checkCollision(player, bDrone)) {
                     player.takeDamage(1); 
                     createExplosion(bDrone.x, bDrone.y, bDrone.color, 10, 200, 2.5, 1, 3); 
-                    bossDrones.splice(i, 1); // Fixed splice index to 'i'
+                    bossDrones.splice(i, 1);
                 }
             }
 
@@ -3665,6 +3617,16 @@
                     case 's': keys.s = true; break;
                     case 'd': keys.d = true; break;
                     case 'shift': keys.shift = true; break;
+                    case 'e': // Dash no desktop via tecla 'E'
+                        if (player && !player.dashActive && currentEnergy >= DASH_COST) {
+                            player.dashActive = true;
+                            playerInvulnerable = true; 
+                            player.dashTimer = performance.now();
+                            currentEnergy -= DASH_COST;
+                            createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
+                            updateMenuDisplay();
+                        }
+                        break;
                 }
             }
 
@@ -3676,16 +3638,6 @@
                         shieldActive = true;
                         shieldTimer = currentRealTimeShield;
                         lastShieldActivation = currentRealTimeShield;
-                        updateMenuDisplay();
-                    }
-                    break;
-                case 'e': 
-                    if (player && !player.dashActive && currentEnergy >= DASH_COST) {
-                        player.dashActive = true;
-                        playerInvulnerable = true; 
-                        player.dashTimer = performance.now();
-                        currentEnergy -= DASH_COST;
-                        createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
                         updateMenuDisplay();
                     }
                     break;
@@ -3817,11 +3769,11 @@
 
 
         // --- Controles de Toque Móveis ---
-        // Eles são intencionalmente mantidos na versão desktop, pois fazem parte do código completo do jogo.
-        // Eles serão ocultados via CSS para telas maiores.
 
         // Joystick Esquerdo (Movimento)
-        if (joystickArea) { // Verificar se o elemento existe antes de adicionar o ouvinte
+        if (joystickArea) { 
+            let dashStartTouchTime = 0;
+
             joystickArea.addEventListener('touchstart', (e) => {
                 e.preventDefault(); 
                 if (gameOver) return;
@@ -3834,6 +3786,11 @@
                 joystickActive = true;
                 joystickInner.classList.add('active');
                 updateJoystick(touch.clientX, touch.clientY);
+
+                dashStartTouchX = touch.clientX;
+                dashStartTouchY = touch.clientY;
+                dashStartTouchTime = performance.now();
+
             }, { passive: false });
 
             joystickArea.addEventListener('touchmove', (e) => {
@@ -3850,6 +3807,36 @@
                 joystickActive = false;
                 joystickInner.style.transform = `translate(0px, 0px)`;
                 joystickInner.classList.remove('active');
+                
+                const endTouchTime = performance.now();
+                // Check for dash gesture if movement joystick was used
+                if (player && currentEnergy >= DASH_COST && (endTouchTime - dashStartTouchTime < DASH_SWIPE_MAX_TIME)) {
+                    // Check if the current touch is the one that started the dash gesture
+                    // Find the initial touch corresponding to the end touch
+                    // (This part is a bit tricky with multi-touch, simplified for single touch release)
+                    let dashEndTouchX = e.changedTouches[0].clientX;
+                    let dashEndTouchY = e.changedTouches[0].clientY;
+
+                    const swipeDistance = Math.hypot(dashEndTouchX - dashStartTouchX, dashEndTouchY - dashStartTouchY);
+                    
+                    if (swipeDistance > DASH_SWIPE_THRESHOLD) {
+                        // Determine dash direction from swipe if joystick delta is negligible
+                        const currentMagnitude = Math.hypot(joystickDeltaX, joystickDeltaY);
+                        if (currentMagnitude < JOYSTICK_DEADZONE * 2) { // If player wasn't actively moving the joystick much
+                            const swipeAngle = Math.atan2(dashEndTouchY - dashStartTouchY, dashEndTouchX - dashStartTouchX);
+                            player.angle = swipeAngle; // Set player angle to swipe direction for dash
+                        }
+                        
+                        // Execute Dash
+                        player.dashActive = true;
+                        playerInvulnerable = true; 
+                        player.dashTimer = performance.now();
+                        currentEnergy -= DASH_COST;
+                        createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
+                        updateMenuDisplay();
+                    }
+                }
+
                 joystickDeltaX = 0;
                 joystickDeltaY = 0;
             });
@@ -3860,7 +3847,6 @@
             let dy = touchY - joystickCenterY;
             const distance = Math.hypot(dx, dy);
 
-            // Aplicar deadzone
             if (distance < JOYSTICK_DEADZONE) {
                 dx = 0;
                 dy = 0;
@@ -3874,64 +3860,33 @@
             joystickDeltaY = dy;
         }
 
-        // Joystick Direito (Mira/Disparo)
-        if (aimJoystickArea) { // Verificar se o elemento existe antes de adicionar o ouvinte
-            aimJoystickArea.addEventListener('touchstart', (e) => {
-                e.preventDefault();
+        // Tap-to-Fire Area
+        if (tapToFireArea) {
+            tapToFireArea.addEventListener('touchstart', (e) => {
+                e.preventDefault(); // Prevent scrolling/zooming
                 if (gameOver) return;
-
                 const touch = e.touches[0];
-                const rect = aimJoystickArea.getBoundingClientRect();
-                aimJoystickCenterX = rect.left + rect.width / 2;
-                aimJoystickCenterY = rect.top + rect.height / 2;
-
-                aimJoystickActive = true; // Isso agora também aciona o disparo para celular
-                aimJoystickInner.classList.add('active');
-                updateAimJoystick(touch.clientX, touch.clientY);
+                tapToFireActive = true;
+                tapToFireTargetX = touch.clientX;
+                tapToFireTargetY = touch.clientY;
             }, { passive: false });
 
-            aimJoystickArea.addEventListener('touchmove', (e) => {
-                e.preventDefault();
-                if (gameOver || !aimJoystickActive) return;
-
+            tapToFireArea.addEventListener('touchmove', (e) => {
+                e.preventDefault(); // Prevent scrolling/zooming
+                if (gameOver || !tapToFireActive) return;
                 const touch = e.touches[0];
-                updateAimJoystick(touch.clientX, touch.clientY);
+                tapToFireTargetX = touch.clientX;
+                tapToFireTargetY = touch.clientY;
             }, { passive: false });
 
-            aimJoystickArea.addEventListener('touchend', (e) => {
+            tapToFireArea.addEventListener('touchend', (e) => {
                 if (gameOver) return;
-
-                aimJoystickActive = false; // Desativar o joystick de mira, parar o disparo
-                aimJoystickInner.style.transform = `translate(0px, 0px)`;
-                aimJoystickInner.classList.remove('active');
-                aimJoystickDeltaX = 0;
-                aimJoystickDeltaY = 0;
-            });
-        }
-
-        function updateAimJoystick(touchX, touchY) {
-            let dx = touchX - aimJoystickCenterX;
-            let dy = touchY - aimJoystickCenterY;
-            const distance = Math.hypot(dx, dy);
-
-            // Aplicar deadzone
-            if (distance < AIM_JOYSTICK_DEADZONE) {
-                aimJoystickDeltaX = 0;
-                aimJoystickDeltaY = 0;
-            } else {
-                // Normalize the vector, then scale by the actual distance from center
-                const angle = Math.atan2(dy, dx);
-                const clampedDistance = Math.min(distance, AIM_JOYSTICK_MAX_DIST); // Clamp distance
-                aimJoystickDeltaX = Math.cos(angle) * (clampedDistance / AIM_JOYSTICK_MAX_DIST); // Normalize by max dist
-                aimJoystickDeltaY = Math.sin(angle) * (clampedDistance / AIM_JOYSTICK_MAX_DIST); // Normalize by max dist
-            }
-            
-            // Update visual position of inner joystick
-            aimJoystickInner.style.transform = `translate(${dx}px, ${dy}px)`;
+                tapToFireActive = false;
+            }, { passive: false });
         }
 
 
-        // Botões de Habilidade Móvel - permanecem os mesmos
+        // Botões de Habilidade Móvel
         if (btnShield) { btnShield.addEventListener('touchstart', (e) => {
             e.preventDefault();
             if (gameOver) return;
@@ -3944,18 +3899,8 @@
             }
         }, { passive: false }); }
 
-        if (btnDash) { btnDash.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            if (gameOver) return;
-            if (player && !player.dashActive && currentEnergy >= DASH_COST) {
-                player.dashActive = true;
-                playerInvulnerable = true; 
-                player.dashTimer = performance.now();
-                currentEnergy -= DASH_COST;
-                createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
-                updateMenuDisplay();
-            }
-        }, { passive: false }); }
+        // REMOVIDO: btnDash - agora é um gesto
+
 
         if (btnCombatDrone) { btnCombatDrone.addEventListener('touchstart', (e) => {
             e.preventDefault();
