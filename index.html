@@ -22,7 +22,7 @@
 
         /* Mensagem de Orientação */
         #orientation-message {
-            display: none; /* Hidden by default */
+            display: none; /* Hidden by default, shown by JS */
             position: absolute;
             top: 0;
             left: 0;
@@ -325,7 +325,7 @@
             gap: 10px 8px; /* Increased gap */
             font-family: 'Share Tech Mono', monospace;
             color: #E0E0E0;
-            display: none;
+            display: none; /* Controlled by JS / Media Query */
             max-width: 98%; /* Ensure it doesn't exceed screen width */
             height: auto;
         }
@@ -409,7 +409,7 @@
             cursor: none;
             border: 2px solid #0f0;
             box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
-            display: none;
+            display: none; /* Controlled by JS */
         }
 
         #reticle {
@@ -422,7 +422,7 @@
             z-index: 20;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 10px yellow, 0 0 15px rgba(255, 255, 0, 0.5);
-            display: none;
+            display: none; /* Controlled by JS / Media Query */
             transition: transform 0.05s linear;
         }
 
@@ -513,6 +513,7 @@
 
         /* Media Query para Forçar Orientação Paisagem e Ajustes Móveis */
         @media (orientation: portrait) {
+            /* Forçar ocultar tudo quando em modo retrato */
             #main-screen, #tutorial-screen, #game-over-screen, canvas, #bottom-bar-menu, #mobile-controls, #reticle {
                 display: none !important;
             }
@@ -523,13 +524,13 @@
 
         @media (orientation: landscape) and (max-width: 768px) {
             #mobile-controls {
-                display: block;
+                display: block; /* Show mobile controls in landscape mobile */
             }
             #reticle {
-                display: none !important;
+                display: none !important; /* Hide desktop reticle */
             }
             canvas {
-                cursor: default;
+                cursor: default; /* No custom cursor on mobile */
             }
             /* Simplified and smaller bottom bar menu for mobile */
             #bottom-bar-menu {
@@ -539,7 +540,21 @@
                 max-width: 95%; /* Make it slightly wider to accommodate items */
                 height: 38px; /* Fixed smaller height */
                 justify-content: space-around; /* Distribute items evenly */
+                display: flex; /* Ensure it's flex on mobile */
+                flex-wrap: nowrap; /* Prevent wrapping for simplified view */
             }
+
+            /* Specific items to show on mobile simplified bar */
+            #bottom-bar-menu #score-item,
+            #bottom-bar-menu #wave-item,
+            #bottom-bar-menu #lives-item {
+                display: flex !important; /* Force display for these essential items */
+            }
+            /* Hide other items on mobile simplified bar */
+            #bottom-bar-menu .menu-item:not(#score-item):not(#wave-item):not(#lives-item) {
+                display: none !important;
+            }
+
             .menu-item {
                 min-width: 35px; /* Even smaller */
                 height: 32px;
@@ -583,17 +598,18 @@
                 background: transparent; /* Ensure it's invisible */
             }
 
-            /* Ability buttons container */
+            /* Ability buttons container (GRID layout) */
             #ability-buttons-container {
                 position: absolute;
                 bottom: 50px; /* Aligned with joystick bottom for consistency */
                 right: 10px;
                 display: grid; /* Use grid for better layout control */
-                grid-template-columns: repeat(4, 1fr); /* 4 columns */
-                grid-template-rows: repeat(2, 1fr); /* 2 rows */
+                grid-template-columns: repeat(2, 1fr); /* 2 columns */
+                grid-template-rows: repeat(4, 1fr); /* 4 rows to fit 8 buttons */
                 gap: 8px; /* Gap between grid items */
                 width: auto; /* Let content determine width */
-                max-width: calc(100vw - 120px - 20px); /* Max width to fit beside joystick, minus its width and padding */
+                /* Adjust max-width if needed to prevent overflow, but grid should handle it */
+                max-width: 100px; /* Example max-width for 2 columns of 40px buttons + gaps */
                 z-index: 51; /* Higher z-index */
                 pointer-events: all; /* Important to make buttons tappable */
             }
@@ -787,6 +803,7 @@
             <span class="label">VIDAS</span>
             <span id="lives">5</span>
         </div>
+        <!-- These items are hidden on mobile by CSS media query in simplified mode -->
         <div class="menu-item" id="shield-item">
             <svg class="icon menu-icon-shield"><use xlink:href="#icon-shield"></use></svg>
             <span class="label">ESC (Q)</span>
@@ -1293,37 +1310,44 @@
             initStars();
             spaceParticles = [];
             initSpaceParticles();
-            checkOrientation(); // Check orientation on resize
+            checkOrientation(); // Check orientation on resize and show/hide elements accordingly
         }
 
-        // Função para verificar a orientação
+        // Função para verificar a orientação e gerenciar a visibilidade geral
         function checkOrientation() {
             if (window.innerHeight > window.innerWidth) { // Portrait mode
                 orientationMessage.style.display = 'flex';
-                // Hide all game/menu screens
-                mainScreen.style.display = 'none';
-                tutorialScreen.style.display = 'none';
-                gameOverScreen.style.display = 'none';
-                canvas.style.display = 'none';
-                bottomBarMenu.style.display = 'none';
-                reticle.style.display = 'none';
-                mobileControls.style.display = 'none';
+                // Forçar ocultar todos os elementos do jogo/menu usando !important
+                mainScreen.style.display = 'none !important';
+                tutorialScreen.style.display = 'none !important';
+                gameOverScreen.style.display = 'none !important';
+                canvas.style.display = 'none !important';
+                bottomBarMenu.style.display = 'none !important';
+                reticle.style.display = 'none !important';
+                mobileControls.style.display = 'none !important'; 
+
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null; // Parar o game loop se ativo
+                }
+
             } else { // Landscape mode
                 orientationMessage.style.display = 'none';
-                // Re-show the appropriate screen based on the last game state
-                // This is typically handled by showScreen() after a resize/orientation change
-                // or when starting/resuming the game.
+                // Ao voltar para o modo paisagem, re-avaliar qual tela deve ser mostrada
+                // A função showScreen() lida com a exibição correta com base no estado do jogo
                 if (mainScreen.style.display === 'flex' || tutorialScreen.style.display === 'flex' || gameOverScreen.style.display === 'flex') {
-                    // Do nothing, the screens are already visible or will be managed by showScreen
+                    // Se uma tela de menu/fim de jogo já estava ativa, apenas certifique-se de que a visibilidade correta é aplicada
+                    // (media queries CSS se encarregam de reticle/mobileControls)
+                    // No need to call showScreen again here if it's already showing a menu
                 } else {
-                    // If no main screen is active, and in landscape, show the game canvas if a game is active
-                    // This is for cases where orientation changes while game is running
-                    if (player && !gameOver) { // If player exists and game is not over, show game screen
-                        showScreen('game');
-                    } else { // Otherwise, go to main screen
-                        showScreen('main');
+                    // Se o jogo estava ativo antes da rotação para retrato e agora voltou para paisagem
+                    if (player && !gameOver) {
+                        showScreen('game'); // Retomar o jogo
+                    } else {
+                        showScreen('main'); // Voltar para o menu principal se nenhum jogo estava ativo
                     }
                 }
+                updateMenuDisplay(); // Atualizar a exibição do menu após a mudança de orientação
             }
         }
 
@@ -2629,49 +2653,58 @@
 
         let animationFrameId = null;
 
+        // showScreen function - manages which main UI screen is visible
         function showScreen(screenId) {
-            // First, hide everything
+            // First, hide all main screens and game elements
             mainScreen.style.display = 'none';
             tutorialScreen.style.display = 'none';
             gameOverScreen.style.display = 'none';
             canvas.style.display = 'none';
             bottomBarMenu.style.display = 'none'; 
             reticle.style.display = 'none';
-            mobileControls.style.display = 'none';
-            orientationMessage.style.display = 'none'; // Ensure orientation message is hidden by default
+            mobileControls.style.display = 'none'; // Ensure mobile controls are hidden initially
+            orientationMessage.style.display = 'none'; // Hide orientation message
 
-            // Check orientation and decide what to show
-            if (window.innerHeight > window.innerWidth && screenId !== 'tutorial') { // Portrait mode, and not tutorial screen (tutorial screen shows its own message)
-                orientationMessage.style.display = 'flex';
-                // Do not proceed with showing other screens if in portrait
-                return; 
-            }
-
+            // Stop any active game loop
             if (animationFrameId) {
                 cancelAnimationFrame(animationFrameId);
                 animationFrameId = null;
             }
 
+            // Based on screenId, show the appropriate screen and its specific elements
             if (screenId === 'main') {
                 mainScreen.style.display = 'flex';
                 loadHighScores();
-            }
-            else if (screenId === 'tutorial') {
+            } else if (screenId === 'tutorial') {
                 tutorialScreen.style.display = 'flex';
-            }
-            else if (screenId === 'game') {
+            } else if (screenId === 'game') {
+                // Before showing game, check orientation again.
+                // If in portrait, show orientation message and return.
+                if (window.innerHeight > window.innerWidth) {
+                    orientationMessage.style.display = 'flex';
+                    return; 
+                }
+
                 canvas.style.display = 'block';
                 bottomBarMenu.style.display = 'flex'; 
+
+                // Show desktop-specific reticle or mobile-specific controls based on screen width
                 if (window.innerWidth > 768) { 
                     reticle.style.display = 'block';
                 } else { 
                     mobileControls.style.display = 'block';
                 }
-            }
-            else if (screenId === 'gameover') {
+                
+                // Start the game loop if not already running
+                if (!animationFrameId) {
+                    lastFrameTime = performance.now(); 
+                    animationFrameId = requestAnimationFrame(gameLoop);
+                }
+            } else if (screenId === 'gameover') {
                 gameOverScreen.style.display = 'flex';
                 finalScoreDisplay.textContent = score;
             }
+            updateMenuDisplay(); // Always update menu display after changing screens
         }
 
 
@@ -2863,14 +2896,17 @@
             // --- Mobile vs Desktop Menu Item Visibility ---
             const isMobile = window.innerWidth <= 768;
 
+            // These are the only items visible in the simplified mobile bottom bar
+            const essentialMobileItems = ['score-item', 'wave-item', 'lives-item'];
+
             document.querySelectorAll('#bottom-bar-menu .menu-item').forEach(item => {
                 const itemId = item.id;
-                // Always visible items (Score, Wave, Lives)
-                if (itemId === 'score-item' || itemId === 'wave-item' || itemId === 'lives-item') {
-                    item.style.display = 'flex';
-                } else if (isMobile) {
-                    // Hide other items on mobile simplified bar
-                    item.style.display = 'none'; 
+                if (isMobile) {
+                    if (essentialMobileItems.includes(itemId)) {
+                        item.style.display = 'flex'; // Ensure essential items are always flex on mobile
+                    } else {
+                        item.style.display = 'none'; // Hide non-essential items on mobile
+                    }
                 } else { // Desktop: show all
                     item.style.display = 'flex';
                 }
@@ -3121,6 +3157,15 @@
         // --- Loop Principal do Jogo ---
         let elapsed = 0;
         function gameLoop(currentTime) {
+            // Pause the game loop if in portrait orientation
+            if (window.innerHeight > window.innerWidth) {
+                if (animationFrameId) {
+                    cancelAnimationFrame(animationFrameId);
+                    animationFrameId = null;
+                }
+                checkOrientation(); // Trigger check to show message
+                return; 
+            }
             if (gameOver) {
                 if (animationFrameId) {
                     cancelAnimationFrame(animationFrameId);
@@ -3128,14 +3173,6 @@
                 }
                 return;
             }
-            if (window.innerHeight > window.innerWidth) { // Pause game loop if in portrait
-                if (animationFrameId) {
-                    cancelAnimationFrame(animationFrameId);
-                    animationFrameId = null;
-                }
-                return;
-            }
-
 
             elapsed = currentTime - lastFrameTime; // elapsed em milissegundos
             const deltaTime = elapsed / 1000; // deltaTime em segundos
@@ -3165,7 +3202,7 @@
             }
 
             for (let i = thrustParticles.length - 1; i >= 0; i--) {
-                const particle = thrustParticles[i];
+                const particle = thrustparticles[i];
                 particle.update(deltaTime);
                 particle.draw();
                 if (particle.life <= 0 || particle.opacity <= 0 || particle.radius <= 0) {
@@ -3824,20 +3861,11 @@
         restartGameButton.addEventListener('click', startGame); 
         backToMainFromGameoverButton.addEventListener('click', () => showScreen('main')); 
 
-        window.addEventListener('load', () => showScreen('main'));
+        // Initial setup and event listeners for orientation and resize
+        window.addEventListener('load', () => {
+            checkOrientation(); // Initial check on load
+        });
         window.addEventListener('resize', resizeCanvas); // Attach resize listener to handle orientation
-
-        // Inicializar verificação de orientação ao carregar
-        window.onload = function() {
-            checkOrientation();
-            // Start game loop only if not in portrait
-            if (window.innerWidth > window.innerHeight) {
-                 // Game loop will be started by startGame() when user clicks
-                 // If main screen is shown, it will start the game when user clicks start
-                 // If game is resumed after orientation change, gameLoop will be called by showScreen('game')
-            }
-        };
-
 
         // --- Controles de Toque Móveis (apenas para mobile) ---
 
@@ -3956,11 +3984,14 @@
                                 playerInvulnerable = true; 
                                 player.dashTimer = currentTime;
                                 currentEnergy -= DASH_COST;
-                                // Set player angle to current joystick direction or facing direction for dash
+                                // Set player angle for dash based on joystick direction if active, else current player angle
                                 if (Math.hypot(joystickDeltaX, joystickDeltaY) > JOYSTICK_DEADZONE) {
                                     player.angle = Math.atan2(joystickDeltaY, joystickDeltaX);
+                                } else if (player.dx !== 0 || player.dy !== 0) {
+                                    // If moving by keyboard on desktop or by some other means, use player's current angle
                                 } else {
-                                    // If joystick is neutral, dash in current facing direction
+                                    // If not moving, dash straight up (default player angle is -PI/2)
+                                    player.angle = -Math.PI / 2;
                                 }
                                 createExplosion(player.x + player.width / 2, player.y + player.height / 2, 'lightblue', 10, 300, 2, 1.5, 4); 
                                 updateMenuDisplay();
