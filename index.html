@@ -104,6 +104,7 @@
             justify-content: center;
             gap: 25px;
             margin-top: 20px;
+            flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
         }
 
         .main-button {
@@ -325,10 +326,40 @@
             gap: 10px 8px; /* Increased gap */
             font-family: 'Share Tech Mono', monospace;
             color: #E0E0E0;
-            display: none; /* Controlled by JS / Media Query */
+            display: none; /* Controlled by JS */
             max-width: 98%; /* Ensure it doesn't exceed screen width */
             height: auto;
         }
+
+        /* Styling for simplified mobile menu bar */
+        #bottom-bar-menu.mobile-simplified {
+            bottom: 2px;
+            padding: 3px 4px;
+            gap: 3px 3px;
+            max-width: 95%;
+            height: 38px;
+            flex-wrap: nowrap;
+            justify-content: space-around;
+        }
+        #bottom-bar-menu.mobile-simplified .menu-item {
+            min-width: 35px;
+            height: 32px;
+            font-size: 0.65em;
+            padding: 0 1px;
+        }
+        #bottom-bar-menu.mobile-simplified .menu-item .label {
+            font-size: 0.5em;
+            margin-bottom: 0px;
+        }
+        #bottom-bar-menu.mobile-simplified .menu-item span:not(.label) {
+            font-size: 0.7em;
+        }
+        #bottom-bar-menu.mobile-simplified .menu-item svg {
+            width: 12px;
+            height: 12px;
+            margin-bottom: 0px;
+        }
+
 
         .menu-item {
             display: flex;
@@ -422,7 +453,7 @@
             z-index: 20;
             transform: translate(-50%, -50%);
             box-shadow: 0 0 10px yellow, 0 0 15px rgba(255, 255, 0, 0.5);
-            display: none; /* Controlled by JS / Media Query */
+            display: none; /* Controlled by JS */
             transition: transform 0.05s linear;
         }
 
@@ -508,127 +539,91 @@
             height: 100%;
             z-index: 50; /* Ensure this is above canvas but below other UI elements if they have z-index */
             pointer-events: none; /* Allows clicks to pass through by default, child elements enable it */
-            display: none; /* Hidden by default, shown via media query */
+            display: none; /* Hidden by default, shown by JS */
         }
 
-        /* Media Query para Forçar Orientação Paisagem e Ajustes Móveis */
-        @media (orientation: portrait) {
-            /* Forçar ocultar tudo quando em modo retrato */
-            #main-screen, #tutorial-screen, #game-over-screen, canvas, #bottom-bar-menu, #mobile-controls, #reticle {
-                display: none !important;
-            }
-            #orientation-message {
-                display: flex !important; /* Show orientation message in portrait */
-            }
+        /* Joystick */
+        #joystick-area {
+            position: absolute;
+            bottom: 50px; /* Adjusted to not overlap with bottom bar */
+            left: 10px;
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(0, 255, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 51; /* Higher z-index to ensure it's tappable */
+            pointer-events: all;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+        }
+        #joystick-inner {
+            width: 30px;
+            height: 30px;
+            background: rgba(0, 255, 0, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            transform: translate(0px, 0px);
+            transition: transform 0.05s linear;
+            box-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
         }
 
-        @media (orientation: landscape) and (max-width: 768px) {
-            #mobile-controls {
-                display: block; /* Show mobile controls in landscape mobile */
-            }
-            #reticle {
-                display: none !important; /* Hide desktop reticle */
-            }
-            canvas {
-                cursor: default; /* No custom cursor on mobile */
-            }
-            /* Simplified and smaller bottom bar menu for mobile */
-            #bottom-bar-menu {
-                bottom: 2px; /* Closer to the very bottom */
-                padding: 3px 4px;
-                gap: 3px 3px;
-                max-width: 95%; /* Make it slightly wider to accommodate items */
-                height: 38px; /* Fixed smaller height */
-                justify-content: space-around; /* Distribute items evenly */
-                display: flex; /* Ensure it's flex on mobile */
-                flex-wrap: nowrap; /* Prevent wrapping for simplified view */
-            }
+        /* Tap-to-Fire area */
+        #tap-to-fire-area {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; /* Covers entire canvas */
+            height: 100%; /* Covers entire canvas */
+            pointer-events: all; /* Allows touch events on its surface */
+            background: transparent; /* Ensure it's invisible */
+        }
 
-            /* Specific items to show on mobile simplified bar */
-            #bottom-bar-menu #score-item,
-            #bottom-bar-menu #wave-item,
-            #bottom-bar-menu #lives-item {
-                display: flex !important; /* Force display for these essential items */
-            }
-            /* Hide other items on mobile simplified bar */
-            #bottom-bar-menu .menu-item:not(#score-item):not(#wave-item):not(#lives-item) {
-                display: none !important;
-            }
+        /* Ability buttons container (GRID layout) */
+        #ability-buttons-container {
+            position: absolute;
+            bottom: 50px; /* Aligned with joystick bottom for consistency */
+            right: 10px;
+            display: grid; /* Use grid for better layout control */
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            grid-template-rows: repeat(4, 1fr); /* 4 rows to fit 8 buttons */
+            gap: 8px; /* Gap between grid items */
+            width: auto; /* Let content determine width */
+            max-width: 100px; /* Example max-width for 2 columns of 40px buttons + gaps */
+            z-index: 51; /* Higher z-index */
+            pointer-events: all; /* Important to make buttons tappable */
+        }
 
-            .menu-item {
-                min-width: 35px; /* Even smaller */
-                height: 32px;
-                font-size: 0.65em;
-                padding: 0 1px;
-            }
-            .menu-item .label {
-                font-size: 0.5em;
-                margin-bottom: 0px;
-            }
-            .menu-item span:not(.label) {
-                font-size: 0.7em;
-            }
-            .menu-item svg {
-                width: 12px;
-                height: 12px;
-                margin-bottom: 0px;
-            }
+        .ability-button {
+            width: 40px; /* Fixed size */
+            height: 40px;
+            font-size: 0.6em; /* Smaller font */
+            padding: 0;
+            border-radius: 8px; /* Standard rounded corners */
+            background-color: #333;
+            color: #eee;
+            border: 1px solid #555;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 8px rgba(50, 50, 200, 0.5);
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+        .ability-button:active {
+            transform: scale(0.95);
+        }
+        .ability-button svg {
+            width: 18px; /* Icon size */
+            height: 18px;
+            margin-bottom: 0px;
+        }
 
-            /* Joystick */
-            #joystick-area {
-                width: 80px;
-                height: 80px;
-                bottom: 50px; /* Adjusted to not overlap with bottom bar */
-                left: 10px;
-                z-index: 51; /* Higher z-index to ensure it's tappable */
-            }
-            #joystick-inner {
-                width: 30px;
-                height: 30px;
-            }
-
-            /* Tap-to-Fire area */
-            #tap-to-fire-area {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%; /* Covers entire canvas */
-                height: 100%; /* Covers entire canvas */
-                pointer-events: all; /* Allows touch events on its surface */
-                background: transparent; /* Ensure it's invisible */
-            }
-
-            /* Ability buttons container (GRID layout) */
-            #ability-buttons-container {
-                position: absolute;
-                bottom: 50px; /* Aligned with joystick bottom for consistency */
-                right: 10px;
-                display: grid; /* Use grid for better layout control */
-                grid-template-columns: repeat(2, 1fr); /* 2 columns */
-                grid-template-rows: repeat(4, 1fr); /* 4 rows to fit 8 buttons */
-                gap: 8px; /* Gap between grid items */
-                width: auto; /* Let content determine width */
-                /* Adjust max-width if needed to prevent overflow, but grid should handle it */
-                max-width: 100px; /* Example max-width for 2 columns of 40px buttons + gaps */
-                z-index: 51; /* Higher z-index */
-                pointer-events: all; /* Important to make buttons tappable */
-            }
-
-            .ability-button {
-                width: 40px; /* Fixed size */
-                height: 40px;
-                font-size: 0.6em; /* Smaller font */
-                padding: 0;
-                border-radius: 8px; /* Standard rounded corners */
-                box-shadow: 0 0 8px rgba(50, 50, 200, 0.5);
-            }
-            .ability-button svg {
-                width: 18px; /* Icon size */
-                height: 18px;
-                margin-bottom: 0px;
-            }
-
-            /* Adjust main menu and game over screens for smaller screens */
+        /* Adjust main menu and game over screens for smaller screens */
+        @media (max-width: 768px) {
             #main-screen, #tutorial-screen, #game-over-screen {
                 padding: 20px;
                 gap: 15px;
@@ -717,7 +712,10 @@
         <input type="text" id="player-name-input" placeholder="Seu nome (opcional)" maxlength="15">
         
         <div class="button-group">
-            <button id="start-game-button" class="main-button">Iniciar Jogo</button>
+            <button id="play-pc-button" class="main-button">Jogar no PC</button>
+            <button id="play-mobile-button" class="main-button">Jogar no Celular</button>
+        </div>
+        <div class="button-group">
             <button id="tutorial-button" class="main-button">Tutorial</button>
         </div>
 
@@ -908,7 +906,8 @@
         const mainScreen = document.getElementById('main-screen');
         const tutorialScreen = document.getElementById('tutorial-screen');
         const gameOverScreen = document.getElementById('game-over-screen');
-        const startGameButton = document.getElementById('start-game-button');
+        const playPcButton = document.getElementById('play-pc-button'); // New button
+        const playMobileButton = document.getElementById('play-mobile-button'); // New button
         const tutorialButton = document.getElementById('tutorial-button');
         const backToMainButton = document.getElementById('back-to-main-button');
         const restartGameButton = document.getElementById('restart-game-button');
@@ -1292,6 +1291,9 @@
         let joystickDeltaX = 0;
         let joystickDeltaY = 0;
 
+        // Variável de controle do modo de entrada
+        let controlMode = null; // 'pc' or 'mobile'
+
 
         // --- Funções Auxiliares e Classes ---
 
@@ -1310,46 +1312,34 @@
             initStars();
             spaceParticles = [];
             initSpaceParticles();
-            checkOrientation(); // Check orientation on resize and show/hide elements accordingly
+            // checkOrientation is now called directly from showScreen('game') logic
+            // so we don't call it here directly to avoid redundant calls or conflicting logic
         }
 
         // Função para verificar a orientação e gerenciar a visibilidade geral
         function checkOrientation() {
-            if (window.innerHeight > window.innerWidth) { // Portrait mode
+            if (controlMode === 'mobile' && window.innerHeight > window.innerWidth) { // Portrait mode AND mobile control mode selected
                 orientationMessage.style.display = 'flex';
                 // Forçar ocultar todos os elementos do jogo/menu usando !important
-                mainScreen.style.display = 'none !important';
-                tutorialScreen.style.display = 'none !important';
-                gameOverScreen.style.display = 'none !important';
-                canvas.style.display = 'none !important';
-                bottomBarMenu.style.display = 'none !important';
-                reticle.style.display = 'none !important';
-                mobileControls.style.display = 'none !important'; 
+                mainScreen.style.display = 'none';
+                tutorialScreen.style.display = 'none';
+                gameOverScreen.style.display = 'none';
+                canvas.style.display = 'none';
+                bottomBarMenu.style.display = 'none';
+                reticle.style.display = 'none';
+                mobileControls.style.display = 'none'; 
 
                 if (animationFrameId) {
                     cancelAnimationFrame(animationFrameId);
                     animationFrameId = null; // Parar o game loop se ativo
                 }
-
-            } else { // Landscape mode
+                return true; // Indicate that portrait mode is active and elements are hidden
+            } else { // Landscape mode or PC control mode selected
                 orientationMessage.style.display = 'none';
-                // Ao voltar para o modo paisagem, re-avaliar qual tela deve ser mostrada
-                // A função showScreen() lida com a exibição correta com base no estado do jogo
-                if (mainScreen.style.display === 'flex' || tutorialScreen.style.display === 'flex' || gameOverScreen.style.display === 'flex') {
-                    // Se uma tela de menu/fim de jogo já estava ativa, apenas certifique-se de que a visibilidade correta é aplicada
-                    // (media queries CSS se encarregam de reticle/mobileControls)
-                    // No need to call showScreen again here if it's already showing a menu
-                } else {
-                    // Se o jogo estava ativo antes da rotação para retrato e agora voltou para paisagem
-                    if (player && !gameOver) {
-                        showScreen('game'); // Retomar o jogo
-                    } else {
-                        showScreen('main'); // Voltar para o menu principal se nenhum jogo estava ativo
-                    }
-                }
-                updateMenuDisplay(); // Atualizar a exibição do menu após a mudança de orientação
+                return false; // Indicate normal orientation or PC mode
             }
         }
+
 
         class Particle {
             constructor(x, y, vx, vy, radius, color, life, decayRate = 0.02, gravityY = 0) {
@@ -1463,11 +1453,11 @@
                 // As partículas de fundo devem se mover em relação ao movimento simulado do jogador
                 const backgroundMovementScale = 0.05; 
                 // Mover o fundo apenas se o jogador estiver se movendo ativamente, não apenas o joystick ativo
-                if (Math.hypot(joystickDeltaX, joystickDeltaY) > JOYSTICK_DEADZONE || keys.w || keys.s || keys.a || keys.d) {
-                    if (joystickDeltaY < 0 || keys.w) this.y += playerSpeed * backgroundMovementScale * deltaTime;
-                    if (joystickDeltaY > 0 || keys.s) this.y -= playerSpeed * backgroundMovementScale * deltaTime;
-                    if (joystickDeltaX < 0 || keys.a) this.x += playerSpeed * backgroundMovementScale * deltaTime;
-                    if (joystickDeltaX > 0 || keys.d) this.x -= playerSpeed * backgroundMovementScale * deltaTime;
+                if ((controlMode === 'mobile' && Math.hypot(joystickDeltaX, joystickDeltaY) > JOYSTICK_DEADZONE) || (controlMode === 'pc' && (keys.w || keys.s || keys.a || keys.d))) {
+                    if ((controlMode === 'mobile' && joystickDeltaY < 0) || (controlMode === 'pc' && keys.w)) this.y += playerSpeed * backgroundMovementScale * deltaTime;
+                    if ((controlMode === 'mobile' && joystickDeltaY > 0) || (controlMode === 'pc' && keys.s)) this.y -= playerSpeed * backgroundMovementScale * deltaTime;
+                    if ((controlMode === 'mobile' && joystickDeltaX < 0) || (controlMode === 'pc' && keys.a)) this.x += playerSpeed * backgroundMovementScale * deltaTime;
+                    if ((controlMode === 'mobile' && joystickDeltaX > 0) || (controlMode === 'pc' && keys.d)) this.x -= playerSpeed * backgroundMovementScale * deltaTime;
                 }
                 
                 this.x += this.vx * deltaTime;
@@ -1581,7 +1571,7 @@
 
                 ctx.restore();
 
-                if (!this.dashActive && (Math.hypot(joystickDeltaX, joystickDeltaY) > JOYSTICK_DEADZONE || keys.w || keys.s || keys.a || keys.d)) {
+                if (!this.dashActive && ((controlMode === 'mobile' && Math.hypot(joystickDeltaX, joystickDeltaY) > JOYSTICK_DEADZONE) || (controlMode === 'pc' && (keys.w || keys.s || keys.a || keys.d)))) {
                     const thrustX = this.x + this.width / 2 + Math.cos(this.angle + Math.PI) * (this.height * 0.4);
                     const thrustY = this.y + this.height / 2 + Math.sin(this.angle + Math.PI) * (this.height * 0.4);
                     const spreadAngle = 0.6; 
@@ -1619,7 +1609,7 @@
                 let currentMoveX = 0;
                 let currentMoveY = 0;
 
-                if (window.innerWidth <= 768) { // Entrada do joystick móvel
+                if (controlMode === 'mobile') { // Entrada do joystick móvel
                     const magnitudeJoystick = Math.hypot(joystickDeltaX, joystickDeltaY);
                     if (magnitudeJoystick > JOYSTICK_DEADZONE) { // Aplicar deadzone
                         currentMoveX = joystickDeltaX / JOYSTICK_MAX_DIST;
@@ -1632,7 +1622,7 @@
                     if (keys.d) currentMoveX += 1;
                 }
 
-                if (keys.shift && window.innerWidth > 768) { // Shift é apenas para desktop
+                if (keys.shift && controlMode === 'pc') { // Shift é apenas para desktop
                     playerSpeed = PLAYER_BASE_SPEED * PLAYER_SLOW_SPEED_FACTOR;
                 } else {
                     playerSpeed = PLAYER_BASE_SPEED;
@@ -1658,7 +1648,7 @@
                 this.y = Math.max(0, Math.min(canvas.height - this.height, this.y));
 
                 let targetAngle;
-                if (window.innerWidth <= 768) { // Lógica de mira móvel: toque para atirar ou auto-mira
+                if (controlMode === 'mobile') { // Lógica de mira móvel: toque para atirar ou auto-mira
                     if (tapToFireActive) {
                         // Tentar auto-aim no inimigo mais próximo se houver um
                         let closestEnemy = null;
@@ -2606,7 +2596,7 @@
         }
 
         function createExplosion(x, y, baseColor, numParticles = 20, particleSpeed = 250, particleDecay = 2, minRadius = 1, maxRadius = 3, hasGravity = false) { 
-            // Limitar o número de partículas geradas para otimização em mobile
+            // Limitar o número de partículas geradas para otimização
             numParticles = Math.min(numParticles, 20); 
 
             for (let i = 0; i < numParticles; i++) {
@@ -2662,7 +2652,7 @@
             canvas.style.display = 'none';
             bottomBarMenu.style.display = 'none'; 
             reticle.style.display = 'none';
-            mobileControls.style.display = 'none'; // Ensure mobile controls are hidden initially
+            mobileControls.style.display = 'none'; 
             orientationMessage.style.display = 'none'; // Hide orientation message
 
             // Stop any active game loop
@@ -2678,20 +2668,21 @@
             } else if (screenId === 'tutorial') {
                 tutorialScreen.style.display = 'flex';
             } else if (screenId === 'game') {
-                // Before showing game, check orientation again.
-                // If in portrait, show orientation message and return.
-                if (window.innerHeight > window.innerWidth) {
-                    orientationMessage.style.display = 'flex';
+                // If mobile control mode is selected, check orientation
+                if (controlMode === 'mobile' && checkOrientation()) {
+                    // checkOrientation will display the message and stop here if in portrait
                     return; 
                 }
 
                 canvas.style.display = 'block';
                 bottomBarMenu.style.display = 'flex'; 
 
-                // Show desktop-specific reticle or mobile-specific controls based on screen width
-                if (window.innerWidth > 768) { 
+                // Show desktop-specific reticle or mobile-specific controls based on selected controlMode
+                if (controlMode === 'pc') { 
                     reticle.style.display = 'block';
-                } else { 
+                    mobileControls.style.display = 'none';
+                } else if (controlMode === 'mobile') { 
+                    reticle.style.display = 'none';
                     mobileControls.style.display = 'block';
                 }
                 
@@ -2732,8 +2723,8 @@
             score = 0;
             lives = 5; 
             gameOver = false;
-            mouseIsDown = false; // Reiniciar o estado de disparo do desktop
-            tapToFireActive = false; // Reiniciar o estado de disparo do celular
+            mouseIsDown = false; 
+            tapToFireActive = false; 
             tapToFireTargetX = 0;
             tapToFireTargetY = 0;
             droneCharge = 0;
@@ -2748,8 +2739,8 @@
             scoreMultiplierTimer = 0;
             lastScoreMultiplierActivation = -SCORE_MULTIPLIER_COOLDOWN; 
 
-            nextBossSpawnScore = 1000; // Resetar para o primeiro chefão em 1000 pontos
-            nextMegaBossSpawnScore = 10000; // Resetar para a primeira mega onda em 10000 pontos
+            nextBossSpawnScore = 1000; 
+            nextMegaBossSpawnScore = 10000; 
 
             // Começar com 2 slots de mísseis prontos
             missileSlots = [
@@ -2763,7 +2754,7 @@
             lastShieldActivation = -SHIELD_COOLDOWN;
             lastEnemySpawnTime = 0;
             bossActive = false; 
-            megaBossWaveActive = false; // Resetar estado da mega onda
+            megaBossWaveActive = false; 
             
             rapidFireActive = false;
             rapidFireTimer = 0;
@@ -2783,7 +2774,7 @@
             playerInvulnerableTimer = 0;
             playerFlashTimer = 0;
 
-            // Reiniciar estados do joystick (apenas para celular, mas reiniciar de qualquer forma por segurança)
+            // Reiniciar estados do joystick
             joystickActive = false;
             joystickDeltaX = 0;
             joystickDeltaY = 0;
@@ -2894,20 +2885,27 @@
             livesDisplay.textContent = `${lives}`;
             
             // --- Mobile vs Desktop Menu Item Visibility ---
-            const isMobile = window.innerWidth <= 768;
+            // Based on controlMode, not window.innerWidth directly
+            const isMobileMode = controlMode === 'mobile';
 
             // These are the only items visible in the simplified mobile bottom bar
             const essentialMobileItems = ['score-item', 'wave-item', 'lives-item'];
 
+            if (isMobileMode) {
+                bottomBarMenu.classList.add('mobile-simplified');
+            } else {
+                bottomBarMenu.classList.remove('mobile-simplified');
+            }
+
             document.querySelectorAll('#bottom-bar-menu .menu-item').forEach(item => {
                 const itemId = item.id;
-                if (isMobile) {
+                if (isMobileMode) {
                     if (essentialMobileItems.includes(itemId)) {
                         item.style.display = 'flex'; // Ensure essential items are always flex on mobile
                     } else {
                         item.style.display = 'none'; // Hide non-essential items on mobile
                     }
-                } else { // Desktop: show all
+                } else { // PC mode: show all
                     item.style.display = 'flex';
                 }
             });
@@ -3157,13 +3155,9 @@
         // --- Loop Principal do Jogo ---
         let elapsed = 0;
         function gameLoop(currentTime) {
-            // Pause the game loop if in portrait orientation
-            if (window.innerHeight > window.innerWidth) {
-                if (animationFrameId) {
-                    cancelAnimationFrame(animationFrameId);
-                    animationFrameId = null;
-                }
-                checkOrientation(); // Trigger check to show message
+            // Pause the game loop if in portrait orientation and mobile mode
+            if (controlMode === 'mobile' && checkOrientation()) {
+                // checkOrientation will handle pausing the game loop
                 return; 
             }
             if (gameOver) {
@@ -3178,8 +3172,8 @@
             const deltaTime = elapsed / 1000; // deltaTime em segundos
             lastFrameTime = currentTime;
             
-            // A mira é apenas para controle do mouse no desktop
-            if (window.innerWidth > 768) {
+            // A mira é apenas para controle do mouse no desktop (PC mode)
+            if (controlMode === 'pc') {
                 reticle.style.left = `${mouseX}px`;
                 reticle.style.top = `${mouseY}px`;
             }
@@ -3202,7 +3196,7 @@
             }
 
             for (let i = thrustParticles.length - 1; i >= 0; i--) {
-                const particle = thrustparticles[i];
+                const particle = thrustParticles[i];
                 particle.update(deltaTime);
                 particle.draw();
                 if (particle.life <= 0 || particle.opacity <= 0 || particle.radius <= 0) {
@@ -3256,11 +3250,10 @@
             }
 
             // Lógica de disparo do jogador
-            // O disparo é acionado pelo clique do mouse no desktop (mouseIsDown) OU pelo toque ativo na metade direita da tela (tapToFireActive)
-            if (player && ((window.innerWidth > 768 && mouseIsDown) || (window.innerWidth <= 768 && tapToFireActive)) && currentRealTime - lastPlayerShotTime > playerBulletCooldown) {
+            if (player && ((controlMode === 'pc' && mouseIsDown) || (controlMode === 'mobile' && tapToFireActive)) && currentRealTime - lastPlayerShotTime > playerBulletCooldown) {
                 let targetX, targetY;
 
-                if (window.innerWidth <= 768) { // Mira automática móvel e mira baseada no toque
+                if (controlMode === 'mobile') { // Mira automática móvel e mira baseada no toque
                     let closestEnemy = null;
                     let minDist = Infinity;
                     const autoAimRadius = 400; // Raio para auto-aim
@@ -3710,7 +3703,7 @@
 
         // --- Ouvintes de Eventos ---
         document.addEventListener('keydown', (e) => {
-            if (gameOver || window.innerWidth <= 768) return; // Apenas para desktop
+            if (gameOver || controlMode !== 'pc') return; // Apenas para PC
 
             switch (e.key.toLowerCase()) {
                 case 'w': keys.w = true; break;
@@ -3794,7 +3787,7 @@
         });
 
         document.addEventListener('keyup', (e) => {
-            if (gameOver || window.innerWidth <= 768) return; // Apenas para desktop
+            if (gameOver || controlMode !== 'pc') return; // Apenas para PC
 
             switch (e.key.toLowerCase()) {
                 case 'w': keys.w = false; break;
@@ -3806,17 +3799,17 @@
         });
 
         document.addEventListener('mousemove', (e) => {
-            if (window.innerWidth > 768) { // Apenas para desktop
+            if (controlMode === 'pc') { // Apenas para PC
                 mouseX = e.clientX;
                 mouseY = e.clientY;
             }
         });
 
         document.addEventListener('mousedown', (e) => {
-            if (window.innerWidth <= 768) return; // Apenas para desktop
+            if (controlMode !== 'pc') return; // Apenas para PC
 
             if (e.button === 0 && !gameOver) { // Apenas clique esquerdo do mouse
-                mouseIsDown = true; // Usar isso apenas para desktop para acionar o disparo
+                mouseIsDown = true; 
             } else if (e.button === 2 && !gameOver) { // Apenas clique direito do mouse para Predador
                 const currentTime = performance.now();
                 if (currentTime - lastPredatorActivation >= PREDATOR_COOLDOWN) {
@@ -3830,15 +3823,15 @@
         });
 
         document.addEventListener('mouseup', (e) => {
-            if (window.innerWidth <= 768) return; // Apenas para desktop
+            if (controlMode !== 'pc') return; // Apenas para PC
 
             if (e.button === 0) { // Apenas clique esquerdo do mouse
-                mouseIsDown = false; // Usar isso apenas para desktop
+                mouseIsDown = false; 
             }
         });
 
         document.addEventListener('wheel', (e) => {
-            if (gameOver || window.innerWidth <= 768) return; // Apenas roda do mouse no desktop
+            if (gameOver || controlMode !== 'pc') return; // Apenas roda do mouse no PC
 
             if (bombCount > 0) { 
                 createExplosion(canvas.width / 2, canvas.height / 2, '#8B008B', BOMB_EXPLOSION_PARTICLE_COUNT, 1000, 1.5, 8, 30, true); 
@@ -3855,24 +3848,41 @@
         });
 
 
-        startGameButton.addEventListener('click', startGame);
+        // Event listeners for control mode selection buttons
+        playPcButton.addEventListener('click', () => {
+            controlMode = 'pc';
+            startGame();
+        });
+
+        playMobileButton.addEventListener('click', () => {
+            controlMode = 'mobile';
+            startGame();
+        });
+
         tutorialButton.addEventListener('click', () => showScreen('tutorial'));
         backToMainButton.addEventListener('click', () => showScreen('main'));
         restartGameButton.addEventListener('click', startGame); 
         backToMainFromGameoverButton.addEventListener('click', () => showScreen('main')); 
 
-        // Initial setup and event listeners for orientation and resize
+        // Initial setup on window load
         window.addEventListener('load', () => {
-            checkOrientation(); // Initial check on load
+            showScreen('main'); // Always start at the main menu for control selection
         });
-        window.addEventListener('resize', resizeCanvas); // Attach resize listener to handle orientation
+        window.addEventListener('resize', () => {
+            resizeCanvas(); // Always resize canvas
+            if (controlMode === 'mobile') {
+                checkOrientation(); // Only check orientation for mobile mode on resize
+            }
+            updateMenuDisplay(); // Update menu display on resize
+        });
+
 
         // --- Controles de Toque Móveis (apenas para mobile) ---
 
         // Joystick Esquerdo (Movimento)
         if (joystickArea) { 
             joystickArea.addEventListener('touchstart', (e) => {
-                if (window.innerWidth > 768) return; // Apenas para mobile
+                if (controlMode !== 'mobile') return; // Apenas para mobile
                 e.preventDefault(); 
                 if (gameOver) return;
 
@@ -3887,7 +3897,7 @@
             }, { passive: false });
 
             joystickArea.addEventListener('touchmove', (e) => {
-                if (window.innerWidth > 768) return; // Apenas para mobile
+                if (controlMode !== 'mobile') return; // Apenas para mobile
                 e.preventDefault();
                 if (gameOver || !joystickActive) return;
 
@@ -3896,7 +3906,7 @@
             }, { passive: false });
 
             joystickArea.addEventListener('touchend', (e) => {
-                if (window.innerWidth > 768) return; // Apenas para mobile
+                if (controlMode !== 'mobile') return; // Apenas para mobile
                 if (gameOver) return;
 
                 joystickActive = false;
@@ -3928,7 +3938,7 @@
         // Tap-to-Fire Area
         if (tapToFireArea) {
             tapToFireArea.addEventListener('touchstart', (e) => {
-                if (window.innerWidth > 768) return; // Apenas para mobile
+                if (controlMode !== 'mobile') return; // Apenas para mobile
                 e.preventDefault(); 
                 if (gameOver) return;
                 const touch = e.touches[0];
@@ -3938,7 +3948,7 @@
             }, { passive: false });
 
             tapToFireArea.addEventListener('touchmove', (e) => {
-                if (window.innerWidth > 768) return; // Apenas para mobile
+                if (controlMode !== 'mobile') return; // Apenas para mobile
                 e.preventDefault(); 
                 if (gameOver || !tapToFireActive) return;
                 const touch = e.touches[0];
@@ -3947,7 +3957,7 @@
             }, { passive: false });
 
             tapToFireArea.addEventListener('touchend', (e) => {
-                if (window.innerWidth > 768) return; // Apenas para mobile
+                if (controlMode !== 'mobile') return; // Apenas para mobile
                 if (gameOver) return;
                 tapToFireActive = false;
             }, { passive: false });
@@ -3963,7 +3973,7 @@
         allAbilityButtons.forEach(button => {
             if (button) { // Ensure button exists
                 button.addEventListener('touchstart', (e) => {
-                    if (window.innerWidth > 768) return; // Apenas para mobile
+                    if (controlMode !== 'mobile') return; // Apenas para mobile
                     e.preventDefault();
                     if (gameOver) return;
 
@@ -3987,8 +3997,6 @@
                                 // Set player angle for dash based on joystick direction if active, else current player angle
                                 if (Math.hypot(joystickDeltaX, joystickDeltaY) > JOYSTICK_DEADZONE) {
                                     player.angle = Math.atan2(joystickDeltaY, joystickDeltaX);
-                                } else if (player.dx !== 0 || player.dy !== 0) {
-                                    // If moving by keyboard on desktop or by some other means, use player's current angle
                                 } else {
                                     // If not moving, dash straight up (default player angle is -PI/2)
                                     player.angle = -Math.PI / 2;
