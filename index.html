@@ -87,7 +87,6 @@
 
         #mobileUpgradeScreen .upgrade-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 95%; max-width: 500px; max-height: 70vh; overflow-y: auto; padding: 15px;}
         #mobileUpgradeScreen .upgrade-card { width: auto; flex-direction: column; justify-content: center; height: 140px; }
-        #mobileUpgradeScreen .upgrade-info { text-align: center; }
         #mobileUpgradeScreen .upgrade-title { font-size: 0.9em; }
         #mobileUpgradeScreen .upgrade-level, #mobileUpgradeScreen .upgrade-cost { font-size: 0.8em; }
         #mobileUpgradeScreen .upgrade-buy button { width: 40px; height: 40px; font-size: 1.5em; }
@@ -140,7 +139,7 @@
         <div class="upgrade-container">
             <!-- Os cards de upgrade serão inseridos aqui pelo JS -->
         </div>
-        <button id="closeUpgradeScreen" class="button">Fechar</button>
+        <button id="closeUpgradeScreen" class="button">Retornar ao jogo</button>
     </div>
 
 
@@ -261,6 +260,8 @@
             mobileUI.classList.add('hidden');
             tutorialActive = true;
             tutorialStep = 1;
+            tutorialMoved = false;
+            tutorialDummy = null;
             controlMode = 'pc';
             initGame(true);
             updateTutorialUI();
@@ -272,6 +273,45 @@
             gameContainer.classList.add('hidden');
             tutorialOverlay.classList.add('hidden');
             menuScreen.classList.remove('hidden');
+        }
+
+        function updateTutorialUI() {
+            if (!tutorialActive) {
+                tutorialOverlay.classList.add('hidden');
+                return;
+            }
+
+            tutorialOverlay.classList.remove('hidden');
+            let tutorialText = '';
+
+            switch (tutorialStep) {
+                case 1:
+                    tutorialText = "Bem-vindo ao Tutorial!\nUse W, A, S, D para mover sua nave.";
+                    break;
+                case 2:
+                    if (!tutorialDummy || tutorialDummy.health <= 0) {
+                        const r = 20;
+                        let x = canvas.width / 2;
+                        let y = canvas.height / 4;
+                        tutorialDummy = new Enemy(x, y, 1);
+                        enemies.push(tutorialDummy);
+                    }
+                    tutorialText = "Ótimo! Agora, mova o mouse para mirar e clique para atirar no inimigo.";
+                    break;
+                case 3:
+                     tutorialText = "Pressione 'Q' para ativar seu escudo protetor.";
+                     break;
+                case 4:
+                     tutorialText = "Clique com o botão direito do mouse (RMB) para ativar o modo de tiro 'Hunter'.";
+                     break;
+                case 5:
+                     tutorialText = "Pressione 'E' para lançar um míssil teleguiado. Você pode acumular mísseis com o tempo.";
+                     break;
+                case 6:
+                     tutorialText = "Tutorial concluído! Pressione ESC para sair.";
+                     break;
+            }
+            tutorialOverlay.innerText = tutorialText;
         }
 
         function startGame(mode, challenge = false, savedState = null) {
@@ -1154,6 +1194,7 @@
 
             isPaused = false;
             mobileUpgradeScreen.classList.add('hidden');
+            tutorialDummy = null;
 
             if (!isTutorial) { updateScore(0); }
             updateHealthBar();
@@ -1283,6 +1324,42 @@
                 }
             }
             
+            if (tutorialActive) {
+                switch (tutorialStep) {
+                    case 1:
+                        if (tutorialMoved) {
+                            tutorialStep++;
+                            updateTutorialUI();
+                        }
+                        break;
+                    case 2:
+                        if (tutorialDummy && tutorialDummy.health <= 0) {
+                            tutorialDummy = null;
+                            tutorialStep++;
+                            updateTutorialUI();
+                        }
+                        break;
+                    case 3:
+                        if (abilities.shield.active) {
+                            tutorialStep++;
+                            updateTutorialUI();
+                        }
+                        break;
+                    case 4:
+                        if (abilities.hunter.active) {
+                            tutorialStep++;
+                            updateTutorialUI();
+                        }
+                        break;
+                    case 5:
+                        if (predatorMissiles.length > 0) {
+                            tutorialStep++;
+                            updateTutorialUI();
+                        }
+                        break;
+                }
+            }
+
             updateUI();
         }
         
@@ -1292,7 +1369,7 @@
             [...bosses, ...arietes].forEach((b) => { 
                 if (Math.hypot(player.x - b.x, player.y - b.y) - b.radius - player.radius < 1) { 
                     if (b instanceof Ariete) {
-                        b.health = 0; // The Ariete dies on collision
+                        b.health = 0; // The Ariete dies on collision, onDeath will handle drone destruction
                     } else { // It's a boss
                         player.takeDamage(100);
                         b.health -= 100;
@@ -1430,12 +1507,9 @@
                 mobileCard.className = 'upgrade-card';
                 mobileCard.id = `mobile-${key}-upgrade`;
                 mobileCard.innerHTML = `
-                    <div class="upgrade-info">
-                        <div class="upgrade-header"><span class="upgrade-icon">${upg.icon}</span><span class="upgrade-title">${upg.name}</span></div>
-                        <div class="upgrade-level"></div>
-                        <div class="upgrade-cost"></div>
-                    </div>
-                    <div class="upgrade-buy"><button>+</button></div>`;
+                    <div class="upgrade-header"><span class="upgrade-icon">${upg.icon}</span><span class="upgrade-title">${upg.name}</span></div>
+                    <div class="upgrade-level"></div>
+                    <div class="upgrade-buy"><button>+</button><span class="upgrade-cost"></span></div>`;
                 mobileCard.querySelector('button').addEventListener('click', upgradeFn);
                 mobileContainer.appendChild(mobileCard);
             });
@@ -1443,8 +1517,46 @@
         
         function updateUI() {
             if (!player) return;
+
+            // Update abilities UI
+            const abilityUIs = controlMode === 'pc' ? {
+                shield: getEl('shield-ability'), hunter: getEl('hunter-ability')
+            } : {
+                shield: getEl('mobile-shield-ability'), hunter: getEl('mobile-hunter-ability')
+            };
+
+            ['shield', 'hunter'].forEach(key => {
+                const ability = abilities[key];
+                const ui = abilityUIs[key];
+                if (!ui) return;
+                const overlay = ui.querySelector('.cooldown-overlay');
+                if (overlay) {
+                    if (ability.onCooldown) {
+                        overlay.style.display = 'flex';
+                        const timePassed = Date.now() - ability.timer;
+                        let percent = 0;
+                        let remainingTime = 0;
+
+                        if (ability.active && timePassed < ability.duration) {
+                            percent = 1 - (timePassed / ability.duration);
+                            remainingTime = ((ability.duration - timePassed) / 1000).toFixed(1);
+                        } else {
+                            const cooldownTimePassed = timePassed - ability.duration;
+                            percent = 1 - (cooldownTimePassed / (ability.cooldown - ability.duration));
+                             remainingTime = ((ability.cooldown - timePassed) / 1000).toFixed(1);
+                        }
+                        
+                        overlay.style.height = `${Math.max(0, percent * 100)}%`;
+                        overlay.textContent = `${Math.max(0, remainingTime)}s`;
+                    } else {
+                        overlay.style.display = 'none';
+                    }
+                }
+            });
+
             getEl('mobile-predator-ability').querySelector('.count-display').innerText = abilities.predator.current;
             
+            // Update upgrade cards UI
             Object.entries(upgrades).forEach(([key, upg]) => {
                 const pcCard = getEl(`pc-${key}-upgrade`);
                 const mobileCard = getEl(`mobile-${key}-upgrade`);
@@ -1462,14 +1574,14 @@
 
                 if (pcCard) {
                     pcCard.querySelector('.upgrade-level').innerText = levelText;
-                    pcCard.querySelector('.upgrade-cost').innerText = costText;
+                    pcCard.querySelector('.upgrade-buy .upgrade-cost').innerText = costText;
                     const pcBtn = pcCard.querySelector('button');
                     pcBtn.disabled = score < currentCost;
                     pcCard.classList.toggle('disabled', score < currentCost);
                 }
                 if (mobileCard) {
                     mobileCard.querySelector('.upgrade-level').innerText = levelText;
-                    mobileCard.querySelector('.upgrade-cost').innerText = costText;
+                    mobileCard.querySelector('.upgrade-buy .upgrade-cost').innerText = costText;
                     const mobileBtn = mobileCard.querySelector('button');
                     mobileBtn.disabled = score < currentCost;
                     mobileCard.classList.toggle('disabled', score < currentCost);
