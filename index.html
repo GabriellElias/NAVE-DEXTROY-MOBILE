@@ -3,23 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>Batalha Espacial V7.9</title>
+    <title>DEXTROY</title>
 
     <style>
         /* CSS Integrado */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { background-color: #0d0221; overflow: hidden; font-family: 'Consolas', 'Courier New', monospace; color: white; }
 
-        .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: #0d0221; padding: 20px; transition: opacity 0.5s; }
+        .screen { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: #0d0221; padding: 20px; transition: opacity 0.5s; z-index: 100; }
         .hidden { display: none !important; }
         
-        h1 { font-size: clamp(2.5em, 10vw, 4em); color: #f923e2; text-shadow: 0 0 5px #f923e2, 0 0 10px #f923e2, 0 0 20px #ff077f, 0 0 30px #ff077f; margin-bottom: 30px; letter-spacing: 4px; }
-        .button { background: transparent; border: 2px solid #07dfd8; color: #07dfd8; text-shadow: 0 0 5px #07dfd8; padding: 15px 30px; font-size: clamp(1em, 5vw, 1.2em); border-radius: 0; cursor: pointer; width: 80%; max-width: 300px; margin-top: 15px; transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; }
-        .button:hover { background-color: #07dfd8; color: #0d0221; box-shadow: 0 0 20px #07dfd8; }
+        #menuScreen h1 {
+            font-size: clamp(4em, 15vw, 8em);
+            color: #E1F2FE;
+            letter-spacing: 5px;
+            margin-bottom: 40px;
+            animation: cosmic-pulse 3s infinite alternate;
+        }
 
-        #menuScreen input { width: 80%; max-width: 300px; padding: 15px; font-size: 1.1em; border-radius: 0; border: 2px solid #07dfd8; background-color: rgba(0,0,0,0.3); color: white; text-align: center; margin-bottom: 20px; }
-        #leaderboardList { list-style: none; width: 90%; max-width: 400px; max-height: 60vh; overflow-y: auto; background-color: rgba(0,0,0,0.3); border: 1px solid #f923e2; padding: 10px; }
+        @keyframes cosmic-pulse {
+            from { text-shadow: 0 0 10px #30BCED, 0 0 20px #30BCED, 0 0 30px #5B8FB9, 0 0 40px #5B8FB9; }
+            to { text-shadow: 0 0 5px #30BCED, 0 0 10px #30BCED, 0 0 15px #5B8FB9, 0 0 20px #5B8FB9; }
+        }
+
+        .button { background: transparent; border: 2px solid #30BCED; color: #30BCED; text-shadow: 0 0 5px #30BCED; padding: 15px 30px; font-size: clamp(1em, 5vw, 1.2em); border-radius: 0; cursor: pointer; width: 80%; max-width: 300px; margin-top: 15px; transition: background-color 0.3s, color 0.3s, box-shadow 0.3s; }
+        .button:hover { background-color: #30BCED; color: #03001C; box-shadow: 0 0 20px #30BCED; }
+        .button.challenge-btn { border-color: #ff4500; color: #ff4500; }
+        .button.challenge-btn:hover { background-color: #ff4500; color: #03001C; box-shadow: 0 0 20px #ff4500; }
+
+        #menuScreen input { width: 80%; max-width: 300px; padding: 15px; font-size: 1.1em; border-radius: 0; border: 2px solid #30BCED; background-color: rgba(0,0,0,0.3); color: white; text-align: center; margin-bottom: 20px; }
+        #leaderboardList { list-style: none; width: 90%; max-width: 400px; max-height: 60vh; overflow-y: auto; background-color: rgba(0,0,0,0.3); border: 1px solid #5B8FB9; padding: 10px; }
+        #leaderboardList li { display: flex; justify-content: space-between; padding: 5px; border-bottom: 1px solid #5B8FB9; }
         
+        #gameOverModal #modalContent p { margin: 10px 0; font-size: 1.2em; }
+
         /* ----- Elementos do Jogo (UI) ----- */
         #gameContainer.crosshair-cursor { cursor: crosshair; }
         #gameCanvas {
@@ -31,32 +48,32 @@
             background: #000;
         }
         
-        #top-left-ui { position: absolute; top: 10px; left: 10px; font-size: 18px; user-select: none; background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; display: flex; flex-direction: column; gap: 5px; border: 1px solid rgba(249, 35, 226, 0.5); }
+        #top-left-ui { position: absolute; top: 10px; left: 10px; font-size: 18px; user-select: none; background-color: rgba(0,0,0,0.3); padding: 10px; border-radius: 8px; display: flex; flex-direction: column; gap: 5px; border: 1px solid rgba(255, 165, 0, 0.5); }
         #stats-display { display: flex; gap: 20px; }
 
-        #health-bar-container { width: 220px; height: 24px; background-color: rgba(249, 35, 226, 0.2); border: 1px solid #f923e2; border-radius: 0; position: relative; }
-        #health-bar { width: 100%; height: 100%; background: linear-gradient(90deg, #f923e2, #ff8c00); transition: width 0.2s; }
+        #health-bar-container { width: 220px; height: 24px; background-color: rgba(255, 165, 0, 0.2); border: 1px solid #FFA500; border-radius: 0; position: relative; }
+        #health-bar { width: 100%; height: 100%; background: linear-gradient(90deg, #4CAF50, #98FB98); transition: width 0.2s; }
         #health-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; font-size: 14px; font-weight: bold; text-shadow: 1px 1px 2px black; }
 
-        #pc-bottom-ui { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; align-items: flex-end; gap: 20px; z-index: 10; }
-        #pc-abilities-ui, #pc-upgrades-ui { display: flex; gap: 10px; background-color: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; border: 1px solid rgba(7, 223, 216, 0.5); }
+        #pc-bottom-ui { position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%); display: flex; align-items: flex-end; gap: 10px; z-index: 10; padding: 5px; background-color: rgba(13, 2, 28, 0.7); border-radius: 10px; border: 1px solid rgba(48, 188, 237, 0.5); }
+        #pc-abilities-ui, #pc-upgrades-ui { display: flex; gap: 5px; }
         
-        .ability { width: 60px; height: 60px; border: 2px solid #07dfd8; border-radius: 8px; position: relative; display: flex; align-items: center; justify-content: center; font-size: 1.5em; font-weight: bold; }
-        .ability .cooldown-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(249, 35, 226, 0.7); display: flex; align-items: center; justify-content: center; font-size: 0.8em; transition: height 0.1s linear; overflow: hidden; border-radius: 6px; }
-        .ability .ability-key { position: absolute; top: 2px; left: 4px; font-size: 0.6em; }
-        .ability .count-display { position: absolute; bottom: 2px; right: 4px; font-size: 0.6em; background: rgba(0,0,0,0.7); padding: 1px 3px; border-radius: 4px; }
+        .ability { width: 50px; height: 50px; border: 2px solid #07dfd8; border-radius: 8px; position: relative; display: flex; align-items: center; justify-content: center; font-size: 1.3em; font-weight: bold; }
+        .ability .cooldown-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(249, 35, 226, 0.7); display: flex; align-items: center; justify-content: center; font-size: 0.7em; transition: height 0.1s linear; overflow: hidden; border-radius: 6px; }
+        .ability .ability-key { position: absolute; top: 1px; left: 3px; font-size: 0.5em; }
+        .ability .count-display { position: absolute; bottom: 1px; right: 3px; font-size: 0.6em; background: rgba(0,0,0,0.7); padding: 1px 3px; border-radius: 4px; }
         
-        .upgrade-card { display: flex; flex-direction: column; align-items: center; padding: 10px; background: rgba(30, 30, 30, 0.7); border: 1px solid #ffac33; width: 120px; }
-        .upgrade-card.disabled { border-color: #a83232; }
-        .upgrade-header { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
-        .upgrade-icon { font-size: 1.2em; }
-        .upgrade-title { font-size: 0.9em; }
-        .upgrade-level { font-size: 0.8em; margin-bottom: 8px; }
-        .upgrade-buy { display: flex; align-items: center; gap: 10px; }
-        .upgrade-buy button { background: #ffac33; border: none; color: black; font-size: 1.5em; width: 30px; height: 30px; cursor: pointer; }
-        .upgrade-buy button:disabled { background: #a83232; cursor: not-allowed; }
-        .upgrade-cost { font-size: 0.9em; }
-
+        .upgrade-card { display: flex; flex-direction: column; align-items: center; padding: 5px; background: rgba(30, 30, 30, 0.7); border: 1px solid #ffac33; width: 90px; border-radius: 8px; text-align: center; }
+        .upgrade-card.disabled { border-color: #a83232; color: #777;}
+        .upgrade-card.disabled .upgrade-header, .upgrade-card.disabled .upgrade-buy button { color: #777; }
+        .upgrade-header { display: flex; align-items: center; justify-content: center; gap: 5px; margin-bottom: 2px; }
+        .upgrade-icon { font-size: 1em; }
+        .upgrade-title { font-size: 0.7em; }
+        .upgrade-level { font-size: 0.6em; margin-bottom: 4px; }
+        .upgrade-buy { display: flex; align-items: center; gap: 5px; }
+        .upgrade-buy button { background: #ffac33; border: none; color: black; font-size: 1em; width: 20px; height: 20px; cursor: pointer; border-radius: 5px;}
+        .upgrade-buy button:disabled { background: #555; cursor: not-allowed; }
+        .upgrade-cost { font-size: 0.7em; }
 
         /* Joysticks e Botões Mobile */
         #joystick-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 180px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px;}
@@ -65,87 +82,148 @@
         .joystick-stick { width: 50px; height: 50px; background-color: rgba(7, 223, 216, 0.5); border-radius: 50%; position: absolute; }
         
         #mobile-abilities-ui { position: absolute; right: 20px; bottom: 180px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
-        #mobile-abilities-ui .ability { width: 55px; height: 55px; font-size: 1.2em; }
+        #mobile-abilities-ui .ability { width: 55px; height: 55px; font-size: 1.2em; border-color: #FFD700; }
+        
+        #tutorial-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.7);
+            border: 2px solid #07dfd8;
+            padding: 20px 40px;
+            font-size: 1.5em;
+            text-align: center;
+            z-index: 20;
+        }
+
     </style>
 </head>
 <body>
     <div id="menuScreen" class="screen">
-        <h1>Batalha Espacial</h1>
-        <input type="text" id="playerNameInput" placeholder="Digite seu nome">
-        <div id="platform-selection"> <button id="startPCButton" class="button">Jogar no PC</button> <button id="startMobileButton" class="button">Jogar no Celular</button> </div>
-        <button id="leaderboardButton" class="button">Placar</button>
+        <h1 id="main-title">DEXTROY</h1>
+        <div class="menu-content">
+            <input type="text" id="playerNameInput" placeholder="Digite seu nome">
+            <div id="platform-selection"> 
+                <button id="startPCButton" class="button">Jogar no PC</button> 
+                <button id="startMobileButton" class="button">Jogar no Celular</button>
+                <button id="challengePCButton" class="button challenge-btn">Desafio (PC)</button> 
+                <button id="challengeMobileButton" class="button challenge-btn">Desafio (Mobile)</button> 
+                <button id="tutorialButton" class="button">Como Jogar</button>
+                <button id="continueButton" class="button hidden">Continuar Jogo</button>
+                <button id="leaderboardButton" class="button">Placar</button>
+            </div>
+        </div>
     </div>
     <div id="leaderboardScreen" class="screen hidden"><h1>Recordes</h1> <ol id="leaderboardList"></ol> <button id="backToMenuButton" class="button">Voltar</button></div>
-    <div id="gameOverModal" class="screen hidden"><div id="modalContent"> <h1>Fim de Jogo</h1> <p>Pontuação Final: <span id="finalScoreEl">0</span></p> <button id="menuReturnButton" class="button">Voltar ao Menu</button> </div></div>
+    <div id="gameOverModal" class="screen hidden">
+        <div id="modalContent"> 
+            <h1>Fim de Jogo</h1> 
+            <p>Pontuação Final: <span id="finalScoreEl">0</span></p> 
+            <p>Inimigos Derrotados: <span id="finalEnemiesDefeatedEl">0</span></p> 
+            <p>Tempo Sobrevivido: <span id="finalTimeSurvivedEl">0</span>s</p>
+            <button id="menuReturnButton" class="button">Voltar ao Menu</button> 
+        </div>
+    </div>
 
     <div id="gameContainer" class="hidden">
         <canvas id="gameCanvas"></canvas>
         <div id="top-left-ui">
             <div id="stats-display"> <span>Pontos: <span id="scoreEl">0</span></span> <span>Horda: <span id="waveEl">0</span></span> </div>
             <div id="health-bar-container"> <div id="health-bar"></div> <div id="health-text"></div> </div>
+             <button id="exitButton" class="button" style="padding: 5px 10px; font-size: 0.8em; margin-top: 5px;">Sair e Salvar</button>
         </div>
         
+        <div id="tutorial-overlay" class="hidden"></div>
+
         <!-- UI para PC -->
         <div id="pc-bottom-ui" class="hidden">
-            <div id="upgrades-ui">
-                <div class="upgrade-card" id="health-upgrade">
-                    <div class="upgrade-header"><span class="upgrade-icon">❤️</span><span class="upgrade-title">Vida</span></div>
-                    <div class="upgrade-level">Lv1</div>
-                    <div class="upgrade-buy"><button>+</button><span class="upgrade-cost"></span></div>
-                </div>
-                <div class="upgrade-card" id="damage-upgrade">
-                     <div class="upgrade-header"><span class="upgrade-icon">💥</span><span class="upgrade-title">Dano</span></div>
-                    <div class="upgrade-level">Lv1</div>
-                    <div class="upgrade-buy"><button>+</button><span class="upgrade-cost"></span></div>
-                </div>
-                <div class="upgrade-card" id="speed-upgrade">
-                     <div class="upgrade-header"><span class="upgrade-icon">⚡</span><span class="upgrade-title">Velocidade</span></div>
-                    <div class="upgrade-level">Lv1</div>
-                    <div class="upgrade-buy"><button>+</button><span class="upgrade-cost"></span></div>
-                </div>
-            </div>
+             <div id="pc-upgrades-ui">
+                 <div class="upgrade-card" id="health-upgrade">
+                     <div class="upgrade-header"><span class="upgrade-icon">❤️</span><span class="upgrade-title">Vida</span></div>
+                     <div class="upgrade-level">Nível 1</div>
+                     <div class="upgrade-buy"><button>+</button><span class="upgrade-cost"></span></div>
+                     <div class="ability-key">[1]</div>
+                 </div>
+                 <div class="upgrade-card" id="damage-upgrade">
+                      <div class="upgrade-header"><span class="upgrade-icon">💥</span><span class="upgrade-title">Dano</span></div>
+                     <div class="upgrade-level">Nível 1</div>
+                     <div class="upgrade-buy"><button>+</button><span class="upgrade-cost"></span></div>
+                     <div class="ability-key">[2]</div>
+                 </div>
+                 <div class="upgrade-card" id="speed-upgrade">
+                      <div class="upgrade-header"><span class="upgrade-icon">⚡</span><span class="upgrade-title">Velocidade</span></div>
+                     <div class="upgrade-level">Nível 1</div>
+                     <div class="upgrade-buy"><button>+</button><span class="upgrade-cost"></span></div>
+                     <div class="ability-key">[3]</div>
+                 </div>
+                  <div class="upgrade-card" id="flot-drone-buy">
+                     <div class="upgrade-header"><span class="upgrade-icon">🛰️</span><span class="upgrade-title">Drone Ataque</span></div>
+                     <div class="upgrade-level" id="flot-drone-count">0</div>
+                     <div class="upgrade-buy"><button>+</button><span class="upgrade-cost"></span></div>
+                     <div class="ability-key">[F]</div>
+                 </div>
+                 <div class="upgrade-card" id="defense-drone-buy">
+                     <div class="upgrade-header"><span class="upgrade-icon">🔵</span><span class="upgrade-title">Drone Defesa</span></div>
+                     <div class="upgrade-level" id="defense-drone-count">0</div>
+                     <div class="upgrade-buy"><button>+</button><span class="upgrade-cost"></span></div>
+                     <div class="ability-key">[C]</div>
+                 </div>
+             </div>
             <div id="pc-abilities-ui">
-                <div id="abilities-row">
-                    <div id="shield-ability" class="ability">🛡️<div class="cooldown-overlay"></div><span class="ability-key">Q</span></div>
-                    <div id="hunter-ability" class="ability">💥<div class="cooldown-overlay"></div><span class="ability-key">RMB</span></div>
-                    <div id="predator-ability" class="ability">🚀<div class="cooldown-overlay"></div><span class="ability-key">E/S+X</span><span class="count-display">0</span></div>
-                    <div id="flot-ability" class="ability">🛰️<div class="cooldown-overlay"></div><span class="ability-key">F</span><span class="count-display">0</span></div>
-                    <div id="defense-drone-ability" class="ability">🔵<div class="cooldown-overlay"></div><span class="ability-key">C</span><span class="count-display">0</span></div>
-                </div>
+                 <div id="abilities-row">
+                     <div id="shield-ability" class="ability">🛡️<div class="cooldown-overlay"></div><span class="ability-key">Q</span></div>
+                     <div id="hunter-ability" class="ability">💥<div class="cooldown-overlay"></div><span class="ability-key">RMB</span></div>
+                     <div id="predator-ability" class="ability">🚀<div class="cooldown-overlay"></div><span class="ability-key">E/S+X</span><span class="count-display">0</span></div>
+                 </div>
             </div>
         </div>
 
          <!-- UI para Mobile -->
          <div id="mobile-controls" class="hidden">
-            <div id="joystick-container">
-                <div class="joystick-zone" id="joystick-zone-left"><div class="joystick-base"><div class="joystick-stick"></div></div></div>
-                <div class="joystick-zone" id="joystick-zone-right"><div class="joystick-base"><div class="joystick-stick"></div></div></div>
-            </div>
-             <div id="mobile-abilities-ui">
-                <div id="mobile-shield-ability" class="ability">🛡️<div class="cooldown-overlay"></div></div>
-                <div id="mobile-hunter-ability" class="ability">💥<div class="cooldown-overlay"></div></div>
-                <div id="mobile-predator-ability" class="ability">🚀<span class="count-display">0</span></div>
-                <div id="mobile-multi-predator-ability" class="ability">🚀<small>xN</small></div>
-                <div id="mobile-flot-ability" class="ability">🛰️<span class="count-display">0</span></div>
-                <div id="mobile-defense-drone-ability" class="ability">🔵<span class="count-display">0</span></div>
-            </div>
-        </div>
+             <div id="joystick-container">
+                 <div class="joystick-zone" id="joystick-zone-left"><div class="joystick-base"><div class="joystick-stick"></div></div></div>
+                 <div class="joystick-zone" id="joystick-zone-right"><div class="joystick-base"><div class="joystick-stick"></div></div></div>
+             </div>
+              <div id="mobile-abilities-ui">
+                 <div id="mobile-shield-ability" class="ability">🛡️<div class="cooldown-overlay"></div></div>
+                 <div id="mobile-hunter-ability" class="ability">💥<div class="cooldown-overlay"></div></div>
+                 <div id="mobile-predator-ability" class="ability">🚀<span class="count-display">0</span></div>
+                 <div id="mobile-multi-predator-ability" class="ability">🚀<small>xN</small></div>
+                 <div id="mobile-flot-ability" class="ability">🛰️<span class="count-display">0</span></div>
+                 <div id="mobile-defense-drone-ability" class="ability">🔵<span class="count-display">0</span></div>
+             </div>
+         </div>
     </div>
 
     <script>
+    window.addEventListener('DOMContentLoaded', () => {
         const getEl = (id) => document.getElementById(id);
+        // Screen and container elements
         const menuScreen = getEl('menuScreen'), leaderboardScreen = getEl('leaderboardScreen'), gameContainer = getEl('gameContainer'), gameOverModal = getEl('gameOverModal');
-        const startPCButton = getEl('startPCButton'), startMobileButton = getEl('startMobileButton'), leaderboardButton = getEl('leaderboardButton'), backToMenuButton = getEl('backToMenuButton'), menuReturnButton = getEl('menuReturnButton');
-        const playerNameInput = getEl('playerNameInput'), canvas = getEl('gameCanvas'), ctx = canvas.getContext('2d');
-        const scoreEl = getEl('scoreEl'), waveEl = getEl('waveEl'), finalScoreEl = getEl('finalScoreEl'), healthBar = getEl('health-bar'), healthText = getEl('health-text');
+        // Button elements
+        const startPCButton = getEl('startPCButton'), startMobileButton = getEl('startMobileButton'), leaderboardButton = getEl('leaderboardButton'), backToMenuButton = getEl('backToMenuButton'), menuReturnButton = getEl('menuReturnButton'), tutorialButton = getEl('tutorialButton');
+        const challengePCButton = getEl('challengePCButton'), challengeMobileButton = getEl('challengeMobileButton');
+        const continueButton = getEl('continueButton'), exitButton = getEl('exitButton');
+        // Game UI elements
+        const playerNameInput = getEl('playerNameInput'), canvas = getEl('gameCanvas'), ctx = canvas ? canvas.getContext('2d') : null;
+        const scoreEl = getEl('scoreEl'), waveEl = getEl('waveEl'), finalScoreEl = getEl('finalScoreEl'), finalEnemiesDefeatedEl = getEl('finalEnemiesDefeatedEl'), finalTimeSurvivedEl = getEl('finalTimeSurvivedEl'), healthBar = getEl('health-bar'), healthText = getEl('health-text');
         const pcUI = getEl('pc-bottom-ui'), mobileUI = getEl('mobile-controls');
-        
-        let player, bosses, bullets, enemies, particles, enemyBullets, explosions, predatorMissiles, flotDrones, defenseDrones, stars, magneticWaves, arietes;
+        const tutorialOverlay = getEl('tutorial-overlay');
+
+        // Game state variables
+        let player, bosses, bullets, enemies, particles, enemyBullets, explosions, predatorMissiles, flotDrones, defenseDrones, stars, magneticWaves, arietes, arieteBullets, fireBreaths;
         let score, currentWave, enemyLevel, nextLevelScore, animationId, controlMode, currentPlayerName, missileChargeTimer, shootCooldown, lastHealTime, pointMultiplier;
+        let isChallengeMode, enemiesDefeated, gameStartTime;
         let moveJoystick, shootJoystick;
         let waveTransition = { active: false, timer: 0, duration: 5000 };
-        const keys = { w: false, a: false, s: false, d: false, q: false, e: false, f: false, '1': false, '2': false, 'c': false, 'shift': false, 'x': false };
+        let tutorialActive = false, tutorialStep = 0, tutorialDummy, tutorialMoved = false;
+        
+        // Input states
+        const keys = { w: false, a: false, s: false, d: false, q: false, e: false, f: false, '1': false, '2': false, '3': false, 'c': false, 'shift': false, 'x': false, 'escape': false };
         const mouse = { x: 0, y: 0, leftDown: false };
+        
+        // Game constants
         const abilities = {
             shield: { duration: 20000, cooldown: 30000, active: false, onCooldown: false, timer: 0 },
             hunter: { duration: 20000, cooldown: 30000, active: false, onCooldown: false, timer: 0 },
@@ -154,13 +232,45 @@
             defense: { cost: 250, currentCost: 250 }
         };
         const upgrades = { health: { cost: 200, level: 0 }, damage: { cost: 1000, level: 0 }, speed: { cost: 500, level: 0 } };
+        const SAVE_GAME_KEY = 'dextroySaveGame';
+        const LEADERBOARD_KEY = 'spaceShooterLeaderboardV6';
 
-        // --- NAVEGAÇÃO E INÍCIO ---
-        startPCButton.addEventListener('click', () => startGame('pc'));
-        startMobileButton.addEventListener('click', () => startGame('mobile'));
-        function startGame(mode) {
-            currentPlayerName = playerNameInput.value || "Jogador"; controlMode = mode;
-            menuScreen.classList.add('hidden'); gameContainer.classList.remove('hidden');
+        // --- NAVIGATION AND SETUP ---
+        startPCButton.addEventListener('click', () => startGame('pc', false));
+        startMobileButton.addEventListener('click', () => startGame('mobile', false));
+        challengePCButton.addEventListener('click', () => startGame('pc', true));
+        challengeMobileButton.addEventListener('click', () => startGame('mobile', true));
+        tutorialButton.addEventListener('click', () => startTutorial());
+        if(continueButton) continueButton.addEventListener('click', () => loadAndContinueGame());
+        if(exitButton) exitButton.addEventListener('click', () => saveAndExit());
+
+        function startTutorial() {
+            menuScreen.classList.add('hidden');
+            gameContainer.classList.remove('hidden');
+            pcUI.classList.add('hidden');
+            mobileUI.classList.add('hidden');
+            tutorialActive = true;
+            tutorialStep = 1;
+            controlMode = 'pc';
+            initGame(true);
+            updateTutorialUI();
+        }
+
+        function endTutorial() {
+            tutorialActive = false;
+            cancelAnimationFrame(animationId);
+            gameContainer.classList.add('hidden');
+            tutorialOverlay.classList.add('hidden');
+            menuScreen.classList.remove('hidden');
+        }
+
+        function startGame(mode, challenge = false, savedState = null) {
+            currentPlayerName = playerNameInput.value || "Jogador"; 
+            controlMode = mode;
+            isChallengeMode = challenge;
+            menuScreen.classList.add('hidden'); 
+            gameContainer.classList.remove('hidden');
+            
             if (controlMode === 'pc') { 
                 pcUI.classList.remove('hidden'); 
                 mobileUI.classList.add('hidden');
@@ -170,206 +280,828 @@
                 mobileUI.classList.remove('hidden');
                 gameContainer.classList.remove('crosshair-cursor'); 
             }
-            initGame();
+            initGame(false, savedState);
         }
-        leaderboardButton.addEventListener('click', () => { leaderboardScreen.classList.remove('hidden'); menuScreen.classList.add('hidden'); displayLeaderboard(); });
-        backToMenuButton.addEventListener('click', () => { menuScreen.classList.remove('hidden'); leaderboardScreen.classList.add('hidden'); });
-        menuReturnButton.addEventListener('click', () => { menuScreen.classList.remove('hidden'); gameOverModal.classList.add('hidden'); gameContainer.classList.add('hidden'); });
-        const LEADERBOARD_KEY = 'spaceShooterLeaderboardV6';
-        const getScores = () => JSON.parse(localStorage.getItem(LEADERBOARD_KEY) || '[]');
-        function saveScore(name, score) { if (score <= 0) return; const scores = getScores(); scores.push({ name, score }); scores.sort((a, b) => b.score - a.score); localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(scores.slice(0, 10))); }
-        function displayLeaderboard() { getEl('leaderboardList').innerHTML = getScores().length ? getScores().map(r => `<li><span>${r.name}</span><span>${r.score}</span></li>`).join('') : '<li>Nenhum recorde ainda.</li>'; }
         
-        // --- CLASSES ---
-        class Player { constructor(x,y){this.x=x;this.y=y;this.radius=15;this.speed=4;this.angle=0;this.maxHp=500;this.hp=500;this.velocity={x:0,y:0};this.damageMultiplier=1;this.lastHitTime=0;} 
-            draw(){
+        leaderboardButton.addEventListener('click', () => { 
+            displayLeaderboard();
+            leaderboardScreen.classList.remove('hidden'); 
+            menuScreen.classList.add('hidden'); 
+        });
+        backToMenuButton.addEventListener('click', () => { 
+            menuScreen.classList.remove('hidden'); 
+            leaderboardScreen.classList.add('hidden'); 
+        });
+        menuReturnButton.addEventListener('click', () => { 
+            gameOverModal.classList.add('hidden'); 
+            gameContainer.classList.add('hidden');
+            menuScreen.classList.remove('hidden');
+            if (localStorage.getItem(SAVE_GAME_KEY)) {
+                continueButton.classList.remove('hidden');
+            }
+        });
+
+        // --- Leaderboard Functions ---
+        const getScores = () => JSON.parse(localStorage.getItem(LEADERBOARD_KEY) || '[]');
+        function saveScore(name, score) { 
+            if (score <= 0) return; 
+            const scores = getScores(); 
+            scores.push({ name, score }); 
+            scores.sort((a, b) => b.score - a.score); 
+            localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(scores.slice(0, 10))); 
+        }
+        function displayLeaderboard() { 
+            const list = getEl('leaderboardList');
+            const scores = getScores();
+            list.innerHTML = scores.length ? scores.map(r => `<li><span>${r.name}</span><span>${r.score}</span></li>`).join('') : '<li>Nenhum recorde ainda.</li>'; 
+        }
+        
+        // --- GAME CLASSES ---
+        class Player { 
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.radius = 20;
+                this.speed = 4;
+                this.angle = 0;
+                this.maxHp = 500; this.hp = 500;
+                this.velocity = { x: 0, y: 0 };
+                this.damageMultiplier = 1;
+                this.lastHitTime = 0;
+            } 
+            draw() {
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(this.angle);
+                const engineGlowIntensity = (Math.abs(this.velocity.x) + Math.abs(this.velocity.y)) > 0 ? 1 : 0.5;
+                const engineGlow = ctx.createRadialGradient(0, 18, 2, 0, 18, 12);
+                engineGlow.addColorStop(0, `rgba(100, 180, 255, ${0.8 * engineGlowIntensity})`);
+                engineGlow.addColorStop(1, 'rgba(100, 180, 255, 0)');
+                ctx.fillStyle = engineGlow;
+                ctx.beginPath();
+                ctx.arc(0, 18, 12, 0, Math.PI * 2);
+                ctx.fill();
                 const bodyGradient = ctx.createLinearGradient(0, -this.radius, 0, this.radius);
-                bodyGradient.addColorStop(0, '#E0E0E0');
-                bodyGradient.addColorStop(1, '#A0A0A0');
+                bodyGradient.addColorStop(0, '#d4d8dd');
+                bodyGradient.addColorStop(0.5, '#898c90');
+                bodyGradient.addColorStop(1, '#5b5e61');
                 ctx.fillStyle = bodyGradient;
-                ctx.strokeStyle = '#424242';
+                ctx.strokeStyle = '#333';
                 ctx.lineWidth = 1.5;
                 ctx.beginPath();
-                ctx.moveTo(0, -18);
-                ctx.lineTo(12, 10);
-                ctx.lineTo(8, 15);
-                ctx.lineTo(-8, 15);
-                ctx.lineTo(-12, 10);
+                ctx.moveTo(0, -22);
+                ctx.lineTo(14, 10);
+                ctx.lineTo(12, 18);
+                ctx.lineTo(-12, 18);
+                ctx.lineTo(-14, 10);
                 ctx.closePath();
                 ctx.fill();
                 ctx.stroke();
-                ctx.beginPath();
-                ctx.arc(0, -2, 5, 0, Math.PI * 2);
-                const cockpitGradient = ctx.createRadialGradient(0, -2, 1, 0, -2, 5);
-                cockpitGradient.addColorStop(0, 'rgba(120, 220, 255, 1)');
-                cockpitGradient.addColorStop(1, 'rgba(0, 150, 200, 0.5)');
+                const cockpitGradient = ctx.createRadialGradient(0, -8, 1, 0, -8, 8);
+                cockpitGradient.addColorStop(0, 'rgba(100, 220, 255, 1)');
+                cockpitGradient.addColorStop(1, 'rgba(0, 100, 150, 0.8)');
                 ctx.fillStyle = cockpitGradient;
-                ctx.fill();
+                ctx.strokeStyle = '#7ccfff';
+                ctx.lineWidth = 1;
                 ctx.beginPath();
-                ctx.moveTo(-7, 7);
-                ctx.lineTo(-5, 0);
-                ctx.lineTo(5, 0);
-                ctx.lineTo(7, 7);
-                ctx.strokeStyle = '#BDBDBD';
+                ctx.arc(0, -9, 7, 0, Math.PI * 2);
+                ctx.fill();
                 ctx.stroke();
                 ctx.restore();
-                if(abilities.shield.active){ctx.beginPath();ctx.arc(this.x,this.y,this.radius+10,0,Math.PI*2);ctx.strokeStyle=`rgba(0,255,255,${0.2+Math.random()*0.5})`;ctx.lineWidth=3;ctx.stroke();}
+                if (abilities.shield.active) {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius + 10, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(0, 255, 255, ${0.2 + Math.random() * 0.5})`;
+                    ctx.lineWidth = 3;
+                    ctx.shadowBlur = 15;
+                    ctx.shadowColor = "cyan";
+                    ctx.stroke();
+                    ctx.shadowBlur = 0;
+                }
             } 
-            update(){
+            update() {
                 this.draw();
                 if (controlMode === 'pc') {
                     this.angle = Math.atan2(mouse.y - this.y, mouse.x - this.x) + Math.PI / 2;
                     this.velocity.x = 0;
                     this.velocity.y = 0;
-                    if (keys.w) this.velocity.y = -1;
-                    if (keys.s) this.velocity.y = 1;
-                    if (keys.a) this.velocity.x = -1;
-                    if (keys.d) this.velocity.x = 1;
-                } else {
+                    if (keys.w) { this.velocity.y = -1; if(tutorialActive) tutorialMoved = true; }
+                    if (keys.s) { this.velocity.y = 1;  if(tutorialActive) tutorialMoved = true; }
+                    if (keys.a) { this.velocity.x = -1; if(tutorialActive) tutorialMoved = true; }
+                    if (keys.d) { this.velocity.x = 1;  if(tutorialActive) tutorialMoved = true; }
+                } else if (moveJoystick) {
                     this.velocity = moveJoystick.vector;
-                    if (shootJoystick.vector.x !== 0 || shootJoystick.vector.y !== 0) {
+                    if (shootJoystick && (shootJoystick.vector.x !== 0 || shootJoystick.vector.y !== 0)) {
                         this.angle = Math.atan2(shootJoystick.vector.y, shootJoystick.vector.x) + Math.PI / 2;
                     }
                 }
+                const magnitude = Math.sqrt(this.velocity.x**2 + this.velocity.y**2);
+                if (magnitude > 1) {
+                    this.velocity.x /= magnitude;
+                    this.velocity.y /= magnitude;
+                }
                 this.x += this.velocity.x * this.speed;
                 this.y += this.velocity.y * this.speed;
-                if (this.velocity.x !== 0 || this.velocity.y !== 0) {
-                    const r = this.angle - Math.PI / 2;
-                    const backOffsetX = Math.cos(r + Math.PI) * 12;
-                    const backOffsetY = Math.sin(r + Math.PI) * 12;
-                    particles.push(new Particle(this.x + backOffsetX, this.y + backOffsetY, 2.5, 'orange'));
-                }
                 this.x = Math.max(this.radius, Math.min(canvas.width - this.radius, this.x));
                 this.y = Math.max(this.radius, Math.min(canvas.height - this.radius, this.y));
             } 
-            takeDamage(amount){this.lastHitTime=Date.now();this.hp=Math.max(0,this.hp-amount);updateHealthBar();if(this.hp<=0)endGame(true);}}
-        class Bullet { constructor(x,y,v,isExplosive=false,dmgMult=1){this.x=x;this.y=y;this.radius=4;this.color=isExplosive?'#FF8C00':'white';this.velocity=v;this.speed=10;this.isExplosive=isExplosive;this.damage=isExplosive?3*dmgMult:1*dmgMult;} draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);ctx.fillStyle=this.color;ctx.fill();} update(){this.draw();this.x+=this.velocity.x*this.speed;this.y+=this.velocity.y*this.speed;} }
-        class Enemy { constructor(x,y,level){this.x=x;this.y=y;this.level=level;this.radius=12+level*2;this.health=level*2;this.maxHealth=level*2;this.points=20*Math.pow(2,level-1);this.color=`hsl(${120 - level*20}, 80%, 50%)`;this.shootCooldown=2000-level*200;this.lastShot=Date.now();} 
-            draw(){
+            takeDamage(amount) {
+                this.lastHitTime = Date.now();
+                this.hp = Math.max(0, this.hp - amount);
+                updateHealthBar();
+                if (this.hp <= 0) endGame();
+            }
+        }
+
+        class Bullet { 
+            constructor(x, y, v, isExplosive = false, dmgMult = 1) {
+                this.x = x; this.y = y;
+                this.radius = 4;
+                this.color = isExplosive ? '#FF8C00' : '#00ffff';
+                this.velocity = v;
+                this.speed = 12;
+                this.isExplosive = isExplosive;
+                this.damage = (isExplosive ? 3 : 1) * dmgMult;
+                this.length = 15;
+            } 
+            draw() {
                 ctx.save();
-                ctx.translate(this.x, this.y);
-                if (player) ctx.rotate(Math.atan2(player.y - this.y, player.x - this.x) + Math.PI / 2);
                 ctx.beginPath();
-                ctx.moveTo(0, -this.radius); // Ponta
-                ctx.quadraticCurveTo(this.radius, 0, 0, this.radius); // Corpo direito
-                ctx.quadraticCurveTo(-this.radius, 0, 0, -this.radius); // Corpo esquerdo
-                ctx.closePath();
-                ctx.fillStyle = this.color;
-                ctx.fill();
-                ctx.strokeStyle = '#333';
-                ctx.lineWidth = 1.5;
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x - this.velocity.x * this.length, this.y - this.velocity.y * this.length);
+                ctx.strokeStyle = this.color;
+                ctx.lineWidth = this.isExplosive ? 4 : 2;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
                 ctx.stroke();
                 ctx.restore();
-            }
-            update(){this.draw();if(!player) return; const angle=Math.atan2(player.y-this.y,player.x-this.x);const speed=.8+(this.level*.2);this.x+=Math.cos(angle)*speed;this.y+=Math.sin(angle)*speed;if(Date.now()-this.lastShot>this.shootCooldown){this.shoot();this.lastShot=Date.now();}} 
-            shoot(){if(!player) return; const angle=Math.atan2(player.y-this.y,player.x-this.x);const damage=2*Math.pow(1.3,this.level-1);enemyBullets.push(new EnemyBullet(this.x,this.y,{x:Math.cos(angle),y:Math.sin(angle)},this.level,damage));}}
-        class EnemyBullet { constructor(x,y,v,level,dmg){this.x=x;this.y=y;this.velocity=v;this.level=level;this.damage=dmg;this.radius=4+level;this.speed=3+level*.5;this.isExplosive=level>=3;this.isHoming=level>=4;this.isDoT=level>=5;this.color=this.isDoT?'red':(this.isExplosive?'orange':'magenta'); this.health = this.isHoming ? 3 : 1; } draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);ctx.fillStyle=this.color;ctx.fill();} update(){if(this.isHoming&&player){const angle=Math.atan2(player.y-this.y,player.x-this.x);this.velocity.x=Math.cos(angle);this.velocity.y=Math.sin(angle);}this.draw();this.x+=this.velocity.x*this.speed;this.y+=this.velocity.y*this.speed;}}
-        class Particle { constructor(x,y,r,c){this.x=x;this.y=y;this.radius=r;this.color=c;this.velocity={x:(Math.random()-.5)*2,y:(Math.random()-.5)*2};this.alpha=1;this.life=Math.random()*40+20;} draw(){ctx.save();ctx.globalAlpha=this.alpha;ctx.beginPath();ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);ctx.fillStyle=this.color;ctx.fill();ctx.restore();} update(){this.draw();this.x+=this.velocity.x;this.y+=this.velocity.y;this.life--; this.alpha=this.life/60;}}
-        class Explosion { constructor(x,y,baseRadius){this.x=x;this.y=y;this.baseRadius=baseRadius;this.particles=[];this.alpha=1;this.init();}
-            init(){
-                const particleCount=this.baseRadius;
-                const colors=['#ffffff','#ffc857','#ffac33','#e67700','#d95d00','#bf4700','#222'];
-                for(let i=0;i<particleCount;i++){
-                    this.particles.push(new Particle(this.x,this.y,Math.random()*2+1,colors[Math.floor(Math.random()*colors.length)]));
-                }
-            }
-            update(){this.particles.forEach((p,i)=>{p.update();if(p.alpha<=0)this.particles.splice(i,1);});this.alpha-=0.04;}}
-        class PredatorMissile { constructor(x,y){this.x=x;this.y=y;this.target=null;this.radius=8;this.speed=8;} findTarget(){let bestTarget=null;let maxScore=-1;const targets=[...enemies,...bosses,...arietes];targets.forEach(t=>{if(!t)return;const dist=Math.hypot(this.x-t.x,this.y-t.y);const score=(t.level||10)*100-dist;if(score>maxScore){maxScore=score;bestTarget=t;}});this.target=bestTarget;} update(){if(!this.target||this.target.health<=0)this.findTarget();if(this.target){const angle=Math.atan2(this.target.y-this.y,this.target.x-this.x);this.x+=Math.cos(angle)*this.speed;this.y+=Math.sin(angle)*this.speed;if(Math.hypot(this.x-this.target.x,this.y-this.target.y)<this.speed*2)this.detonate();}else{this.y-=this.speed;if(this.y<0)predatorMissiles.splice(predatorMissiles.indexOf(this),1);}this.draw();} draw(){ctx.save();ctx.translate(this.x,this.y);ctx.rotate(this.target?Math.atan2(this.target.y-this.y,this.target.x-this.x)+Math.PI/2:0);ctx.fillStyle='white';ctx.beginPath();ctx.moveTo(0,-10);ctx.lineTo(5,5);ctx.lineTo(-5,5);ctx.closePath();ctx.fill();particles.push(new Particle(this.x,this.y,3,'red'));ctx.restore();} detonate(){createExplosion(this.x, this.y, 150);[...enemies, ...bosses, ...arietes].forEach(e=>{if(Math.hypot(this.x-e.x,this.y-e.y)<150)e.health-=30;});predatorMissiles.splice(predatorMissiles.indexOf(this),1);}}
-        class Boss { constructor(x,y){this.x=x;this.y=y;this.level=10;this.radius=50;this.maxHealth=2000;this.health=2000;this.color='purple';this.target={x:Math.random()*canvas.width,y:Math.random()*canvas.height};this.speed=1;this.lastShot=Date.now();this.shootCooldown=1000;this.points=2000;} update(){if(Math.hypot(this.x-this.target.x,this.y-this.target.y)<50)this.target={x:Math.random()*canvas.width,y:Math.random()*canvas.height};const angle=Math.atan2(this.target.y-this.y,this.target.x-this.x);this.x+=Math.cos(angle)*this.speed;this.y+=Math.sin(angle)*this.speed;if(Date.now()-this.lastShot>this.shootCooldown)this.shoot();this.draw();} shoot(){this.lastShot=Date.now();if(!player)return;const angle=Math.atan2(player.y-this.y,player.x-this.x);enemyBullets.push(new EnemyBullet(this.x,this.y,{x:Math.cos(angle),y:Math.sin(angle)},4,15));} 
+            } 
+            update() {
+                this.draw();
+                this.x += this.velocity.x * this.speed;
+                this.y += this.velocity.y * this.speed;
+            } 
+        }
+        
+        class Enemy { 
+            constructor(x, y, level) {
+                this.x = x; this.y = y; this.level = level;
+                this.radius = 12 + level * 2;
+                this.health = level * 2; this.maxHealth = level * 2;
+                this.points = 20 * Math.pow(2, level - 1);
+                this.color = `hsl(${360 - level * 40}, 90%, 50%)`;
+                this.shootCooldown = 2000 - level * 200;
+                this.lastShot = Date.now();
+            } 
             draw() {
                 ctx.save();
                 ctx.translate(this.x, this.y);
-                ctx.beginPath(); ctx.arc(0, 0, this.radius, 0, Math.PI * 2); ctx.fillStyle = this.color; ctx.fill();
-                ctx.strokeStyle = '#ff00ff'; ctx.lineWidth = 3;
-                for(let i=0; i<6; i++) { ctx.beginPath(); const angle = i * (Math.PI*2/6) + Date.now()/1000; ctx.moveTo(Math.cos(angle) * this.radius * 0.6, Math.sin(angle) * this.radius * 0.6); ctx.lineTo(Math.cos(angle) * this.radius, Math.sin(angle) * this.radius); ctx.stroke(); }
-                ctx.beginPath(); ctx.arc(0, 0, this.radius, -Math.PI/2, -Math.PI/2 + Math.PI*2*(this.health/this.maxHealth)); ctx.strokeStyle='red'; ctx.lineWidth=8; ctx.stroke();
+                if (player) ctx.rotate(Math.atan2(player.y - this.y, player.x - this.x) + Math.PI / 2);
+                ctx.fillStyle = this.color;
+                ctx.strokeStyle = 'black';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(0, -this.radius);
+                ctx.quadraticCurveTo(this.radius, 0, this.radius * 0.7, this.radius);
+                ctx.lineTo(-this.radius * 0.7, this.radius);
+                ctx.quadraticCurveTo(-this.radius, 0, 0, -this.radius);
+                ctx.closePath();
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.stroke();
+                ctx.shadowBlur = 0;
                 ctx.restore();
             }
+            update() {
+                this.draw();
+                if (!player) return; 
+                const angle = Math.atan2(player.y - this.y, player.x - this.x);
+                const speed = 0.8 + (this.level * 0.2);
+                this.x += Math.cos(angle) * speed;
+                this.y += Math.sin(angle) * speed;
+                if (Date.now() - this.lastShot > this.shootCooldown) {
+                    this.shoot();
+                    this.lastShot = Date.now();
+                }
+            } 
+            shoot() {
+                if (!player) return; 
+                const angle = Math.atan2(player.y - this.y, player.x - this.x);
+                const damage = 2 * Math.pow(1.3, this.level - 1);
+                enemyBullets.push(new EnemyBullet(this.x, this.y, { x: Math.cos(angle), y: Math.sin(angle) }, this.level, damage));
+            }
         }
-        class FlotDrone { constructor(x,y){this.x=x;this.y=y;this.radius=8;this.health=100;this.maxHealth=100;this.target=null;this.lastShot=0;this.shootCooldown=500;} findTarget(){let bestTarget=null;let min_dist=Infinity;[...enemies,...bosses,...arietes].forEach(t=>{if(!t)return;const dist=Math.hypot(this.x-t.x,this.y-t.y);if(dist<min_dist){min_dist=dist;bestTarget=t;}});this.target=bestTarget;} update(index, totalDrones){if(!player)return;if(!this.target||this.target.health<=0)this.findTarget();const orbitRadius=80;const orbitAngle=(Date.now()/2000)+(index*(Math.PI*2/totalDrones));const targetX=player.x+Math.cos(orbitAngle)*orbitRadius;const targetY=player.y+Math.sin(orbitAngle)*orbitRadius;const angle=Math.atan2(targetY-this.y,targetX-this.x);this.x+=Math.cos(angle)*3;this.y+=Math.sin(angle)*3;if(this.target&&Date.now()-this.lastShot>this.shootCooldown){this.shoot();this.lastShot=Date.now();}this.draw();} shoot(){if(!this.target)return;const angle=Math.atan2(this.target.y-this.y,this.target.x-this.x);const damage=this.target instanceof Boss || this.target instanceof Ariete ?30:20;bullets.push(new Bullet(this.x,this.y,{x:Math.cos(angle),y:Math.sin(angle)},false,damage/player.damageMultiplier));} 
+        
+        class EnemyBullet { 
+            constructor(x, y, v, level, dmg) {
+                this.x = x; this.y = y;
+                this.velocity = v; this.level = level; this.damage = dmg;
+                this.radius = 4 + level;
+                this.speed = 3 + level * 0.5;
+                this.isExplosive = level >= 3;
+                this.isHoming = level >= 4;
+                this.isDoT = level >= 5;
+                this.color = this.isDoT ? '#ff4d4d' : (this.isExplosive ? '#ff8c00' : '#ff00ff'); 
+                this.health = this.isHoming ? 3 : 1;
+            } 
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            } 
+            update() {
+                if (this.isHoming && player) {
+                    const angle = Math.atan2(player.y - this.y, player.x - this.x);
+                    this.velocity.x = Math.cos(angle);
+                    this.velocity.y = Math.sin(angle);
+                }
+                this.draw();
+                this.x += this.velocity.x * this.speed;
+                this.y += this.velocity.y * this.speed;
+            }
+        }
+
+        class ArieteBullet {
+            constructor(x, y, v) {
+                this.x = x; this.y = y;
+                this.velocity = v;
+                this.radius = 8;
+                this.speed = 4;
+                this.color = '#FFA500';
+            }
+            draw() {
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 2;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = this.color;
+                ctx.fill();
+                ctx.stroke();
+                ctx.restore();
+            }
+            update() {
+                this.draw();
+                this.x += this.velocity.x * this.speed;
+                this.y += this.velocity.y * this.speed;
+            }
+        }
+        
+        class Particle { 
+            constructor(x, y, r, c, velocity) {
+                this.x = x; this.y = y; this.radius = r; this.color = c;
+                this.velocity = velocity || { x: (Math.random() - 0.5) * (Math.random() * 4), y: (Math.random() - 0.5) * (Math.random() * 4) };
+                this.alpha = 1;
+                this.life = Math.random() * 60 + 30;
+                this.initialLife = this.life;
+            } 
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+                ctx.restore();
+            } 
+            update() {
+                this.draw();
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.life--; 
+                this.alpha = this.life / this.initialLife;
+            }
+        }
+
+        class FireBreath {
+            constructor(x, y, angle) {
+                this.x = x;
+                this.y = y;
+                this.angle = angle;
+                this.duration = 3000; // 3 seconds
+                this.startTime = Date.now();
+                this.alpha = 1;
+                this.damageInterval = 100; // deals damage every 100ms
+                this.lastDamageTime = 0;
+            }
+            update() {
+                const elapsedTime = Date.now() - this.startTime;
+                if (elapsedTime > this.duration) {
+                    this.alpha = 0;
+                    return;
+                }
+
+                // Create a stream of fire particles
+                for (let i = 0; i < 5; i++) {
+                    const speed = Math.random() * 5 + 3;
+                    const spread = (Math.random() - 0.5) * 0.5;
+                    const vel = {
+                        x: Math.cos(this.angle + spread) * speed,
+                        y: Math.sin(this.angle + spread) * speed
+                    }
+                    const life = Math.random() * 40 + 20;
+                    const color = `rgba(255, ${Math.random() * 150}, 0, 0.8)`;
+                    particles.push(new Particle(this.x, this.y, Math.random() * 4 + 2, color, vel));
+                }
+            }
+        }
+        
+        class Explosion { 
+            constructor(x, y, baseRadius) {
+                this.x = x; this.y = y; this.baseRadius = baseRadius;
+                this.particles = [];
+                this.alpha = 1;
+                this.init();
+            }
+            init() {
+                const particleCount = this.baseRadius * 1.5;
+                const colors = ['#ffffff', '#ffc857', '#ffac33', '#e67700', '#d95d00', '#bf4700', '#222', '#ff4500'];
+                for (let i = 0; i < particleCount; i++) {
+                    this.particles.push(new Particle(this.x, this.y, Math.random() * 3 + 1, colors[Math.floor(Math.random() * colors.length)]));
+                }
+            }
+            update() {
+                this.particles.forEach((p, i) => {
+                    p.update();
+                    if (p.alpha <= 0) this.particles.splice(i, 1);
+                });
+                this.alpha -= 0.04;
+            }
+        }
+        
+        class PredatorMissile { 
+            constructor(x, y) {
+                this.x = x; this.y = y;
+                this.target = null;
+                this.radius = 8;
+                this.speed = 8;
+            } 
+            findTarget() {
+                let bestTarget = null;
+                let maxScore = -1;
+                const targets = [...enemies, ...bosses, ...arietes];
+                targets.forEach(t => {
+                    if (!t) return;
+                    const dist = Math.hypot(this.x - t.x, this.y - t.y);
+                    const score = (t.level || 10) * 100 - dist;
+                    if (score > maxScore) {
+                        maxScore = score;
+                        bestTarget = t;
+                    }
+                });
+                this.target = bestTarget;
+            } 
+            update() {
+                if (!this.target || this.target.health <= 0) this.findTarget();
+                if (this.target) {
+                    const angle = Math.atan2(this.target.y - this.y, this.target.x - this.x);
+                    this.x += Math.cos(angle) * this.speed;
+                    this.y += Math.sin(angle) * this.speed;
+                    if (Math.hypot(this.x - this.target.x, this.y - this.target.y) < this.speed * 2) this.detonate();
+                } else {
+                    this.y -= this.speed;
+                    if (this.y < 0) predatorMissiles.splice(predatorMissiles.indexOf(this), 1);
+                }
+                this.draw();
+            } 
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.target ? Math.atan2(this.target.y - this.y, this.target.x - this.x) + Math.PI / 2 : 0);
+                ctx.fillStyle = 'white';
+                ctx.beginPath();
+                ctx.moveTo(0, -10); ctx.lineTo(5, 5); ctx.lineTo(-5, 5);
+                ctx.closePath();
+                ctx.fill();
+                particles.push(new Particle(this.x, this.y, 3, '#ff4500'));
+                ctx.restore();
+            } 
+            detonate() {
+                createExplosion(this.x, this.y, 150);
+                [...enemies, ...bosses, ...arietes].forEach(e => {
+                    if (Math.hypot(this.x - e.x, this.y - e.y) < 150) e.health -= 30;
+                });
+                predatorMissiles.splice(predatorMissiles.indexOf(this), 1);
+            }
+        }
+        
+        class FinalBoss extends Enemy {
+             constructor(x, y) {
+                super(x, y, 20); // High level for stats
+                this.maxHealth = 20000;
+                this.health = 20000;
+                this.radius = 80;
+                this.points = 50000;
+                this.speed = 0.5;
+                this.shootCooldown = 4000; // Shoots less often, but attack is powerful
+                this.color = '#8B0000'; // Dark red
+                this.name = "Aniquilador Estelar";
+             }
+
+             shoot() {
+                if (!player) return;
+                this.lastShot = Date.now();
+                const angle = Math.atan2(player.y - this.y, player.x - this.x);
+                fireBreaths.push(new FireBreath(this.x, this.y, angle));
+             }
+
+             draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                // Draw health bar above boss
+                const healthPercentage = this.health / this.maxHealth;
+                ctx.fillStyle = 'grey';
+                ctx.fillRect(-this.radius, -this.radius - 20, this.radius * 2, 10);
+                ctx.fillStyle = 'red';
+                ctx.fillRect(-this.radius, -this.radius - 20, this.radius * 2 * healthPercentage, 10);
+
+                if (player) ctx.rotate(Math.atan2(player.y - this.y, player.x - this.x) + Math.PI / 2);
+
+                // Main body
+                ctx.fillStyle = this.color;
+                ctx.strokeStyle = '#FF0000';
+                ctx.lineWidth = 4;
+                ctx.shadowColor = 'red';
+                ctx.shadowBlur = 20;
+
+                ctx.beginPath();
+                ctx.moveTo(0, -this.radius); // Nose
+                ctx.quadraticCurveTo(this.radius * 0.8, -this.radius * 0.5, this.radius, this.radius * 0.2);
+                ctx.lineTo(this.radius * 0.5, this.radius);
+                ctx.lineTo(-this.radius * 0.5, this.radius);
+                ctx.lineTo(-this.radius, this.radius * 0.2);
+                ctx.quadraticCurveTo(-this.radius * 0.8, -this.radius * 0.5, 0, -this.radius);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                ctx.restore();
+             }
+        }
+        
+        class FlotDrone { 
+            constructor(x, y) {
+                this.x = x; this.y = y; this.radius = 8; this.health = 100; this.maxHealth = 100;
+                this.target = null; this.lastShot = 0; this.shootCooldown = 500;
+            } 
+            findTarget() {
+                let bestTarget = null; let min_dist = Infinity;
+                [...enemies, ...bosses, ...arietes].forEach(t => {
+                    if (!t) return;
+                    const dist = Math.hypot(this.x - t.x, this.y - t.y);
+                    if (dist < min_dist) { min_dist = dist; bestTarget = t; }
+                });
+                this.target = bestTarget;
+            } 
+            update(index, totalDrones) {
+                if (!player) return;
+                if (!this.target || this.target.health <= 0) this.findTarget();
+                const orbitRadius = 80;
+                const orbitAngle = (Date.now() / 2000) + (index * (Math.PI * 2 / totalDrones));
+                const targetX = player.x + Math.cos(orbitAngle) * orbitRadius;
+                const targetY = player.y + Math.sin(orbitAngle) * orbitRadius;
+                const angle = Math.atan2(targetY - this.y, targetX - this.x);
+                this.x += Math.cos(angle) * 3;
+                this.y += Math.sin(angle) * 3;
+                if (this.target && Date.now() - this.lastShot > this.shootCooldown) {
+                    this.shoot();
+                    this.lastShot = Date.now();
+                }
+                this.draw();
+            } 
+            shoot() {
+                if (!this.target) return;
+                const angle = Math.atan2(this.target.y - this.y, this.target.x - this.x);
+                const damage = this.target instanceof Enemy ? 20 : 30;
+                bullets.push(new Bullet(this.x, this.y, { x: Math.cos(angle), y: Math.sin(angle) }, false, damage / player.damageMultiplier));
+            } 
             draw() {
                 ctx.save();
                 ctx.translate(this.x, this.y);
                 ctx.rotate(Date.now() / 1000);
                 ctx.beginPath();
-                ctx.rect(-this.radius, -this.radius, this.radius*2, this.radius*2);
-                ctx.strokeStyle='lime';
-                ctx.lineWidth=2;
+                ctx.rect(-this.radius, -this.radius, this.radius * 2, this.radius * 2);
+                ctx.strokeStyle = 'lime'; ctx.lineWidth = 2;
+                ctx.shadowBlur = 10; ctx.shadowColor = 'lime';
                 ctx.stroke();
                 ctx.fillStyle = `rgba(0, 255, 0, 0.2)`;
                 ctx.fill();
                 ctx.restore();
             }
         }
-        class DefenseDrone { constructor(x,y){this.x=x;this.y=y;this.radius=12;this.health=200;this.maxHealth=200;} update(index,totalDrones){if(!player)return;const orbitRadius=60;const orbitAngle=-(Date.now()/2000)+(index*(Math.PI*2/totalDrones));let targetX=player.x+Math.cos(orbitAngle)*orbitRadius;let targetY=player.y+Math.sin(orbitAngle)*orbitRadius;const angle=Math.atan2(targetY-this.y,targetX-this.x);this.x+=Math.cos(angle)*3;this.y+=Math.sin(angle)*3;this.draw();} draw(){ctx.save();ctx.translate(this.x,this.y);ctx.beginPath();for(let i=0;i<6;i++){ctx.lineTo(this.radius*Math.cos(i*Math.PI/3),this.radius*Math.sin(i*Math.PI/3));}ctx.closePath();ctx.strokeStyle='lightblue';ctx.lineWidth=3;ctx.stroke();ctx.restore();}}
-        class MagneticWave { constructor(x,y){this.x=x;this.y=y;this.radius=0;this.maxRadius=300;this.alpha=1;this.hitDrones=[];} update(){this.radius+=5;this.alpha-=0.02;this.draw();} draw(){ctx.save();ctx.globalAlpha=this.alpha;ctx.beginPath();ctx.arc(this.x,this.y,this.radius,0,Math.PI*2);ctx.strokeStyle='rgba(255,0,255,0.8)';ctx.lineWidth=5;ctx.stroke();ctx.restore();}}
-        class MagnetEnemy extends Enemy { constructor(x,y){super(x,y,5);this.shootCooldown=3000;} shoot(){if(!player)return;magneticWaves.push(new MagneticWave(this.x,this.y));}}
-        class Ariete extends Enemy {constructor(x,y){super(x,y,6);this.health=2000;this.points=3000;this.radius=30; this.speed=6;} draw(){ctx.save();ctx.translate(this.x,this.y);if(player)ctx.rotate(Math.atan2(player.y-this.y,player.x-this.x));ctx.fillStyle='#888';ctx.beginPath();ctx.rect(-this.radius,-this.radius/2,this.radius*2,this.radius);ctx.fill();ctx.fillStyle='#f00';ctx.beginPath();ctx.arc(this.radius,0,this.radius/2,0,Math.PI*2);ctx.fill();ctx.restore();} onDeath(){createExplosion(this.x,this.y,this.radius*2);const attackDronesToDestroy = Math.floor(Math.random() * (5 - 1 + 1)) + 1; const defenseDronesToDestroy = Math.floor(Math.random() * (10 - 5 + 1)) + 5; for(let i = 0; i < attackDronesToDestroy && flotDrones.length > 0; i++){ flotDrones[0].health = 0; } for(let i = 0; i < defenseDronesToDestroy && defenseDrones.length > 0; i++){ defenseDrones[0].health = 0; }}}
-        class Star { constructor(x, y, radius, speed) { this.x=x; this.y=y; this.radius=radius; this.speed=speed; this.alpha=Math.random()*0.5+0.5; } draw() { ctx.save(); ctx.globalAlpha=this.alpha; ctx.beginPath(); ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2); ctx.fillStyle='white'; ctx.fill(); ctx.restore(); } update() { this.y += this.speed; if(this.y > canvas.height + this.radius) { this.y = -this.radius; this.x = Math.random() * canvas.width; } this.draw(); } }
-        class Joystick { constructor(zone) { this.zone=zone;this.stick=zone.querySelector('.joystick-stick');this.active=false;this.touchId=null;this.vector={x:0,y:0};this.center={x:0,y:0};this.stickPos={x:0,y:0};this.zone.addEventListener('touchstart',this.handleTouchStart.bind(this),{passive: false});this.zone.addEventListener('touchmove',this.handleTouchMove.bind(this),{passive: false});this.zone.addEventListener('touchend',this.handleTouchEnd.bind(this),{passive: false});} handleTouchStart(e){e.preventDefault();if(this.active)return;const touch=e.changedTouches[0];this.active=true;this.touchId=touch.identifier;const rect=this.zone.getBoundingClientRect();this.center={x:rect.left+rect.width/2,y:rect.top+rect.height/2};this.updateStick(touch.clientX,touch.clientY);} handleTouchMove(e){e.preventDefault();if(!this.active)return;const touch=Array.from(e.changedTouches).find(t=>t.identifier===this.touchId);if(touch){this.updateStick(touch.clientX,touch.clientY);}} handleTouchEnd(e){e.preventDefault();const touch=Array.from(e.changedTouches).find(t=>t.identifier===this.touchId);if(touch){this.active=false;this.touchId=null;this.vector={x:0,y:0};this.stick.style.transform=`translate(0px, 0px)`;}} updateStick(x,y){const dx=x-this.center.x;const dy=y-this.center.y;const distance=Math.sqrt(dx*dx+dy*dy);const maxDistance=this.zone.clientWidth/4;const clampedX=this.center.x+(dx/distance)*Math.min(distance,maxDistance);const clampedY=this.center.y+(dy/distance)*Math.min(distance,maxDistance);this.stick.style.transform=`translate(${clampedX-this.center.x}px,${clampedY-this.center.y}px)`;this.vector={x:(clampedX-this.center.x)/maxDistance,y:(clampedY-this.center.y)/maxDistance};}}
         
-        // --- CONTROLES E HABILIDADES ---
-        window.addEventListener('keydown',(e)=>{const k=e.key.toLowerCase();if(k in keys)keys[k]=true;if(controlMode==='pc'){if(k==='q')activateShield();if(k==='e')activatePredator();if(k==='x'&&keys.shift)launchAllPredators();if(k==='f')activateFlot();if(k==='1')buyHealthUpgrade();if(k==='2')buyDamageUpgrade();if(k==='c')buyDefenseDrone();}});
-        window.addEventListener('keyup',(e)=>{const k=e.key.toLowerCase();if(k in keys)keys[k]=false;});
-        window.addEventListener('mousemove',(e)=>{mouse.x=e.clientX;mouse.y=e.clientY;});
-        window.addEventListener('mousedown',(e)=>{if(controlMode==='pc'){e.button===0?mouse.leftDown=true:activateHunter();}});
-        window.addEventListener('mouseup',(e)=>{if(controlMode==='pc'&&e.button===0)mouse.leftDown=false;});
-        window.addEventListener('contextmenu',e=>{if(controlMode==='pc')e.preventDefault();});
+        class DefenseDrone { 
+            constructor(x, y) {
+                this.x = x; this.y = y; this.radius = 12; this.health = 200; this.maxHealth = 200;
+            } 
+            update(index, totalDrones) {
+                if (!player) return;
+                const orbitRadius = 60;
+                const orbitAngle = -(Date.now() / 2000) + (index * (Math.PI * 2 / totalDrones));
+                let targetX = player.x + Math.cos(orbitAngle) * orbitRadius;
+                let targetY = player.y + Math.sin(orbitAngle) * orbitRadius;
+                const angle = Math.atan2(targetY - this.y, targetX - this.x);
+                this.x += Math.cos(angle) * 3;
+                this.y += Math.sin(angle) * 3;
+                this.draw();
+            } 
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.beginPath();
+                for (let i = 0; i < 6; i++) { ctx.lineTo(this.radius * Math.cos(i * Math.PI / 3), this.radius * Math.sin(i * Math.PI / 3)); }
+                ctx.closePath();
+                ctx.strokeStyle = 'lightblue'; ctx.lineWidth = 3;
+                ctx.shadowBlur = 10; ctx.shadowColor = 'lightblue';
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        
+        class MagneticWave { 
+            constructor(x, y) {
+                this.x = x; this.y = y; this.radius = 0; this.maxRadius = 300; this.alpha = 1;
+                this.hitDrones = [];
+            } 
+            update() {
+                this.radius += 5;
+                this.alpha -= 0.02;
+                this.draw();
+            } 
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.strokeStyle = 'rgba(255,0,255,0.8)'; ctx.lineWidth = 5;
+                ctx.stroke();
+                ctx.restore();
+            }
+        }
+        
+        class MagnetEnemy extends Enemy { 
+            constructor(x, y) {
+                super(x, y, 5);
+                this.shootCooldown = 3000;
+            } 
+            shoot() {
+                if (!player) return;
+                magneticWaves.push(new MagneticWave(this.x, this.y));
+            }
+        }
+        
+        class Ariete extends Enemy {
+            constructor(x, y) {
+                super(x, y, 6);
+                this.health = 2000; this.points = 3000; this.radius = 30; this.speed = 6;
+                this.lastShot = Date.now(); this.shootCooldown = 2500;
+            } 
+            update() {
+                this.draw();
+                if(!player) return;
+                const angle = Math.atan2(player.y - this.y, player.x - this.x);
+                this.x += Math.cos(angle) * this.speed;
+                this.y += Math.sin(angle) * this.speed;
+
+                if (Date.now() - this.lastShot > this.shootCooldown) {
+                    this.shoot();
+                }
+            }
+            shoot() {
+                if (!player) return;
+                const angle = Math.atan2(player.y - this.y, player.x - this.x);
+                arieteBullets.push(new ArieteBullet(this.x, this.y, {x: Math.cos(angle), y: Math.sin(angle)}));
+                this.lastShot = Date.now();
+            }
+            draw() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                if (player) ctx.rotate(Math.atan2(player.y - this.y, player.x - this.x));
+                ctx.fillStyle = '#888';
+                ctx.beginPath(); ctx.rect(-this.radius, -this.radius / 2, this.radius * 2, this.radius); ctx.fill();
+                ctx.fillStyle = '#f00';
+                ctx.beginPath(); ctx.arc(this.radius, 0, this.radius / 2, 0, Math.PI * 2); ctx.fill();
+                ctx.restore();
+            } 
+            onDeath() {
+                createExplosion(this.x, this.y, this.radius * 2);
+                const attackDronesToDestroy = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+                const defenseDronesToDestroy = Math.floor(Math.random() * (10 - 5 + 1)) + 5;
+                for (let i = 0; i < attackDronesToDestroy && flotDrones.length > 0; i++) { flotDrones[0].health = 0; }
+                for (let i = 0; i < defenseDronesToDestroy && defenseDrones.length > 0; i++) { defenseDrones[0].health = 0; }
+            }
+        }
+        
+        class Star { 
+            constructor(x, y, radius, speed) {
+                this.x = x; this.y = y; this.radius = radius; this.speed = speed;
+                this.alpha = Math.random() * 0.8 + 0.1;
+            } 
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.alpha;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'white';
+                ctx.fill();
+                ctx.restore();
+            } 
+            update() {
+                this.y += this.speed;
+                if (this.y > canvas.height + this.radius) {
+                    this.y = -this.radius;
+                    this.x = Math.random() * canvas.width;
+                }
+                this.draw();
+            } 
+        }
+        
+        class Joystick { 
+            constructor(zone) {
+                this.zone = zone; this.stick = zone.querySelector('.joystick-stick');
+                this.active = false; this.touchId = null;
+                this.vector = { x: 0, y: 0 }; this.center = { x: 0, y: 0 }; this.stickPos = { x: 0, y: 0 };
+                this.zone.addEventListener('touchstart', this.handleTouchStart.bind(this), { passive: false });
+                this.zone.addEventListener('touchmove', this.handleTouchMove.bind(this), { passive: false });
+                this.zone.addEventListener('touchend', this.handleTouchEnd.bind(this), { passive: false });
+            } 
+            handleTouchStart(e) {
+                e.preventDefault(); if (this.active) return;
+                const touch = e.changedTouches[0];
+                this.active = true; this.touchId = touch.identifier;
+                const rect = this.zone.getBoundingClientRect();
+                this.center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+                this.updateStick(touch.clientX, touch.clientY);
+            } 
+            handleTouchMove(e) {
+                e.preventDefault(); if (!this.active) return;
+                const touch = Array.from(e.changedTouches).find(t => t.identifier === this.touchId);
+                if (touch) { this.updateStick(touch.clientX, touch.clientY); }
+            } 
+            handleTouchEnd(e) {
+                e.preventDefault();
+                const touch = Array.from(e.changedTouches).find(t => t.identifier === this.touchId);
+                if (touch) {
+                    this.active = false; this.touchId = null;
+                    this.vector = { x: 0, y: 0 };
+                    this.stick.style.transform = `translate(0px, 0px)`;
+                }
+            } 
+            updateStick(x, y) {
+                const dx = x - this.center.x;
+                const dy = y - this.center.y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                const maxDistance = this.zone.clientWidth / 4;
+                const clampedX = this.center.x + (dx / distance) * Math.min(distance, maxDistance);
+                const clampedY = this.center.y + (dy / distance) * Math.min(distance, maxDistance);
+                this.stick.style.transform = `translate(${clampedX - this.center.x}px, ${clampedY - this.center.y}px)`;
+                this.vector = { x: (clampedX - this.center.x) / maxDistance, y: (clampedY - this.center.y) / maxDistance };
+            }
+        }
+        
+        // --- CONTROLS AND ABILITIES ---
+        window.addEventListener('keydown', (e) => {
+            const k = e.key.toLowerCase();
+            if (k in keys) keys[k] = true;
+            if (tutorialActive && k === 'escape') { endTutorial(); } 
+            else if (controlMode === 'pc') {
+                if (k === 'q') activateShield();
+                if (k === 'e') activatePredator();
+                if (k === 'x' && keys.shift) launchAllPredators();
+                if (k === 'f') activateFlot();
+                if (k === '1') buyHealthUpgrade();
+                if (k === '2') buyDamageUpgrade();
+                if (k === '3') buySpeedUpgrade();
+                if (k === 'c') buyDefenseDrone();
+            }
+        });
+        window.addEventListener('keyup', (e) => { const k = e.key.toLowerCase(); if (k in keys) keys[k] = false; });
+        window.addEventListener('mousemove', (e) => { mouse.x = e.clientX; mouse.y = e.clientY; });
+        window.addEventListener('mousedown', (e) => { if (controlMode === 'pc') { e.button === 0 ? mouse.leftDown = true : activateHunter(); } });
+        window.addEventListener('mouseup', (e) => { if (controlMode === 'pc' && e.button === 0) mouse.leftDown = false; });
+        window.addEventListener('contextmenu', e => { if (controlMode === 'pc') e.preventDefault(); });
         getEl('mobile-shield-ability').addEventListener('touchstart', (e) => { e.preventDefault(); activateShield(); });
         getEl('mobile-hunter-ability').addEventListener('touchstart', (e) => { e.preventDefault(); activateHunter(); });
         getEl('mobile-predator-ability').addEventListener('touchstart', (e) => { e.preventDefault(); activatePredator(); });
         getEl('mobile-flot-ability').addEventListener('touchstart', (e) => { e.preventDefault(); activateFlot(); });
 
-        function activateShield(){if(!player || abilities.shield.onCooldown)return;abilities.shield.active=true;abilities.shield.onCooldown=true;abilities.shield.timer=Date.now();setTimeout(()=>abilities.shield.active=false,abilities.shield.duration);setTimeout(()=>abilities.shield.onCooldown=false,abilities.shield.cooldown);}
-        function activateHunter(){if(!player || abilities.hunter.onCooldown)return;abilities.hunter.active=true;abilities.hunter.onCooldown=true;abilities.hunter.timer=Date.now();setTimeout(()=>abilities.hunter.active=false,abilities.hunter.duration);setTimeout(()=>abilities.hunter.onCooldown=false,abilities.hunter.cooldown);}
-        function activatePredator(){if(!player || abilities.predator.current<=0||predatorMissiles.length>0)return;abilities.predator.current--;predatorMissiles.push(new PredatorMissile(player.x,player.y));}
-        function launchAllPredators(){if(!player||abilities.predator.current<=0)return;const numToLaunch=abilities.predator.current;const targets=[...enemies,...bosses,...arietes];for(let i=0;i<numToLaunch;i++){const missile=new PredatorMissile(player.x,player.y);if(targets[i])missile.target=targets[i];predatorMissiles.push(missile);}abilities.predator.current=0;}
-        function activateFlot(){if(!player || score < abilities.flot.currentCost)return;updateScore(-abilities.flot.currentCost);flotDrones.push(new FlotDrone(player.x,player.y));}
-        function buyDefenseDrone(){if(!player || score < abilities.defense.currentCost)return;updateScore(-abilities.defense.currentCost);defenseDrones.push(new DefenseDrone(player.x,player.y));}
+        function activateShield() { if (!player || abilities.shield.onCooldown) return; abilities.shield.active = true; abilities.shield.onCooldown = true; abilities.shield.timer = Date.now(); setTimeout(() => abilities.shield.active = false, abilities.shield.duration); setTimeout(() => abilities.shield.onCooldown = false, abilities.shield.cooldown); }
+        function activateHunter() { if (!player || abilities.hunter.onCooldown) return; abilities.hunter.active = true; abilities.hunter.onCooldown = true; abilities.hunter.timer = Date.now(); setTimeout(() => abilities.hunter.active = false, abilities.hunter.duration); setTimeout(() => abilities.hunter.onCooldown = false, abilities.hunter.cooldown); }
+        function activatePredator() { if (!player || abilities.predator.current <= 0 || predatorMissiles.length > 0) return; abilities.predator.current--; predatorMissiles.push(new PredatorMissile(player.x, player.y)); }
+        function launchAllPredators() { if (!player || abilities.predator.current <= 0) return; const numToLaunch = abilities.predator.current; const targets = [...enemies, ...bosses, ...arietes]; for (let i = 0; i < numToLaunch; i++) { const missile = new PredatorMissile(player.x, player.y); if (targets[i]) missile.target = targets[i]; predatorMissiles.push(missile); } abilities.predator.current = 0; }
+        function activateFlot() { if (!player || score < abilities.flot.currentCost) return; updateScore(-abilities.flot.currentCost); flotDrones.push(new FlotDrone(player.x, player.y)); }
+        function buyDefenseDrone() { if (!player || score < abilities.defense.currentCost) return; updateScore(-abilities.defense.currentCost); defenseDrones.push(new DefenseDrone(player.x, player.y)); }
 
-        // --- MELHORIAS ---
-        function buyHealthUpgrade(){if(!player || score<upgrades.health.cost)return;updateScore(-upgrades.health.cost);const increase=player.maxHp>=1000?300:50;player.maxHp+=increase;player.hp+=increase;upgrades.health.level++;upgrades.health.cost=player.maxHp>=1000?upgrades.health.cost*2:upgrades.health.cost+100;updateHealthBar();updateUI();}
-        function buyDamageUpgrade(){if(!player || score<upgrades.damage.cost)return;updateScore(-upgrades.damage.cost);player.damageMultiplier+=.1;upgrades.damage.level++;upgrades.damage.cost+=500;updateUI();}
+        // --- UPGRADES ---
+        function buyHealthUpgrade() { if (!player || score < upgrades.health.cost) return; updateScore(-upgrades.health.cost); const increase = player.maxHp >= 1000 ? 300 : 50; player.maxHp += increase; player.hp += increase; upgrades.health.level++; upgrades.health.cost = player.maxHp >= 1000 ? upgrades.health.cost * 2 : upgrades.health.cost + 100; updateHealthBar(); updateUI(); }
+        function buyDamageUpgrade() { if (!player || score < upgrades.damage.cost) return; updateScore(-upgrades.damage.cost); player.damageMultiplier += 0.1; upgrades.damage.level++; upgrades.damage.cost += 500; updateUI(); }
+        function buySpeedUpgrade() { if (!player || score < upgrades.speed.cost) return; updateScore(-upgrades.speed.cost); player.speed += 0.5; upgrades.speed.level++; upgrades.speed.cost += 250; updateUI(); }
 
-        // --- LÓGICA DO JOGO ---
-        function initGame(){
-            canvas.width=window.innerWidth;canvas.height=window.innerHeight;
-            if(controlMode === 'mobile') {
+        // --- GAME LOGIC ---
+        function initGame(isTutorial = false, savedState = null) {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+            if (controlMode === 'mobile') {
                 moveJoystick = new Joystick(getEl('joystick-zone-left'));
                 shootJoystick = new Joystick(getEl('joystick-zone-right'));
             }
-            player=new Player(canvas.width/2,canvas.height/2);stars=[];for(let i=0;i<200;i++){stars.push(new Star(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*1.5,Math.random()*0.5+0.2));}bullets=[];enemies=[];particles=[];enemyBullets=[];explosions=[];flotDrones=[];predatorMissiles=[];bosses=[];defenseDrones=[];magneticWaves=[];arietes=[];score=0;currentWave=0;enemyLevel=1;pointMultiplier=1;nextLevelScore=500;shootCooldown=false;lastHealTime=0;Object.values(abilities).forEach(a=>{a.active=false;a.onCooldown=false;});abilities.predator.current=0;abilities.flot.currentCost=abilities.flot.cost;abilities.defense.currentCost=abilities.defense.cost;upgrades.health.cost=200;upgrades.damage.cost=1000;upgrades.health.level=0;upgrades.damage.level=0;waveTransition.active=false;updateScore(0);updateHealthBar();if(missileChargeTimer)clearInterval(missileChargeTimer);missileChargeTimer=setInterval(()=>{if(abilities.predator.current<abilities.predator.max){abilities.predator.current++;}},abilities.predator.chargeTime);if(animationId)cancelAnimationFrame(animationId);startNextWave();animate();}
-        function startNextWave(){currentWave++;waveEl.innerText=currentWave;pointMultiplier*=1.1;if(currentWave>=6){abilities.flot.currentCost=2000;abilities.defense.currentCost=1000;}else{abilities.flot.currentCost=Math.floor(abilities.flot.cost*1.3);abilities.defense.currentCost=Math.floor(abilities.defense.cost*1.3);}const isBossWave=currentWave>0&&currentWave%5===0;if(isBossWave){const bossCount=Math.floor(currentWave/5);for(let i=0;i<bossCount;i++){bosses.push(new Boss(canvas.width/2+(i*150-bossCount*75),100));}spawnEnemies(5,5*bossCount);spawnEnemies(3,5*bossCount);spawnEnemies(2,8*bossCount);spawnEnemies(1,15*bossCount);}else{const spawnCount=currentWave*3;for(let i=0;i<spawnCount;i++){const level=Math.ceil(Math.random()*enemyLevel);spawnEnemies(level,1);}if(currentWave>=10){let arieteCount=Math.floor((currentWave-10)/2)+1;spawnEnemies(6,arieteCount);}}}
-        function spawnEnemies(level,count){for(let i=0;i<count;i++){const r=15+level*2;let x,y;if(Math.random()<.5){x=Math.random()<.5?0-r:canvas.width+r;y=Math.random()*canvas.height}else{x=Math.random()*canvas.width;y=Math.random()<.5?0-r:canvas.height+r}if(level===5){enemies.push(new MagnetEnemy(x,y));}else if(level===6){arietes.push(new Ariete(x,y));}else{enemies.push(new Enemy(x,y,level));}}}
-        function handleShooting(){if(!player)return;let fire=false;let angle=0;if(controlMode==='pc'&&mouse.leftDown){fire=true;angle=Math.atan2(mouse.y-player.y,mouse.x-player.x);}else if(controlMode==='mobile'&&shootJoystick&& (shootJoystick.vector.x!==0||shootJoystick.vector.y!==0)){fire=true;angle=Math.atan2(shootJoystick.vector.y,shootJoystick.vector.x);}if(!fire)return;const r=player.angle-Math.PI/2;const nX=player.x+Math.cos(r)*player.radius,nY=player.y+Math.sin(r)*player.radius;if(abilities.hunter.active){for(let i=-2;i<=2;i++)bullets.push(new Bullet(nX,nY,{x:Math.cos(angle+i*.15),y:Math.sin(angle+i*.15)},true,player.damageMultiplier));}else{bullets.push(new Bullet(nX,nY,{x:Math.cos(angle),y:Math.sin(angle)},false,player.damageMultiplier));}}
+            player = new Player(canvas.width / 2, canvas.height / 2);
+            stars = []; for (let i = 0; i < 200; i++) { stars.push(new Star(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() * 2, Math.random() * 0.5 + 0.1)); }
+            bullets = []; enemies = []; particles = []; enemyBullets = []; explosions = []; flotDrones = []; predatorMissiles = []; bosses = []; defenseDrones = []; magneticWaves = []; arietes = []; arieteBullets = []; fireBreaths = [];
+            score = 0; currentWave = 0; enemyLevel = 1; pointMultiplier = 1; nextLevelScore = 500; shootCooldown = false; lastHealTime = 0; enemiesDefeated = 0;
+            gameStartTime = Date.now();
+            Object.values(abilities).forEach(a => { a.active = false; a.onCooldown = false; });
+            abilities.predator.current = 0;
+            abilities.flot.currentCost = abilities.flot.cost;
+            abilities.defense.currentCost = abilities.defense.cost;
+            upgrades.health.cost = 200; upgrades.damage.cost = 1000; upgrades.speed.cost = 500;
+            upgrades.health.level = 0; upgrades.damage.level = 0; upgrades.speed.level = 0;
+            waveTransition.active = false;
+            if (!isTutorial) { updateScore(0); }
+            updateHealthBar();
+            if (missileChargeTimer) clearInterval(missileChargeTimer);
+            missileChargeTimer = setInterval(() => { if (player && abilities.predator.current < abilities.predator.max) { abilities.predator.current++; } }, abilities.predator.chargeTime);
+            if (animationId) cancelAnimationFrame(animationId);
+            if (!isTutorial) { startNextWave(); }
+            animate();
+        }
+        function startNextWave() {
+            currentWave++; waveEl.innerText = currentWave; pointMultiplier *= 1.1;
+            
+            if (isChallengeMode && currentWave === 10) {
+                 bosses.push(new FinalBoss(canvas.width / 2, -100));
+                 return; // Final boss wave
+            }
+
+            if (currentWave >= 6) { abilities.flot.currentCost = 2000; abilities.defense.currentCost = 1000; } 
+            else { abilities.flot.currentCost = Math.floor(abilities.flot.cost * 1.3); abilities.defense.currentCost = Math.floor(abilities.defense.cost * 1.3); }
+            const isBossWave = currentWave > 0 && currentWave % 5 === 0;
+            if (isBossWave) {
+                const bossCount = Math.floor(currentWave / 5);
+                for (let i = 0; i < bossCount; i++) { bosses.push(new FinalBoss(canvas.width / 2 + (i * 150 - bossCount * 75), 100)); }
+                spawnEnemies(5, 5 * bossCount); spawnEnemies(3, 5 * bossCount); spawnEnemies(2, 8 * bossCount); spawnEnemies(1, 15 * bossCount);
+            } else {
+                const spawnCount = currentWave * 3;
+                for (let i = 0; i < spawnCount; i++) {
+                    const level = Math.ceil(Math.random() * enemyLevel);
+                    spawnEnemies(level, 1);
+                }
+                if (isChallengeMode) {
+                    let arieteCount = Math.floor(currentWave / 2) + 1;
+                    spawnEnemies(6, arieteCount);
+                } else if (currentWave >= 10) { 
+                    let arieteCount = Math.floor((currentWave - 10) / 2) + 1; 
+                    spawnEnemies(6, arieteCount); 
+                }
+            }
+        }
+        function spawnEnemies(level, count) { for (let i = 0; i < count; i++) { const r = 15 + level * 2; let x, y; if (Math.random() < 0.5) { x = Math.random() < 0.5 ? 0 - r : canvas.width + r; y = Math.random() * canvas.height } else { x = Math.random() * canvas.width; y = Math.random() < 0.5 ? 0 - r : canvas.height + r } if (level === 5) { enemies.push(new MagnetEnemy(x, y)); } else if (level === 6) { arietes.push(new Ariete(x, y)); } else { enemies.push(new Enemy(x, y, level)); } } }
+        function handleShooting() {
+            if (!player) return; let fire = false; let angle = 0;
+            if (controlMode === 'pc' && mouse.leftDown) { fire = true; angle = Math.atan2(mouse.y - player.y, mouse.x - player.x); } 
+            else if (controlMode === 'mobile' && shootJoystick && (shootJoystick.vector.x !== 0 || shootJoystick.vector.y !== 0)) { fire = true; angle = Math.atan2(shootJoystick.vector.y, shootJoystick.vector.x); }
+            if (!fire) return;
+            const r = player.angle - Math.PI / 2;
+            const nX = player.x + Math.cos(r) * (player.radius - 5), nY = player.y + Math.sin(r) * (player.radius - 5);
+            if (abilities.hunter.active) { for (let i = -2; i <= 2; i++) bullets.push(new Bullet(nX, nY, { x: Math.cos(angle + i * 0.15), y: Math.sin(angle + i * 0.15) }, true, player.damageMultiplier)); } 
+            else { bullets.push(new Bullet(nX, nY, { x: Math.cos(angle), y: Math.sin(angle) }, false, player.damageMultiplier)); }
+        }
         
-        function animate(){
+        function animate() {
             animationId = requestAnimationFrame(animate);
-            ctx.fillStyle = 'rgba(0,0,0,0.3)';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             stars.forEach(s => s.update());
             
-            const gameArrays = { particles, explosions, bullets, enemyBullets, enemies, bosses, magneticWaves, arietes, flotDrones, defenseDrones, predatorMissiles };
+            const gameArrays = { particles, explosions, bullets, enemyBullets, arieteBullets, fireBreaths, enemies, bosses, magneticWaves, arietes, flotDrones, defenseDrones, predatorMissiles };
             for (const key in gameArrays) {
                 for (let i = gameArrays[key].length - 1; i >= 0; i--) {
                     const item = gameArrays[key][i];
-                    if(!item) continue;
+                    if (!item) continue;
                     
-                    if (key === 'flotDrones' || key === 'defenseDrones') {
-                        item.update(i, gameArrays[key].length);
-                    } else {
-                        item.update();
-                    }
+                    if (key === 'flotDrones' || key === 'defenseDrones') { item.update(i, gameArrays[key].length); } 
+                    else { item.update(); }
 
-                    if (item.health <= 0 || item.alpha <= 0 || (item instanceof PredatorMissile && !item.target && item.y < 0) ) {
-                        if(item instanceof Ariete){ item.onDeath(); updateScore(item.points); }
-                        else if(item instanceof Enemy) { createExplosion(item.x, item.y, item.radius); updateScore(item.points); }
-                        else if(item instanceof Boss) { createExplosion(item.x, item.y, item.radius * 1.5); updateScore(item.points); }
-                        else if(item instanceof FlotDrone || item instanceof DefenseDrone) { createExplosion(item.x, item.y, item.radius); }
+                    if (item.health <= 0 || item.alpha <= 0 || (item instanceof PredatorMissile && !item.target && item.y < 0)) {
+                        if (item instanceof Enemy) { 
+                            if(item instanceof FinalBoss) createExplosion(item.x, item.y, item.radius * 2);
+                            else createExplosion(item.x, item.y, item.radius); 
+                            updateScore(item.points); enemiesDefeated++; 
+                        } 
+                        else if (item instanceof FlotDrone || item instanceof DefenseDrone) { createExplosion(item.x, item.y, item.radius); }
                         gameArrays[key].splice(i, 1);
+                        continue;
+                    }
+                    if (key === 'bullets' || key === 'enemyBullets' || key === 'arieteBullets') {
+                        const b = item;
+                        if (b.x < 0 || b.x > canvas.width || b.y < 0 || b.y > canvas.height) {
+                            gameArrays[key].splice(i, 1);
+                        }
                     }
                 }
             }
@@ -389,7 +1121,7 @@
                 }
             } else {
                 if (player && Date.now() - player.lastHitTime > 2000 && player.hp < player.maxHp && Date.now() - lastHealTime > 500) {
-                    player.hp = Math.min(player.maxHp, player.hp + 100);
+                    player.hp = Math.min(player.maxHp, player.hp + 10); // Slower regen
                     lastHealTime = Date.now();
                     updateHealthBar();
                 }
@@ -400,7 +1132,7 @@
                     setTimeout(() => shootCooldown = false, abilities.hunter.active ? 300 : 150);
                 }
                 checkCollisions();
-                 if (player && enemies.length === 0 && bosses.length === 0 && arietes.length === 0) {
+                if (player && enemies.length === 0 && bosses.length === 0 && arietes.length === 0) {
                     waveTransition.active = true;
                     waveTransition.timer = Date.now();
                 }
@@ -409,22 +1141,167 @@
             updateUI();
         }
         
-        function checkCollisions(){if(!player)return;[...bosses, ...arietes].forEach((b)=>{if(Math.hypot(player.x-b.x,player.y-b.y)-b.radius-player.radius<1){if(b instanceof Boss) endGame(true); else b.health=0; return;}bullets.forEach((bullet,bulletI)=>{if(Math.hypot(bullet.x-b.x,bullet.y-b.y)-b.radius-bullet.radius<1){b.health-=bullet.damage;bullets.splice(bulletI,1);}});});enemies.forEach((e)=>{if(Math.hypot(player.x-e.x,player.y-e.y)-e.radius-player.radius<1){player.takeDamage(15);e.health=0;return;}bullets.forEach((b,bI)=>{if(Math.hypot(b.x-e.x,b.y-e.y)-e.radius-b.radius<1){e.health-=b.damage;if(b.isExplosive){createExplosion(b.x,b.y,10);enemies.forEach(oE=>{if(oE!==e&&Math.hypot(b.x-oE.x,b.y-oE.y)<50)oE.health-=.5*player.damageMultiplier});}bullets.splice(bI,1);}});});enemyBullets.forEach((eb,ebI)=>{if(eb.isHoming){bullets.forEach((b,bI)=>{if(Math.hypot(b.x-eb.x,b.y-eb.y)-eb.radius-b.radius<1){eb.health-=b.damage;bullets.splice(bI,1);}});}if(Math.hypot(player.x-eb.x,player.y-eb.y)-player.radius-eb.radius<1){if(!abilities.shield.active)player.takeDamage(eb.damage);if(eb.isExplosive&&!abilities.shield.active)createExplosion(eb.x,eb.y,10);enemyBullets.splice(ebI,1);return;}defenseDrones.forEach((d,dI)=>{if(Math.hypot(d.x-eb.x,d.y-eb.y)-d.radius-eb.radius<1){d.health-=eb.damage;enemyBullets.splice(ebI,1);}});});magneticWaves.forEach((mw)=>{[...flotDrones,...defenseDrones].forEach(d=>{if(!mw.hitDrones.includes(d)&&Math.hypot(mw.x-d.x,mw.y-d.y)<mw.radius){d.health-=d.maxHealth*0.25;mw.hitDrones.push(d);}});});}
+        function checkCollisions() { 
+            if (!player) return; 
+            [...bosses, ...arietes].forEach((b) => { 
+                if (Math.hypot(player.x - b.x, player.y - b.y) - b.radius - player.radius < 1) { 
+                    if (b instanceof Enemy) player.takeDamage(100);
+                    b.health -= 100;
+                    return; 
+                } 
+                bullets.forEach((bullet, bulletI) => { 
+                    if (Math.hypot(bullet.x - b.x, bullet.y - b.y) - b.radius - bullet.radius < 1) { 
+                        b.health -= bullet.damage; 
+                        bullets.splice(bulletI, 1); 
+                    } 
+                }); 
+            }); 
+            enemies.forEach((e, eI) => { 
+                if (Math.hypot(player.x - e.x, player.y - e.y) - e.radius - player.radius < 1) { 
+                    player.takeDamage(15); e.health = 0; return; 
+                } 
+                bullets.forEach((b, bI) => { 
+                    if (Math.hypot(b.x - e.x, b.y - e.y) - e.radius - b.radius < 1) { 
+                        e.health -= b.damage; 
+                        if (b.isExplosive) { 
+                            createExplosion(b.x, b.y, 50); 
+                            enemies.forEach(oE => { if (oE !== e && Math.hypot(b.x - oE.x, b.y - oE.y) < 50) oE.health -= 0.5 * player.damageMultiplier }); 
+                        } 
+                        bullets.splice(bI, 1); 
+                    } 
+                }); 
+            }); 
+            enemyBullets.forEach((eb, ebI) => { 
+                if (eb.isHoming) { 
+                    bullets.forEach((b, bI) => { 
+                        if (Math.hypot(b.x - eb.x, b.y - eb.y) - eb.radius - b.radius < 1) { 
+                            eb.health -= b.damage; 
+                            bullets.splice(bI, 1); 
+                        } 
+                    }); 
+                } 
+                if (Math.hypot(player.x - eb.x, player.y - eb.y) - player.radius - eb.radius < 1) { 
+                    if (!abilities.shield.active) player.takeDamage(eb.damage); 
+                    if (eb.isExplosive && !abilities.shield.active) createExplosion(eb.x, eb.y, 10); 
+                    enemyBullets.splice(ebI, 1); 
+                    return; 
+                } 
+                defenseDrones.forEach((d) => { 
+                    if (Math.hypot(d.x - eb.x, d.y - eb.y) - d.radius - eb.radius < 1) { 
+                        d.health -= eb.damage; 
+                        enemyBullets.splice(ebI, 1); 
+                    } 
+                }); 
+            }); 
+            arieteBullets.forEach((ab, abI) => {
+                if (Math.hypot(player.x - ab.x, player.y - ab.y) - player.radius - ab.radius < 1) {
+                    if (!abilities.shield.active) player.takeDamage(40);
+                    createExplosion(ab.x, ab.y, ab.radius * 2);
+                    arieteBullets.splice(abI, 1);
+                    return;
+                }
+                let hitDrone = false;
+                [...flotDrones, ...defenseDrones].forEach(d => {
+                    if (!hitDrone && Math.hypot(d.x - ab.x, d.y - ab.y) - d.radius - ab.radius < 1) {
+                        d.health -= d.maxHealth * 0.20;
+                        hitDrone = true;
+                    }
+                });
+                if (hitDrone) {
+                    createExplosion(ab.x, ab.y, ab.radius * 2);
+                    arieteBullets.splice(abI, 1);
+                }
+            });
+            fireBreaths.forEach(fb => {
+                const fireConeLength = 200;
+                const fireConeWidth = Math.PI / 4;
+                const dist = Math.hypot(player.x - fb.x, player.y - fb.y);
+                const angleToPlayer = Math.atan2(player.y - fb.y, player.x - fb.x);
+                const angleDiff = Math.abs(fb.angle - angleToPlayer);
+
+                if(dist < fireConeLength && angleDiff < fireConeWidth / 2 && Date.now() - fb.lastDamageTime > fb.damageInterval) {
+                     if (!abilities.shield.active) player.takeDamage(100 * (fb.damageInterval / 1000)); // 100 damage per second
+                     fb.lastDamageTime = Date.now();
+                }
+            });
+            magneticWaves.forEach((mw) => { 
+                [...flotDrones, ...defenseDrones].forEach(d => { 
+                    if (!mw.hitDrones.includes(d) && Math.hypot(mw.x - d.x, mw.y - d.y) < mw.radius) { 
+                        d.health -= d.maxHealth * 0.25; 
+                        mw.hitDrones.push(d); 
+                    } 
+                }); 
+            }); 
+        }
         
-        function createExplosion(x,y,radius){const particleCount=radius;const colors=['#ffffff','#ffc857','#ffac33','#e67700','#d95d00','#bf4700','#222'];for(let i=0;i<particleCount;i++){particles.push(new Particle(x,y,Math.random()*2+1,colors[Math.floor(Math.random()*colors.length)]));}}
-        function updateScore(points){if(!player) return; score+=Math.floor(points * pointMultiplier);scoreEl.innerText=score;if(score>=nextLevelScore){enemyLevel=Math.min(5,enemyLevel+1);nextLevelScore+=750;}}
-        function updateHealthBar(){if(!player) return; const hp=Math.max(0,player.hp);const p=hp/player.maxHp;healthBar.style.width=`${p*100}%`;healthBar.style.backgroundColor=p>.5?'#4CAF50':(p>.2?'#FFC107':'#F44336');healthText.innerText=`${Math.ceil(hp)}/${player.maxHp} HP`;}
-        function updateUI(){
+        function createExplosion(x, y, radius) { const particleCount = radius; const colors = ['#ffffff', '#ffc857', '#ffac33', '#e67700', '#d95d00', '#bf4700', '#222']; for (let i = 0; i < particleCount; i++) { particles.push(new Particle(x, y, Math.random() * 2 + 1, colors[Math.floor(Math.random() * colors.length)])); } }
+        function updateScore(points) { if (!player) return; score += Math.floor(points * pointMultiplier); scoreEl.innerText = score; if (score >= nextLevelScore) { enemyLevel = Math.min(5, enemyLevel + 1); nextLevelScore += 750; } }
+        function updateHealthBar() { if (!player) return; const hp = Math.max(0, player.hp); const p = hp / player.maxHp; healthBar.style.width = `${p * 100}%`; healthBar.style.backgroundColor = p > 0.5 ? '#4CAF50' : (p > 0.2 ? '#FFC107' : '#F44336'); healthText.innerText = `${Math.ceil(hp)}/${player.maxHp} HP`; }
+        function updateUI() {
+            if (!player) return;
             const abilityUIs = controlMode === 'pc' ? {
                 shield: getEl('shield-ability'), hunter: getEl('hunter-ability'), predator: getEl('predator-ability'), flot: getEl('flot-ability'), defense: getEl('defense-drone-upgrade')
             } : {
                 shield: getEl('mobile-shield-ability'), hunter: getEl('mobile-hunter-ability'), predator: getEl('mobile-predator-ability'), flot: getEl('mobile-flot-ability')
             };
-            Object.entries(abilities).forEach(([key,ability])=>{const ui=abilityUIs[key];if(!ui)return;const overlay=ui.querySelector('.cooldown-overlay');const countEl = ui.querySelector('.count-display');if(key==='predator'){if(countEl)countEl.innerText=ability.current;}else if(key==='flot'){if(countEl)countEl.innerText=`${flotDrones.length}`;const costEl=getEl('flot-ability').querySelector('.cost-display');if(costEl)costEl.innerText=`${abilities.flot.currentCost}P`;}if(ability.onCooldown&&overlay){overlay.style.display='flex';const timePassed=Date.now()-ability.timer;const cd=ability.active?ability.duration:ability.cooldown;const percent=1-(timePassed/cd);overlay.style.height=`${percent*100}%`;overlay.textContent=ability.active?`${((ability.duration-timePassed)/1000).toFixed(1)}s`:`${((ability.cooldown-timePassed)/1000).toFixed(1)}s`;}else if(overlay){overlay.style.display='none';}});
-            if(controlMode==='pc'){getEl('health-upgrade').innerText=`[1] HP+ | ${upgrades.health.cost} Pts`;getEl('damage-upgrade').innerText=`[2] Dano+ | ${upgrades.damage.cost} Pts`;getEl('defense-drone-upgrade').innerText=`[C] Drone Def. | ${abilities.defense.currentCost} Pts (${defenseDrones.length})`;}
+            Object.entries(abilities).forEach(([key, ability]) => {
+                const ui = abilityUIs[key];
+                if (!ui) return;
+                const overlay = ui.querySelector('.cooldown-overlay');
+                const countEl = ui.querySelector('.count-display');
+                if (key === 'predator') { if (countEl) countEl.innerText = ability.current; } 
+                else if (key === 'flot') { if (countEl) countEl.innerText = `${flotDrones.length}`; const costEl = ui.querySelector('.cost-display'); if (costEl) costEl.innerText = `${abilities.flot.currentCost}P`; }
+                if (ability.onCooldown && overlay) { overlay.style.display = 'flex'; const timePassed = Date.now() - ability.timer; const cd = ability.active ? ability.duration : ability.cooldown; const percent = 1 - (timePassed / cd); overlay.style.height = `${percent * 100}%`; overlay.textContent = ability.active ? `${((ability.duration - timePassed) / 1000).toFixed(1)}s` : `${((ability.cooldown - timePassed) / 1000).toFixed(1)}s`; } 
+                else if (overlay) { overlay.style.display = 'none'; }
+            });
+            if (controlMode === 'pc') {
+                const upgradeCards = {
+                    health: getEl('health-upgrade'),
+                    damage: getEl('damage-upgrade'),
+                    speed: getEl('speed-upgrade')
+                };
+                Object.entries(upgradeCards).forEach(([key, card]) => {
+                    const upgrade = upgrades[key];
+                    card.querySelector('.upgrade-level').innerText = `Nível ${upgrade.level + 1}`;
+                    card.querySelector('.upgrade-cost').innerText = `${upgrade.cost} Pts`;
+                    const btn = card.querySelector('button');
+                    btn.disabled = score < upgrade.cost;
+                    card.classList.toggle('disabled', score < upgrade.cost);
+                });
+                
+                const flotCard = getEl('flot-drone-buy');
+                flotCard.querySelector('#flot-drone-count').innerText = flotDrones.length;
+                flotCard.querySelector('.upgrade-cost').innerText = `${abilities.flot.currentCost} Pts`;
+                const flotBtn = flotCard.querySelector('button');
+                flotBtn.disabled = score < abilities.flot.currentCost;
+                flotCard.classList.toggle('disabled', score < abilities.flot.currentCost);
+
+                const defenseCard = getEl('defense-drone-buy');
+                defenseCard.querySelector('#defense-drone-count').innerText = defenseDrones.length;
+                defenseCard.querySelector('.upgrade-cost').innerText = `${abilities.defense.currentCost} Pts`;
+                const defenseBtn = defenseCard.querySelector('button');
+                defenseBtn.disabled = score < abilities.defense.currentCost;
+                defenseCard.classList.toggle('disabled', score < abilities.defense.currentCost);
+            }
         }
-        function endGame(returnToMenu=false){if(!player)return;saveScore(currentPlayerName,score);finalScoreEl.innerText=score;player=null;cancelAnimationFrame(animationId);clearInterval(missileChargeTimer);if(returnToMenu){menuReturnButton.click();}else{gameOverModal.classList.remove('hidden');}}
-        window.addEventListener('resize',()=>{if(!gameContainer.classList.contains('hidden'))initGame();});
+        function endGame() { 
+            if (!player) return; 
+            const timeSurvived = Math.floor((Date.now() - gameStartTime) / 1000);
+            saveScore(currentPlayerName, score); 
+            finalScoreEl.innerText = score; 
+            finalEnemiesDefeatedEl.innerText = enemiesDefeated;
+            finalTimeSurvivedEl.innerText = timeSurvived;
+            player = null; 
+            cancelAnimationFrame(animationId); 
+            clearInterval(missileChargeTimer); 
+            gameOverModal.classList.remove('hidden'); 
+        }
+        window.addEventListener('resize', () => { if (!gameContainer.classList.contains('hidden')) initGame(tutorialActive); });
+        
+        if (localStorage.getItem(SAVE_GAME_KEY)) {
+            continueButton.classList.remove('hidden');
+        }
+    });
     </script>
 </body>
 </html>
