@@ -289,7 +289,7 @@
                     tutorialText = "Bem-vindo ao Tutorial!\nUse W, A, S, D para mover sua nave.";
                     break;
                 case 2:
-                    if (!tutorialDummy || tutorialDummy.health <= 0) {
+                    if (!tutorialDummy) {
                         const r = 20;
                         let x = canvas.width / 2;
                         let y = canvas.height / 4;
@@ -312,6 +312,10 @@
                      break;
             }
             tutorialOverlay.innerText = tutorialText;
+        }
+        
+        function loadAndContinueGame() {
+            console.log("Continue game not implemented yet.");
         }
 
         function startGame(mode, challenge = false, savedState = null) {
@@ -988,7 +992,7 @@
                 this.hitDrones = [];
             } 
             update() {
-                this.radius += 5;
+                this.radius += 7; // Increased speed
                 this.alpha -= 0.02;
                 this.draw();
             } 
@@ -1049,18 +1053,18 @@
             } 
             onDeath() {
                 createExplosion(this.x, this.y, this.radius * 2);
-                const dronesToDestroy = Math.floor(Math.random() * 3) + 1; // 1, 2, or 3
-                const allDrones = [...flotDrones, ...defenseDrones];
-
-                // Simple Fisher-Yates shuffle
-                for (let i = allDrones.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [allDrones[i], allDrones[j]] = [allDrones[j], allDrones[i]];
-                }
+                const attackDronesToDestroy = Math.floor(Math.random() * 2) + 1; // 1 or 2
+                const defenseDronesToDestroy = Math.floor(Math.random() * 2) + 1; // 1 or 2
                 
-                // Destroy the determined number of drones from the shuffled list
-                for (let i = 0; i < dronesToDestroy && i < allDrones.length; i++) {
-                    allDrones[i].health = 0;
+                for (let i = 0; i < attackDronesToDestroy; i++) {
+                    if (flotDrones.length > 0) {
+                        flotDrones.splice(0, 1);
+                    }
+                }
+                for (let i = 0; i < defenseDronesToDestroy; i++) {
+                    if (defenseDrones.length > 0) {
+                        defenseDrones.splice(0, 1);
+                    }
                 }
             }
         }
@@ -1156,6 +1160,8 @@
         getEl('mobile-shield-ability').addEventListener('click', (e) => { e.preventDefault(); activateShield(); });
         getEl('mobile-hunter-ability').addEventListener('click', (e) => { e.preventDefault(); activateHunter(); });
         getEl('mobile-predator-ability').addEventListener('click', (e) => { e.preventDefault(); activatePredator(); });
+        getEl('mobile-flot-ability').addEventListener('click', (e) => { e.preventDefault(); buyFlotDrone(); });
+        getEl('mobile-defense-drone-ability').addEventListener('click', (e) => { e.preventDefault(); buyDefenseDrone(); });
 
         function activateShield() { if (!player || abilities.shield.onCooldown) return; abilities.shield.active = true; abilities.shield.onCooldown = true; abilities.shield.timer = Date.now(); setTimeout(() => abilities.shield.active = false, abilities.shield.duration); setTimeout(() => abilities.shield.onCooldown = false, abilities.shield.cooldown); }
         function activateHunter() { if (!player || abilities.hunter.onCooldown) return; abilities.hunter.active = true; abilities.hunter.onCooldown = true; abilities.hunter.timer = Date.now(); setTimeout(() => abilities.hunter.active = false, abilities.hunter.duration); setTimeout(() => abilities.hunter.onCooldown = false, abilities.hunter.cooldown); }
@@ -1189,7 +1195,7 @@
             upgrades.health.cost = 200; upgrades.health.level = 0;
             upgrades.damage.cost = 1000; upgrades.damage.level = 0;
             upgrades.speed.cost = 500; upgrades.speed.level = 0;
-            upgrades.flot.cost = 300;
+            upgrades.flot.cost = (controlMode === 'mobile') ? 100 : 300;
             upgrades.defense.cost = 250;
 
             isPaused = false;
@@ -1205,37 +1211,69 @@
             if (!isTutorial) { startNextWave(); }
             animate();
         }
+        
         function startNextWave() {
-            currentWave++; waveEl.innerText = currentWave; pointMultiplier *= 1.1;
-            
+            currentWave++;
+            waveEl.innerText = currentWave;
+            pointMultiplier *= 1.1;
+
             if (isChallengeMode && currentWave === 10) {
-                 bosses.push(new FinalBoss(canvas.width / 2, -100));
-                 return;
+                bosses.push(new FinalBoss(canvas.width / 2, -100));
+                return;
             }
-            
+
             const isBossWave = currentWave > 0 && currentWave % 5 === 0;
             if (isBossWave) {
                 const bossCount = Math.floor(currentWave / 5);
-                for (let i = 0; i < bossCount; i++) { bosses.push(new FinalBoss(canvas.width / 2 + (i * 150 - bossCount * 75), 100)); }
-            } else {
-                const spawnCount = currentWave * 3;
-                for (let i = 0; i < spawnCount; i++) {
-                    const level = Math.ceil(Math.random() * enemyLevel);
-                    spawnEnemies(level, 1);
+                for (let i = 0; i < bossCount; i++) {
+                    bosses.push(new FinalBoss(canvas.width / 2 + (i * 150 - bossCount * 75), 100));
                 }
-                if(currentWave >= 3) spawnEnemies(7, Math.floor(currentWave/3)); // Stealth
-                if(currentWave >= 4) spawnEnemies(8, Math.floor(currentWave/4)); // Tank
-                if(currentWave >= 6) spawnEnemies(9, Math.floor(currentWave/3)); // Sniper
+                spawnEnemies(1, 5 * bossCount);
+                return;
+            }
 
-                if (isChallengeMode) {
-                    let arieteCount = Math.floor(currentWave / 2) + 1;
-                    spawnEnemies(6, arieteCount);
-                } else if (currentWave >= 10) { 
-                    let arieteCount = Math.floor((currentWave - 10) / 2) + 1; 
-                    spawnEnemies(6, arieteCount); 
+            let baseSpawnCount = 3;
+            let spawnMultiplier = 1.0;
+
+            for (let i = 1; i < currentWave; i++) {
+                if (i < 6) {
+                    spawnMultiplier += 0.10;
+                } else {
+                    spawnMultiplier += 0.20;
                 }
             }
+            
+            const totalEnemiesToSpawn = Math.floor(baseSpawnCount * spawnMultiplier);
+
+            for (let i = 0; i < totalEnemiesToSpawn; i++) {
+                let enemyTypeLevel = 1;
+                const randomFactor = Math.random();
+
+                if (currentWave >= 8 && randomFactor > 0.85) {
+                    enemyTypeLevel = 9; // Sniper
+                } else if (currentWave >= 6 && randomFactor > 0.75) {
+                    enemyTypeLevel = 8; // Tank
+                } else if (currentWave >= 4 && randomFactor > 0.65) {
+                    enemyTypeLevel = 7; // Stealth
+                } else if (currentWave >= 2 && randomFactor > 0.5) {
+                    enemyTypeLevel = Math.ceil(Math.random() * 2) + 1;
+                }
+                
+                spawnEnemies(enemyTypeLevel, 1);
+            }
+
+            if (isChallengeMode) {
+                let arieteCount = Math.floor(currentWave / 2) + 1;
+                spawnEnemies(6, arieteCount);
+            } else if (currentWave >= 7) { 
+                let arieteCount = Math.floor((currentWave - 7) / 2) + 1;
+                spawnEnemies(6, arieteCount); 
+            }
+            if (currentWave >= 5) {
+                 spawnEnemies(5, Math.floor(currentWave / 5)); // Magnet Enemy
+            }
         }
+
         function spawnEnemies(level, count) { for (let i = 0; i < count; i++) { const r = 15 + level * 2; let x, y; if (Math.random() < 0.5) { x = Math.random() < 0.5 ? 0 - r : canvas.width + r; y = Math.random() * canvas.height } else { x = Math.random() * canvas.width; y = Math.random() < 0.5 ? 0 - r : canvas.height + r } 
             if (level === 5) { enemies.push(new MagnetEnemy(x, y)); } 
             else if (level === 6) { arietes.push(new Ariete(x, y)); } 
@@ -1367,6 +1405,7 @@
             if (!player) return; 
             
             [...bosses, ...arietes].forEach((b) => { 
+                if (!b) return;
                 if (Math.hypot(player.x - b.x, player.y - b.y) - b.radius - player.radius < 1) { 
                     if (b instanceof Ariete) {
                         b.health = 0; // The Ariete dies on collision, onDeath will handle drone destruction
@@ -1376,18 +1415,21 @@
                     }
                     return;
                 } 
-                bullets.forEach((bullet, bulletI) => { 
-                    if (Math.hypot(bullet.x - b.x, bullet.y - b.y) - b.radius - bullet.radius < 1) { 
+                for (let bulletI = bullets.length - 1; bulletI >= 0; bulletI--) {
+                    const bullet = bullets[bulletI];
+                     if (Math.hypot(bullet.x - b.x, bullet.y - b.y) - b.radius - bullet.radius < 1) { 
                         b.health -= bullet.damage; 
                         bullets.splice(bulletI, 1); 
                     } 
-                }); 
+                }
             }); 
             enemies.forEach((e) => { 
+                if (!e) return;
                 if (Math.hypot(player.x - e.x, player.y - e.y) - e.radius - player.radius < 1) { 
                     player.takeDamage(e instanceof TankEnemy ? 80 : 15); e.health = 0; return; 
                 } 
-                bullets.forEach((b, bI) => { 
+                for (let bI = bullets.length - 1; bI >= 0; bI--) {
+                    const b = bullets[bI];
                     if (Math.hypot(b.x - e.x, b.y - e.y) - e.radius - b.radius < 1) { 
                         e.health -= b.damage; 
                         if (b.isExplosive) { 
@@ -1396,36 +1438,44 @@
                         } 
                         bullets.splice(bI, 1); 
                     } 
-                }); 
+                }
             }); 
-            enemyBullets.forEach((eb, ebI) => { 
+            for (let ebI = enemyBullets.length - 1; ebI >= 0; ebI--) { 
+                const eb = enemyBullets[ebI];
+                if (!eb) continue;
                 if (eb.isHoming) { 
-                    bullets.forEach((b, bI) => { 
+                    for (let bI = bullets.length - 1; bI >= 0; bI--) { 
+                        const b = bullets[bI];
                         if (Math.hypot(b.x - eb.x, b.y - eb.y) - eb.radius - b.radius < 1) { 
                             eb.health -= b.damage; 
                             bullets.splice(bI, 1); 
                         } 
-                    }); 
+                    }
                 } 
                 if (Math.hypot(player.x - eb.x, player.y - eb.y) - player.radius - eb.radius < 1) { 
                     player.takeDamage(eb.damage);
                     if (eb.isExplosive) createExplosion(eb.x, eb.y, 10); 
                     enemyBullets.splice(ebI, 1); 
-                    return; 
+                    continue; 
                 } 
+                let ebHit = false;
                 defenseDrones.forEach((d) => { 
+                    if (ebHit) return;
                     if (Math.hypot(d.x - eb.x, d.y - eb.y) - d.radius - eb.radius < 1) { 
                         d.health -= eb.damage; 
                         enemyBullets.splice(ebI, 1); 
+                        ebHit = true;
                     } 
                 }); 
-            }); 
-            arieteBullets.forEach((ab, abI) => {
+            }
+            for (let abI = arieteBullets.length - 1; abI >= 0; abI--) {
+                const ab = arieteBullets[abI];
+                if (!ab) continue;
                 if (Math.hypot(player.x - ab.x, player.y - ab.y) - player.radius - ab.radius < 1) {
                     player.takeDamage(40);
                     createExplosion(ab.x, ab.y, ab.radius * 2);
                     arieteBullets.splice(abI, 1);
-                    return;
+                    continue;
                 }
                 let hitDrone = false;
                 [...flotDrones, ...defenseDrones].forEach(d => {
@@ -1438,14 +1488,16 @@
                     createExplosion(ab.x, ab.y, ab.radius * 2);
                     arieteBullets.splice(abI, 1);
                 }
-            });
-            sniperBullets.forEach((sb, sbI) => {
+            }
+            for (let sbI = sniperBullets.length - 1; sbI >= 0; sbI--) {
+                 const sb = sniperBullets[sbI];
+                 if (!sb) continue;
                  if (Math.hypot(player.x - sb.x, player.y - sb.y) - player.radius - sb.radius < 1) {
                     player.takeDamage(sb.damage);
                     sniperBullets.splice(sbI, 1);
-                    return;
+                    continue;
                 }
-            });
+            }
             fireBreaths.forEach(fb => {
                 const fireConeLength = 200;
                 const fireConeWidth = Math.PI / 4;
